@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/16 18:35:23 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/16 21:24:49 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,36 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char		*command_line;
-	t_prompt	prompt;
+	//char		*command_line;
+	//t_prompt	prompt;
+	
+	char		*input_example;//
+	char		**output_example;//
+	//int i = 0;
 
+	(void)env;
 	(void)ac;
 	(void)av;
-	prompt.first_token = NULL;
-	prompt.env = env;
-	prompt.token_len = 0;
-	prompt.line = NULL;
-	while (1)
-	{
-		command_line = readline("> ");
-		add_history(command_line);
-	}
+
+	input_example = "echo \"hello      there\" how are 'you 'doing? $USER |wc -l >outfile";
+	output_example = ft_split_input(input_example);
+	// while (output_example[i])
+	// {
+	// 	printf("%s\n", output_example[i]);
+	// 	i++;
+	// }
+	
+
+
+	// prompt.first_token = NULL;
+	// prompt.env = env;
+	// prompt.token_len = 0;
+	// prompt.line = NULL;
+	// while (1)
+	// {
+	// 	command_line = readline("> ");
+	// 	add_history(command_line);
+	// }
 	return (0);
 }
 

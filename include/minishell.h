@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/16 19:26:40 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/16 21:24:49 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,8 @@ struct s_token
 	int		out_fd;
 	t_token	*next;
 };
+
+char	**ft_split_input(char *str);
+char	*get_bash_var(char *var_to_find, char **env);
 
 #endif

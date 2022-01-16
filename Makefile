@@ -16,7 +16,7 @@ HEAD = minishell.h
 HEADS = $(addprefix $(HEAD_DIR), $(HEAD))
 
 SRC_DIR = ./src/
-SRC = main.c variables.c
+SRC =      main.c      splitter.c  variables.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = ./tmp/
