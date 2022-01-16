@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: coop <coop@student.42.fr>                  +#+  +:+       +#+         #
+#    By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 17:35:27 by rokupin           #+#    #+#              #
-#    Updated: 2021/11/09 22:24:30 by rokupin          ###   ########.fr        #
+#    Updated: 2022/01/16 19:24:56 by sserbin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ ft_lstadd_back_bonus.c  ft_putstr_fd.c          get_next_line.c\
 ft_lstadd_front_bonus.c ft_sort.c               get_next_line_utils.c\
 ft_lstclear_bonus.c     ft_split.c\
 ft_lstdelone_bonus.c    ft_strchr.c\
-ft_lstiter_bonus.c      ft_strdup.c
+ft_lstiter_bonus.c      ft_strdup.c\
+free_that_matrice.c     ft_strcmp.c
 
 BNS = ft_lstnew_bonus.c ft_lstdelone_bonus.c ft_lstadd_front_bonus.c ft_lstadd_back_bonus.c ft_lstsize_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c ft_lstlast_bonus.c  ft_lstclear_bonus.c
 

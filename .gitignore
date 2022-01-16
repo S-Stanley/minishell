@@ -1,0 +1,9 @@
+*.o
+a.out
+*.dSYM
+a.out
+*.plist
+*.a
+*.gch
+minishell
+*.json

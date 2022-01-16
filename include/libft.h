@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:24:17 by rokupin           #+#    #+#             */
-/*   Updated: 2021/11/09 04:58:10 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/01/16 19:24:58 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void			ft_sort(int *arr, int len);
 /*
 ** String
 */
+int				ft_strcmp(char *s1, char *s2);
 size_t			ft_strlen(const char *s);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t			ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -57,6 +58,10 @@ char			*ft_strtrim(char const *s1, char const *set);
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char *s, char (*f)(unsigned int, char));
+/*
+** table
+*/
+void			free_that_matrice(char **matrice);
 /*
 ** io
 */

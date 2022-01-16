@@ -3,7 +3,7 @@ ASAN = asan
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -g
-AFLAG = -fsanitize=address
+AFLAG = -fsanitize=address --fsanitize=leaks
 LIB = -lft -L$(LFT_DIR)
 INCL = -I$(HEAD_DIR) -I$(LFT_DIR)
 
@@ -16,7 +16,7 @@ HEAD = minishell.h
 HEADS = $(addprefix $(HEAD_DIR), $(HEAD))
 
 SRC_DIR = ./src/
-SRC = main.c
+SRC = main.c variables.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = ./tmp/
@@ -28,7 +28,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(OBJ))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJS)
-	$(CC) $(OBJS) $(FLAGS) $(LIB) $(INCL) -o $(NAME)
+	$(CC) $(OBJS) $(FLAGS) -lreadline $(LIB) $(INCL) -o $(NAME)
 
 $(ASAN): $(LIBFT) $(OBJ_DIR) $(OBJS)
 	$(CC) $(OBJS) $(AFLAG) $(FLAGS) $(LIB) $(INCL) -o $(NAME)
