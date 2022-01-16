@@ -6,14 +6,14 @@
 /*   By: coop <coop@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:15:06 by rokupin           #+#    #+#             */
-/*   Updated: 2021/08/02 00:54:58 by rokupin          ###   ########.fr       */
+/*   Updated: 2021/11/09 00:56:36 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-static int	get_range(int n, int negative)
+int	get_range(long n, int negative)
 {
 	int		range;
 

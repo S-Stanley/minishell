@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 14:39:45 by rokupin           #+#    #+#             */
-/*   Updated: 2021/09/04 04:27:39 by rokupin          ###   ########.fr       */
+/*   Created: 2021/11/08 10:24:17 by rokupin           #+#    #+#             */
+/*   Updated: 2021/11/09 04:58:10 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			ft_bzero(void *s, size_t n);
 /*
 ** Algo
 */
-void      ft_sort(int *arr, int len);
+void			ft_sort(int *arr, int len);
 /*
 ** String
 */
@@ -65,6 +65,12 @@ void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 int				get_next_line(int fd, char **line);
+char			*dec_to_any(long dec, char *base, int base_val);
+char			*ft_dtoa(double d, int prec);
+int				get_range(long n, int negative);
+char			*ft_convert_base(
+					char *nbr, char *base_from, char *base_to, int nbr_i);
+void			ft_swap(char *a, char *b);
 /*
 ** list
 */
@@ -72,7 +78,7 @@ typedef struct s_list
 {
 	struct s_list	*next;
 	void			*content;
-}				t_list;
+}		t_list;
 
 t_list			*ft_lstnew(void *content);
 void			ft_lstadd_front(t_list **alst, t_list *new_l);

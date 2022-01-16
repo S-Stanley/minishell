@@ -10,12 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+//#include <minishell.h>
+#include "include/minishell.h"
 
 int		main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
+
+	t_prompt prompt;
+
+	// prompt init
+	prompt.cmds = NULL;
+	prompt.envs = env;
+	prompt.cmds_l = 0;
 
 
 

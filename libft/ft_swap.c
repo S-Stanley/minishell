@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 09:21:22 by rokupin           #+#    #+#             */
-/*   Updated: 2021/11/05 23:01:41 by rokupin          ###   ########.fr       */
+/*   Created: 2020/01/18 10:48:41 by rokupin           #+#    #+#             */
+/*   Updated: 2021/11/09 04:50:24 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	*ft_memset(void *b, int c, size_t len)
+void	ft_swap(char *a, char *b)
 {
-	int	*ptr;
+	char	c;
 
-	ptr = b;
-	while (len > 0)
-	{
-		*(ptr++) = (unsigned char)c;
-		len--;
-	}
-	return (b);
+	c = *a;
+	*a = *b;
+	*b = c;
 }
