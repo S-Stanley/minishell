@@ -6,20 +6,65 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/17 20:56:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:16:31 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		ft_len_matrice(char **matrice)
+int	ft_len_matrice(char **matrice)
 {
 	int		i;
 
 	i = 0;
+	if (!matrice)
+		return (0);
 	while (matrice[i])
 		i++;
 	return (i);
+}
+
+int	count_next_stop(char **output, int i)
+{
+	int		count;
+
+	count = 0;
+	while (i < ft_len_matrice(output) && ft_strcmp(output[i], "|") != 0)
+	{
+		count++;
+		i++;
+	}
+	return (count + 1);
+}
+
+char	*get_full_path(char *cmd)
+{
+	char	**path;
+	int		i;
+	char	*full_path;
+	char	*path_with_slash;
+	char	*path_env;
+
+	i = 0;
+	path_env = getenv("PATH");
+	if (!path_env)
+		return (NULL);
+	path = ft_split(path_env, ':');
+	while (path[i])
+	{
+		path_with_slash = ft_strjoin(path[i], "/");
+		full_path = ft_strjoin(path_with_slash, cmd);
+		free(path_with_slash);
+		if (access(full_path, X_OK) == 0)
+		{
+			free_that_matrice(path);
+			return (full_path);
+		}
+		free(full_path);
+		i++;
+	}
+	free_that_matrice(path);
+	return (NULL);
 }
 
 void	parse_and_exec(char	**output, char **env)
@@ -35,16 +80,20 @@ void	parse_and_exec(char	**output, char **env)
 	while (i < ft_len_matrice(output))
 	{
 		x = 0;
-		cmd = malloc(sizeof(char *) * 3);
+		cmd = malloc(sizeof(char *) * count_next_stop(output, i));
 		if (!cmd)
 			return ;
 		while (output[i] && ft_strcmp(output[i], "|") != 0)
 		{
-			cmd[x] = output[i];
+			if (x == 0)
+				cmd[x] = get_full_path(output[i]);
+			else
+				cmd[x] = output[i];
 			i++;
 			x++;
 		}
 		cmd[x] = NULL;
+		get_full_path(cmd[0]);
 		lst = add_token(lst, 0, 1, cmd);
 		i++;
 	}
