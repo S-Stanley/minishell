@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/17 20:16:45 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/17 22:02:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define CYAN		"\x1b[36m"
 # define RESET		"\x1b[0m"
 
+# define COMMAND_NOT_FOUND	0
+
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,6 +30,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;

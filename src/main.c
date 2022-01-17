@@ -6,11 +6,27 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/17 21:16:31 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/17 22:22:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	print_error(int code, char *value, char **env)
+{
+	char	*shell_path;
+	char	*shell;
+
+	shell_path = get_bash_var("$SHELL", env);
+	if (shell_path)
+		shell = ft_strtrim(shell_path, "/bin/");
+	else
+		shell = ft_strdup("");
+	if (code == 0)
+		printf("%s: %s: command not found\n", shell, value);
+	free(shell_path);
+	free(shell);
+}
 
 int	ft_len_matrice(char **matrice)
 {
@@ -67,7 +83,7 @@ char	*get_full_path(char *cmd)
 	return (NULL);
 }
 
-void	parse_and_exec(char	**output, char **env)
+void	parse_and_exec(char	**output, char **env, int *exit_status)
 {
 	t_token	*lst;
 	int		i;
@@ -86,7 +102,15 @@ void	parse_and_exec(char	**output, char **env)
 		while (output[i] && ft_strcmp(output[i], "|") != 0)
 		{
 			if (x == 0)
+			{
 				cmd[x] = get_full_path(output[i]);
+				if (!cmd[x])
+				{
+					print_error(COMMAND_NOT_FOUND, output[i], env);
+					exit_status[0] = 127;
+					return ;
+				}
+			}
 			else
 				cmd[x] = output[i];
 			i++;
@@ -106,15 +130,22 @@ int	main(int ac, char **av, char **env)
 {
 	char		**output;
 	char		*command_line;
+	int			*exit_status;
 
-	(void)ac;
 	(void)av;
+	if (ac != 1)
+		return (0);
+	exit_status = malloc(sizeof(int));
+	if (!exit_status)
+		return (0);
+	exit_status[0] = 0;
 	while (1)
 	{
 		command_line = readline("> ");
 		add_history(command_line);
 		output = ft_split_input(command_line);
-		parse_and_exec(output, env);
+		parse_and_exec(output, env, exit_status);
+		printf("exit status ->%d\n", exit_status[0]);
 	}
 	return (0);
 }
