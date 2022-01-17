@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/17 22:22:22 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 00:46:35 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,13 @@ int	count_next_stop(char **output, int i)
 	return (count + 1);
 }
 
-char	*get_full_path(char *cmd)
+char	*find_cmd_in_path(char **path, char *cmd)
 {
-	char	**path;
 	int		i;
 	char	*full_path;
 	char	*path_with_slash;
-	char	*path_env;
 
 	i = 0;
-	path_env = getenv("PATH");
-	if (!path_env)
-		return (NULL);
-	path = ft_split(path_env, ':');
 	while (path[i])
 	{
 		path_with_slash = ft_strjoin(path[i], "/");
@@ -79,26 +73,47 @@ char	*get_full_path(char *cmd)
 		free(full_path);
 		i++;
 	}
+	return (NULL);
+}
+
+char	*get_full_path(char *cmd)
+{
+	char	**path;
+	char	*path_env;
+	char	*res;
+
+	path_env = getenv("PATH");
+	if (!path_env)
+		return (NULL);
+	path = ft_split(path_env, ':');
+	if (!path)
+		return (NULL);
+	res = find_cmd_in_path(path, cmd);
+	if (res)
+		return (res);
 	free_that_matrice(path);
 	return (NULL);
 }
 
-void	parse_and_exec(char	**output, char **env, int *exit_status)
+t_token	*build_lst(char	**output, char **env, int *exit_status)
 {
 	t_token	*lst;
 	int		i;
-	char	**cmd;
 	int		x;
+	char	**cmd;
 
-	(void)env;
-	lst = NULL;
 	i = 0;
+	lst = NULL;
 	while (i < ft_len_matrice(output))
 	{
 		x = 0;
 		cmd = malloc(sizeof(char *) * count_next_stop(output, i));
 		if (!cmd)
-			return ;
+		{
+			free_that_matrice(output);
+			free_token_list(lst);
+			return (NULL);
+		}
 		while (output[i] && ft_strcmp(output[i], "|") != 0)
 		{
 			if (x == 0)
@@ -108,7 +123,9 @@ void	parse_and_exec(char	**output, char **env, int *exit_status)
 				{
 					print_error(COMMAND_NOT_FOUND, output[i], env);
 					exit_status[0] = 127;
-					return ;
+					free_that_matrice(output);
+					free_token_list(lst);
+					return (NULL);
 				}
 			}
 			else
@@ -117,10 +134,19 @@ void	parse_and_exec(char	**output, char **env, int *exit_status)
 			x++;
 		}
 		cmd[x] = NULL;
-		get_full_path(cmd[0]);
 		lst = add_token(lst, 0, 1, cmd);
 		i++;
 	}
+	return (lst);
+}
+
+void	parse_and_exec(char	**output, char **env, int *exit_status)
+{
+	t_token	*lst;
+
+	(void)env;
+	lst = NULL;
+	lst = build_lst(output, env, exit_status);
 	exec_cmd(lst, env);
 	free_that_matrice(output);
 	free_token_list(lst);
@@ -145,7 +171,6 @@ int	main(int ac, char **av, char **env)
 		add_history(command_line);
 		output = ft_split_input(command_line);
 		parse_and_exec(output, env, exit_status);
-		printf("exit status ->%d\n", exit_status[0]);
 	}
 	return (0);
 }
