@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 02:36:33 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/17 02:50:55 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/17 19:28:28 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,75 @@
 #include <sys/wait.h>
 #include <stdio.h>
 
-void	exec_cmd(char **cmd, char **env, int in, int out)
+#include "include/minishell.h"
+
+t_token	*create_token(int in_fd, int out_fd, char **cmd)
 {
-	if (fork() == 0)
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	new->cmd = cmd;
+	new->exec_name = cmd[0];
+	new->in_fd = in_fd;
+	new->out_fd = out_fd;
+	new->next = NULL;
+	return (new);
+}
+
+t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd)
+{
+	t_token	*tmp;
+	t_token	*new;
+
+	new = create_token(in_fd, out_fd, cmd);
+	if (!lst)
+		return (new);
+	tmp = lst;
+	while (lst->next)
+		lst = lst->next;
+	lst->next = new;
+	return (tmp);
+}
+
+void	exec_cmd(t_token *lst, char **env)
+{
+	int	status;
+	int	fd[2];
+	int	fd_in;
+
+	fd_in = 0;
+	while (lst)
 	{
-		if (in != -1)
-			dup2(in, STDIN_FILENO);
-		if (out != -1)
-			dup2(out, STDOUT_FILENO);
-		execve(cmd[0], cmd, env);
+		pipe(fd);
+		if (fork() == 0)
+		{
+			dup2(fd_in, STDIN_FILENO);
+			if (lst->next != NULL)
+				dup2(fd[1], STDOUT_FILENO);
+			close(fd[0]);
+			execve(lst->exec_name, lst->cmd, env);
+		}
+		else
+		{
+			wait(&status);
+			close(fd[1]);
+			fd_in = fd[0];
+		}
+		lst = lst->next;
 	}
 }
 
 int	main(int ac, char **av, char **env)
 {
-	char	*cmd[] = {"/bin/ls", "-l", 0};
-	char	*cmd2[] = {"/usr/bin/grep", "dr", 0};
-	char	*cmd3[] = {"/usr/bin/wc", "-l", 0};
-	int		fd[2];
-	int		fd2[2];
+	char	*ls[] = {"/bin/ls", "-l", 0};
+	char	*grep[] = {"/usr/bin/grep", "dr", 0};
+	char	*wc[] = {"/usr/bin/wc", "-l", 0};
+	t_token	*lst;
 
-	pipe(fd);
-	pipe(fd2);
-	exec_cmd(cmd, env, -1, fd[1]);
-	exec_cmd(cmd2, env, fd[0], -1);
-	// exec_cmd(cmd2, env, fd[0], fd2[1]);
-	// exec_cmd(cmd3, env, fd2[0], -1);
+	lst = NULL;
+	lst = add_token(lst, -1, 1, ls);
+	lst = add_token(lst, 1, 1, grep);
+	lst = add_token(lst, 1, 1, wc);
+	exec_cmd(lst, env);
 	return (0);
 }
