@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 02:36:33 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/17 19:28:28 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/17 19:31:10 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,16 @@ void	exec_cmd(t_token *lst, char **env)
 int	main(int ac, char **av, char **env)
 {
 	char	*ls[] = {"/bin/ls", "-l", 0};
-	char	*grep[] = {"/usr/bin/grep", "dr", 0};
-	char	*wc[] = {"/usr/bin/wc", "-l", 0};
+	char	*grep[] = {"/usr/bin/grep", "a", 0};
+	char	*wc[] = {"/usr/bin/wc", 0};
+	// char	*wc2[] = {"/usr/bin/wc", "-c", 0};
 	t_token	*lst;
 
 	lst = NULL;
 	lst = add_token(lst, -1, 1, ls);
 	lst = add_token(lst, 1, 1, grep);
 	lst = add_token(lst, 1, 1, wc);
+	// lst = add_token(lst, 1, 1, wc2);
 	exec_cmd(lst, env);
 	return (0);
 }
