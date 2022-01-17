@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/16 21:24:49 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/17 20:16:45 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
@@ -75,5 +76,8 @@ char	**ft_split_input(char *str);
 /* takes splitted input and replaces variable names by it's values */
 char	**ft_extend_vars(char **splitted);
 char	*get_bash_var(char *var_to_find, char **env);
+void	exec_cmd(t_token *lst, char **env);
+t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
+void	free_token_list(t_token *lst);
 
 #endif
