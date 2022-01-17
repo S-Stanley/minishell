@@ -3,7 +3,7 @@ ASAN = asan
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -g
-AFLAG = -fsanitize=address --fsanitize=leaks
+AFLAG = -fsanitize=address
 LIB = -lft -L$(LFT_DIR)
 INCL = -I$(HEAD_DIR) -I$(LFT_DIR)
 
@@ -16,7 +16,8 @@ HEAD = minishell.h
 HEADS = $(addprefix $(HEAD_DIR), $(HEAD))
 
 SRC_DIR = ./src/
-SRC =      main.c      splitter.c  variables.c
+SRC = main.c splitter.c extender.c
+#SRC = exec.c main.c splitter.c splitter_1.c variables.c ORIGINAL SRC
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJ_DIR = ./tmp/

@@ -10,109 +10,123 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+//#include <minishell.h>
+#include "../include/minishell.h"
 
-static int	is_whitespace(char c)
+static int	check_handle_quotes(char **s)
 {
-	if (c == ' ' || (c >= 9 && c <= 12))
-		return (1);
-	return (0);
-}
-
-static void	check_handle_quotes(int *sin_q, int *doub_q, char c)
-{
-	if (c == '\'' && !(*sin_q))
-		*sin_q = 1;
-	else if (c == '\'' && *sin_q)
-		*sin_q = 0;
-	else if (c == '\"' && !(*doub_q))
-		*doub_q = 1;
-	else if (c == '\"' && *doub_q)
-		*doub_q = 0;
+	if (*(*s) == '\'')
+	{
+		(*s)++;
+		while (*(*s) && *(*s) != '\'')
+			(*s)++;
+		if (!*(*s))
+			return (1); // particular quote is not closed
+	}
+	else if (*(*s) == '\"')
+	{
+		(*s)++;
+		while (*(*s) && *(*s) != '\"')
+			(*s)++;
+		if (!*(*s))
+			return (1); // particular quote is not closed
+	}
+	return (0); // We've hound the closing quote
 }
 
 static int	wcount(char *s)
 {
 	int	w;
-	int	in_sin_q;
-	int	in_doub_q;
 
 	w = 0;
-	in_sin_q = 0;
-	in_doub_q = 0;
 	while (*s)
 	{
-		while (*s && is_whitespace(*s))
+		while (*s && (*s == ' ' || (*s >= 9 && *s <= 12)))
 			s++;
-		if (*s && !is_whitespace(*s))
+		if (*s && !(*s == ' ' || (*s >= 9 && *s <= 12)))
 		{
 			w++;
-			check_handle_quotes(&in_sin_q, &in_doub_q, *s);
-			while (*s && (!is_whitespace(*s) || in_sin_q || in_doub_q))
+			if (check_handle_quotes(&s))
+				return (-1);
+			while (*s && !(*s == ' ' || (*s >= 9 && *s <= 12)))
 			{
-				check_handle_quotes(&in_sin_q, &in_doub_q, *s);
 				s++;
+				if (check_handle_quotes(&s))
+					return (-1);
 			}
 		}
 	}
 	return (w);
 }
 
-// static char	*allocate(char *s)
-// {
-// 	char	*word;
-// 	int		chars;
-
-// 	chars = 0;
-// 	while (s[chars] && !is_whitespace(s[chars]))
-// 		chars++;
-// 	word = malloc(sizeof(char) * (chars + 1));
-// 	if (!word)
-// 		return (NULL);
-// 	word[chars--] = '\0';
-// 	while (chars >= 0)
-// 	{
-// 		word[chars] = s[chars];
-// 		chars--;
-// 	}
-// 	return (word);
-// }
-
-char	**split_spaces(char *st)
+static int	get_word_length(char *s)
 {
-	// char	**table;
-	int		wc;
-	// int		i;
+	int	chars;
 
-	// i = 0;
-	(void)st;
-	wc = wcount(st);
-	printf("%d\n", wc);
-	// table = malloc(sizeof(char *) * (wc + 1));
-	// if (table)
-	// {
-	// 	while (*st && i < wc)
-	// 	{
-	// 		while (*st && is_whitespace(*st))
-	// 			st++;
-	// 		if (*st && !is_whitespace(*st))
-	// 		{
-	// 			table[i++] = allocate(st);
-	// 			while (*st && !is_whitespace(*st))
-	// 				st++;
-	// 		}
-	// 	}
-	// 	table[i] = NULL;
-	// }
-	// return (table);
-	return NULL;
+	chars = 0;
+	while (s[chars] &&
+			!(s[chars] == ' ' || (s[chars] >= 9 && s[chars] <= 12)))
+	{
+		if (s[chars] == '\'')
+		{
+			chars++;
+			while (s[chars] != '\'')
+				chars++;
+		}
+		else if (s[chars] == '\"')
+		{
+			chars++;
+			while (s[chars] != '\"')
+				chars++;
+		}
+		chars++;
+	}
+	return (chars);
 }
 
-char	**ft_split_input(char *str)
+static char	*allocate(char **str)
 {
-	char	**splitted;
+ 	char	*word;
+ 	int		chars;
+	char	*s;
 
-	splitted = split_spaces(str);
+ 	chars = 0;
+	s = *str;
+	chars = get_word_length(s);
+ 	word = malloc(sizeof(char) * (chars + 1));
+ 	if (!word)
+ 		return (NULL);
+	(*str) += chars;
+ 	word[chars--] = '\0';
+ 	while (chars >= 0)
+ 	{
+ 		word[chars] = s[chars];
+ 		chars--;
+ 	}
+ 	return (word);
+}
 
-	return (splitted);
+char	**ft_split_input(char *st)
+{
+	char	**table;
+	int		wc;
+	int		i;
+
+	i = 0;
+	wc = wcount(st);
+	if (wc == -1)
+		return (NULL);
+	table = malloc(sizeof(char *) * (wc + 1));
+	if (table)
+	{
+		while (*st && i < wc)
+		{
+			while (*st && (*st == ' ' || (*st >= 9 && *st <= 12)))
+				st++;
+			if (*st && !(*st == ' ' || (*st >= 9 && *st <= 12)))
+				table[i++] = allocate(&st);
+		}
+		table[i] = NULL;
+	}
+	return (table);
 }
