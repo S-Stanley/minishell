@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 02:36:33 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/17 19:31:10 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/17 19:45:56 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,25 @@
 #include <stdio.h>
 
 #include "include/minishell.h"
+
+int	is_builtin(char *exec_name)
+{
+	return (0);
+}
+
+void	free_token_list(t_token *lst)
+{
+	t_token	*tmp;	
+
+	if (!lst)
+		return ;
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst);
+		lst = tmp;
+	}
+}
 
 t_token	*create_token(int in_fd, int out_fd, char **cmd)
 {
@@ -86,5 +105,6 @@ int	main(int ac, char **av, char **env)
 	lst = add_token(lst, 1, 1, wc);
 	// lst = add_token(lst, 1, 1, wc2);
 	exec_cmd(lst, env);
+	free_token_list(lst);
 	return (0);
 }
