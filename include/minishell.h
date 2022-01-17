@@ -53,11 +53,11 @@ struct s_prompt
 /*
  *	Structure to hold command token
  *	> array of strings representing the executable name, arguments, etc, like argv
-	> name of executable
-	> Bool value is builtin or not
+ *	> name of executable
+ *	> Bool value is builtin or not
  *	> input file descriptor
  *	> output file descriptor
-	> pointer to the next token
+ *	> pointer to the next token
  */
 
 struct s_token
@@ -70,7 +70,10 @@ struct s_token
 	t_token	*next;
 };
 
+/* Splits input by quotes and whitespaces, returns allocated char[][], or NULL, if quote expression is wrong */
 char	**ft_split_input(char *str);
+/* takes splitted input and replaces variable names by it's values */
+char	**ft_extend_vars(char **splitted);
 char	*get_bash_var(char *var_to_find, char **env);
 
 #endif
