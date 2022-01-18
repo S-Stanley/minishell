@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/18 00:46:35 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:08:15 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,30 @@ char	*get_full_path(char *cmd)
 	return (NULL);
 }
 
+t_token	*free_build_list(char **output, t_token *lst)
+{
+	free_that_matrice(output);
+	free_token_list(lst);
+	return (NULL);
+}
+
+char	*test(char **cmd, int x, char **output, int i, char **env, int *exit_status)
+{
+	if (x == 0)
+	{
+		cmd[x] = get_full_path(output[i]);
+		if (!cmd[x])
+		{
+			print_error(COMMAND_NOT_FOUND, output[i], env);
+			exit_status[0] = 127;
+			return (NULL);
+		}
+	}
+	else
+		cmd[x] = output[i];
+	return (cmd[x]);
+}
+
 t_token	*build_lst(char	**output, char **env, int *exit_status)
 {
 	t_token	*lst;
@@ -102,40 +126,24 @@ t_token	*build_lst(char	**output, char **env, int *exit_status)
 	int		x;
 	char	**cmd;
 
-	i = 0;
+	i = -1;
 	lst = NULL;
-	while (i < ft_len_matrice(output))
+	while (++i < ft_len_matrice(output))
 	{
 		x = 0;
 		cmd = malloc(sizeof(char *) * count_next_stop(output, i));
 		if (!cmd)
-		{
-			free_that_matrice(output);
-			free_token_list(lst);
-			return (NULL);
-		}
+			return (free_build_list(output, lst));
 		while (output[i] && ft_strcmp(output[i], "|") != 0)
 		{
-			if (x == 0)
-			{
-				cmd[x] = get_full_path(output[i]);
-				if (!cmd[x])
-				{
-					print_error(COMMAND_NOT_FOUND, output[i], env);
-					exit_status[0] = 127;
-					free_that_matrice(output);
-					free_token_list(lst);
-					return (NULL);
-				}
-			}
-			else
-				cmd[x] = output[i];
+			cmd[x] = test(cmd, x, output, i, env, exit_status);
+			if (!cmd)
+				return (free_build_list(output, lst));
 			i++;
 			x++;
 		}
 		cmd[x] = NULL;
 		lst = add_token(lst, 0, 1, cmd);
-		i++;
 	}
 	return (lst);
 }
