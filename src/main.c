@@ -6,159 +6,11 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:08:15 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:38:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	print_error(int code, char *value, char **env)
-{
-	char	*shell_path;
-	char	*shell;
-
-	shell_path = get_bash_var("$SHELL", env);
-	if (shell_path)
-		shell = ft_strtrim(shell_path, "/bin/");
-	else
-		shell = ft_strdup("");
-	if (code == 0)
-		printf("%s: %s: command not found\n", shell, value);
-	free(shell_path);
-	free(shell);
-}
-
-int	ft_len_matrice(char **matrice)
-{
-	int		i;
-
-	i = 0;
-	if (!matrice)
-		return (0);
-	while (matrice[i])
-		i++;
-	return (i);
-}
-
-int	count_next_stop(char **output, int i)
-{
-	int		count;
-
-	count = 0;
-	while (i < ft_len_matrice(output) && ft_strcmp(output[i], "|") != 0)
-	{
-		count++;
-		i++;
-	}
-	return (count + 1);
-}
-
-char	*find_cmd_in_path(char **path, char *cmd)
-{
-	int		i;
-	char	*full_path;
-	char	*path_with_slash;
-
-	i = 0;
-	while (path[i])
-	{
-		path_with_slash = ft_strjoin(path[i], "/");
-		full_path = ft_strjoin(path_with_slash, cmd);
-		free(path_with_slash);
-		if (access(full_path, X_OK) == 0)
-		{
-			free_that_matrice(path);
-			return (full_path);
-		}
-		free(full_path);
-		i++;
-	}
-	return (NULL);
-}
-
-char	*get_full_path(char *cmd)
-{
-	char	**path;
-	char	*path_env;
-	char	*res;
-
-	path_env = getenv("PATH");
-	if (!path_env)
-		return (NULL);
-	path = ft_split(path_env, ':');
-	if (!path)
-		return (NULL);
-	res = find_cmd_in_path(path, cmd);
-	if (res)
-		return (res);
-	free_that_matrice(path);
-	return (NULL);
-}
-
-t_token	*free_build_list(char **output, t_token *lst)
-{
-	free_that_matrice(output);
-	free_token_list(lst);
-	return (NULL);
-}
-
-char	*test(char **cmd, int x, char **output, int i, char **env, int *exit_status)
-{
-	if (x == 0)
-	{
-		cmd[x] = get_full_path(output[i]);
-		if (!cmd[x])
-		{
-			print_error(COMMAND_NOT_FOUND, output[i], env);
-			exit_status[0] = 127;
-			return (NULL);
-		}
-	}
-	else
-		cmd[x] = output[i];
-	return (cmd[x]);
-}
-
-t_token	*build_lst(char	**output, char **env, int *exit_status)
-{
-	t_token	*lst;
-	int		i;
-	int		x;
-	char	**cmd;
-
-	i = -1;
-	lst = NULL;
-	while (++i < ft_len_matrice(output))
-	{
-		x = 0;
-		cmd = malloc(sizeof(char *) * count_next_stop(output, i));
-		if (!cmd)
-			return (free_build_list(output, lst));
-		while (output[i] && ft_strcmp(output[i], "|") != 0)
-		{
-			cmd[x] = test(cmd, x, output, i, env, exit_status);
-			if (!cmd)
-				return (free_build_list(output, lst));
-			i++;
-			x++;
-		}
-		cmd[x] = NULL;
-		lst = add_token(lst, 0, 1, cmd);
-	}
-	return (lst);
-}
-
-void	parse_and_exec(char	**output, char **env, int *exit_status)
-{
-	t_token	*lst;
-
-	(void)env;
-	lst = NULL;
-	lst = build_lst(output, env, exit_status);
-	exec_cmd(lst, env);
-	free_that_matrice(output);
-	free_token_list(lst);
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -179,6 +31,7 @@ int	main(int ac, char **av, char **env)
 		add_history(command_line);
 		output = ft_split_input(command_line);
 		parse_and_exec(output, env, exit_status);
+		printf("%d\n", exit_status[0]);
 	}
 	return (0);
 }
@@ -236,4 +89,3 @@ if (full_path)
 execve(cmd[0], cmd, env);
 
 */
-

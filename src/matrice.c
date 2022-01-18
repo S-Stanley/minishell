@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   matrice.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 01:13:15 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:35:57 by sserbin          ###   ########.fr       */
+/*   Created: 2022/01/18 01:09:43 by sserbin           #+#    #+#             */
+/*   Updated: 2022/01/18 01:09:45 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-
-char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status)
+int	ft_len_matrice(char **matrice)
 {
-	if (x == 0)
-	{
-		cmd[x] = get_full_path(output);
-		if (!cmd[x])
-		{
-			print_error(COMMAND_NOT_FOUND, output, exit_status);
-			return (NULL);
-		}
-	}
-	else
-		cmd[x] = output;
-	return (cmd[x]);
+	int		i;
+
+	i = 0;
+	if (!matrice)
+		return (0);
+	while (matrice[i])
+		i++;
+	return (i);
 }

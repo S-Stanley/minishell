@@ -5,25 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 01:13:15 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:35:57 by sserbin          ###   ########.fr       */
+/*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
+/*   Updated: 2022/01/18 01:13:05 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status)
+void	exec_cmd(t_token *lst, char **env)
 {
-	if (x == 0)
+	int	status;
+	int	fd[2];
+	int	fd_in;
+
+	fd_in = 0;
+	while (lst)
 	{
-		cmd[x] = get_full_path(output);
-		if (!cmd[x])
+		pipe(fd);
+		if (fork() == 0)
 		{
-			print_error(COMMAND_NOT_FOUND, output, exit_status);
-			return (NULL);
+			dup2(fd_in, STDIN_FILENO);
+			if (lst->next != NULL)
+				dup2(fd[1], STDOUT_FILENO);
+			close(fd[0]);
+			execve(lst->exec_name, lst->cmd, env);
 		}
+		else
+		{
+			wait(&status);
+			close(fd[1]);
+			fd_in = fd[0];
+		}
+		lst = lst->next;
 	}
-	else
-		cmd[x] = output;
-	return (cmd[x]);
 }

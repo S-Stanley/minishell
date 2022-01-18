@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:28:04 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/17 20:49:58 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:15:13 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static int	get_word_length(char *s)
 	int	chars;
 
 	chars = 0;
-	while (s[chars] &&
-			!(s[chars] == ' ' || (s[chars] >= 9 && s[chars] <= 12)))
+	while (s[chars] && !(s[chars] == ' ' || (s[chars] >= 9 && s[chars] <= 12)))
 	{
 		if (s[chars] == '\'')
 		{

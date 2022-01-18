@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/17 22:02:33 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:36:06 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,10 @@ char	*get_bash_var(char *var_to_find, char **env);
 void	exec_cmd(t_token *lst, char **env);
 t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
 void	free_token_list(t_token *lst);
+void	parse_and_exec(char	**output, char **env, int *exit_status);
+char	*get_full_path(char *cmd);
+void	print_error(int code, char *value, int *exit_status);
+int		ft_len_matrice(char **matrice);
+char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status);
 
 #endif
