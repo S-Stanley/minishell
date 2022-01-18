@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:14 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 20:34:19 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 20:47:15 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ t_token	*free_build_list(char **output, t_token *lst)
 	return (NULL);
 }
 
-int	get_fd(char *filename)
+int	get_fd(char *filename, int std)
 {
 	int	fd;
 
 	if (!filename)
-		return (0);
-	fd = open(filename, O_RDONLY);
+		return (std);
+	fd = open(filename, O_RDWR | O_CREAT, 0777);
 	if (fd == -1)
 	{
 		close(fd);
-		return (0);
+		return (std);
 	}
 	return (fd);
 }
@@ -55,10 +55,24 @@ int	find_stdin(char *cmd_line, char *next_cmd_line)
 	while (cmd_line[i])
 	{
 		if (cmd_line[i] == '<')
-			return (get_fd(next_cmd_line));
+			return (get_fd(next_cmd_line, 0));
 		i++;
 	}
 	return (0);
+}
+
+int	find_stdout(char *cmd_line, char *next_cmd_line)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_line[i])
+	{
+		if (cmd_line[i] == '>')
+			return (get_fd(next_cmd_line, 1));
+		i++;
+	}
+	return (1);
 }
 
 t_token	*build_lst(char	**output, int *exit_status)
@@ -68,10 +82,12 @@ t_token	*build_lst(char	**output, int *exit_status)
 	int		x;
 	char	**cmd;
 	int		fd_in;
+	int		fd_out;
 
 	i = -1;
 	lst = NULL;
 	fd_in = 0;
+	fd_out = 1;
 	while (++i < ft_len_matrice(output))
 	{
 		x = 0;
@@ -82,7 +98,16 @@ t_token	*build_lst(char	**output, int *exit_status)
 		{
 			if (fd_in == 0)
 				fd_in = find_stdin(output[i], output[i + 1]);
+			if (fd_out == 1)
+				fd_out = find_stdout(output[i], output[i + 1]);
 			if (ft_strcmp(output[i], "<") == 0)
+			{
+				i++;
+				while (output[i] && ft_strcmp(output[i], "|") != 0)
+					i++;
+				break ;
+			}
+			if (ft_strcmp(output[i], ">") == 0)
 			{
 				i++;
 				while (output[i] && ft_strcmp(output[i], "|") != 0)
@@ -96,7 +121,7 @@ t_token	*build_lst(char	**output, int *exit_status)
 			x++;
 		}
 		cmd[x] = NULL;
-		lst = add_token(lst, fd_in, 1, cmd);
+		lst = add_token(lst, fd_in, fd_out, cmd);
 		fd_in = 0;
 	}
 	return (lst);
