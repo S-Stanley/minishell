@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:14 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 20:47:15 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 20:55:32 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,16 @@ t_token	*free_build_list(char **output, t_token *lst)
 	return (NULL);
 }
 
-int	get_fd(char *filename, int std)
+int	get_fd(char *filename, int append, int std)
 {
 	int	fd;
 
 	if (!filename)
 		return (std);
-	fd = open(filename, O_RDWR | O_CREAT, 0777);
+	if (append)
+		fd = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+	else
+		fd = open(filename, O_RDWR | O_CREAT, 0777);
 	if (fd == -1)
 	{
 		close(fd);
@@ -49,29 +52,19 @@ int	get_fd(char *filename, int std)
 
 int	find_stdin(char *cmd_line, char *next_cmd_line)
 {
-	int	i;
-
-	i = 0;
-	while (cmd_line[i])
-	{
-		if (cmd_line[i] == '<')
-			return (get_fd(next_cmd_line, 0));
-		i++;
-	}
+	if (ft_strcmp(cmd_line, "<") == 0)
+		return (get_fd(next_cmd_line, 0, 0));
+	if (ft_strcmp(cmd_line, "<<") == 0)
+		return (get_fd(next_cmd_line, 1, 0));	
 	return (0);
 }
 
 int	find_stdout(char *cmd_line, char *next_cmd_line)
 {
-	int	i;
-
-	i = 0;
-	while (cmd_line[i])
-	{
-		if (cmd_line[i] == '>')
-			return (get_fd(next_cmd_line, 1));
-		i++;
-	}
+	if (ft_strcmp(cmd_line, ">") == 0)
+		return (get_fd(next_cmd_line, 0, 1));
+	if (ft_strcmp(cmd_line, ">>") == 0)
+		return (get_fd(next_cmd_line, 1, 1));
 	return (1);
 }
 
@@ -100,14 +93,14 @@ t_token	*build_lst(char	**output, int *exit_status)
 				fd_in = find_stdin(output[i], output[i + 1]);
 			if (fd_out == 1)
 				fd_out = find_stdout(output[i], output[i + 1]);
-			if (ft_strcmp(output[i], "<") == 0)
+			if (ft_strcmp(output[i], "<") == 0 || ft_strcmp(output[i], "<<") == 0)
 			{
 				i++;
 				while (output[i] && ft_strcmp(output[i], "|") != 0)
 					i++;
 				break ;
 			}
-			if (ft_strcmp(output[i], ">") == 0)
+			if (ft_strcmp(output[i], ">") == 0 || ft_strcmp(output[i], ">>") == 0)
 			{
 				i++;
 				while (output[i] && ft_strcmp(output[i], "|") != 0)
