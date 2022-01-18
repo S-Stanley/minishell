@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:14 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 20:55:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 23:07:43 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,41 @@ int	get_fd(char *filename, int append, int std)
 	return (fd);
 }
 
+int	read_from_stdin(void)
+{
+	int		reading;
+	char	*buffer;
+	int		fd_to_write;
+
+	fd_to_write = open("/tmp/.listen-stdin", O_RDWR | O_CREAT, 0777);
+	while (1)
+	{
+		buffer = malloc(sizeof(char) * 100);
+		reading = read(0, buffer, 99);
+		buffer[reading] = 0;
+		printf("%s\n", buffer);
+		if (ft_strcmp(buffer, "fin du fichier\n") == 0
+			|| ft_strcmp(buffer, "fin du fichier") == 0)
+		{
+			printf("Stopping to read\n");
+			write(fd_to_write, buffer, ft_strlen(buffer));
+			close(fd_to_write);
+			free(buffer);
+			break ;
+		}
+		free(buffer);
+	}
+	return (get_fd("/tmp/.listen-stdin", 0, 0));
+}
+
 int	find_stdin(char *cmd_line, char *next_cmd_line)
 {
 	if (ft_strcmp(cmd_line, "<") == 0)
 		return (get_fd(next_cmd_line, 0, 0));
 	if (ft_strcmp(cmd_line, "<<") == 0)
-		return (get_fd(next_cmd_line, 1, 0));	
+	{
+		return (read_from_stdin());
+	}
 	return (0);
 }
 
