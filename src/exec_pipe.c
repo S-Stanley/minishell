@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:13:05 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 20:33:59 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec_cmd(t_token *lst, char **env)
 	int	fd[2];
 	int	fd_in;
 
-	fd_in = 0;
+	fd_in = lst->in_fd;
 	while (lst)
 	{
 		pipe(fd);
@@ -34,7 +34,12 @@ void	exec_cmd(t_token *lst, char **env)
 		{
 			wait(&status);
 			close(fd[1]);
-			fd_in = fd[0];
+			if (fd_in != 0)
+				close(fd_in);
+			if (lst->in_fd)
+				fd_in = lst->in_fd;
+			else
+				fd_in = fd[0];
 		}
 		lst = lst->next;
 	}

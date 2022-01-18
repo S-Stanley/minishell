@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:36:06 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 20:06:05 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+# include <fcntl.h>
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
