@@ -75,10 +75,10 @@ struct s_token
 	t_token	*next;
 };
 
-/* Splits input by quotes and whitespaces, returns allocated char[][], or NULL, if quote expression is wrong */
+/* Splits input by quotes  and whitespaces, returns allocated char[][], or NULL, if quote expression is wrong */
 char	**ft_split_input(char *str);
-/* takes splitted input and replaces variable names by it's values */
-char	**ft_extend_vars(char **splitted);
+/* takes splitted (not NULL) input and replaces variable names by it's values */
+char	**ft_extend_vars(char **splitted, char **env);
 char	*get_bash_var(char *var_to_find, char **env);
 void	exec_cmd(t_token *lst, char **env, int *exit_status);
 t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);

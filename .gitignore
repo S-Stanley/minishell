@@ -8,3 +8,4 @@ a.out
 minishell
 *.json
 .DS_Store
+test/
