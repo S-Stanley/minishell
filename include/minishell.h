@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/16 21:24:49 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 20:06:05 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,17 @@
 # define CYAN		"\x1b[36m"
 # define RESET		"\x1b[0m"
 
+# define COMMAND_NOT_FOUND	0
+
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
+# include <stdbool.h>
+# include <fcntl.h>
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
@@ -75,5 +80,13 @@ char	**ft_split_input(char *str);
 /* takes splitted (not NULL) input and replaces variable names by it's values */
 char	**ft_extend_vars(char **splitted, char **env);
 char	*get_bash_var(char *var_to_find, char **env);
+void	exec_cmd(t_token *lst, char **env);
+t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
+void	free_token_list(t_token *lst);
+void	parse_and_exec(char	**output, char **env, int *exit_status);
+char	*get_full_path(char *cmd);
+void	print_error(int code, char *value, int *exit_status);
+int		ft_len_matrice(char **matrice);
+char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status);
 
 #endif

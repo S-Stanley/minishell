@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:28:04 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/16 21:36:40 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/18 01:15:13 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static int	get_word_length(char *s)
 	int	chars;
 
 	chars = 0;
-	while (s[chars] &&
-			!(s[chars] == ' ' || (s[chars] >= 9 && s[chars] <= 12)))
+	while (s[chars] && !(s[chars] == ' ' || (s[chars] >= 9 && s[chars] <= 12)))
 	{
 		if (s[chars] == '\'')
 		{
@@ -86,24 +85,24 @@ static int	get_word_length(char *s)
 
 static char	*allocate(char **str)
 {
- 	char	*word;
- 	int		chars;
+	char	*word;
+	int		chars;
 	char	*s;
 
- 	chars = 0;
+	chars = 0;
 	s = *str;
 	chars = get_word_length(s);
- 	word = malloc(sizeof(char) * (chars + 1));
- 	if (!word)
- 		return (NULL);
+	word = malloc(sizeof(char) * (chars + 1));
+	if (!word)
+		return (NULL);
 	(*str) += chars;
- 	word[chars--] = '\0';
- 	while (chars >= 0)
- 	{
- 		word[chars] = s[chars];
- 		chars--;
- 	}
- 	return (word);
+	word[chars--] = '\0';
+	while (chars >= 0)
+	{
+		word[chars] = s[chars];
+		chars--;
+	}
+	return (word);
 }
 
 char	**ft_split_input(char *st)
