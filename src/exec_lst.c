@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:14 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/19 22:25:14 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/19 22:52:06 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	parse_and_exec(char	**output, char **env, int *exit_status)
 	lst = build_lst(output, exit_status);
 	if (!lst)
 		return ;
-	exec_cmd(lst, env);
+	exec_cmd(lst, env, exit_status);
 	free_that_matrice(output);
 	free_token_list(lst);
 }

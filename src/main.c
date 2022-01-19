@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/19 00:27:27 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/19 22:47:38 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,16 @@ int	main(int ac, char **av, char **env)
 	exit_status = malloc(sizeof(int));
 	if (!exit_status)
 		return (0);
-	exit_status[0] = 0;
 	while (1)
 	{
+		exit_status[0] = 0;
 		command_line = readline("> ");
 		add_history(command_line);
 		output = ft_split_input(command_line);
 		if (ft_len_matrice(output) == 1 && ft_strcmp(output[0], "exit") == 0)
 			break ;
 		parse_and_exec(output, env, exit_status);
+		printf("exit_status %d\n", exit_status[0]);
 	}
 	return (0);
 }

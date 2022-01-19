@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/18 20:06:05 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/19 22:53:29 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**ft_split_input(char *str);
 /* takes splitted input and replaces variable names by it's values */
 char	**ft_extend_vars(char **splitted);
 char	*get_bash_var(char *var_to_find, char **env);
-void	exec_cmd(t_token *lst, char **env);
+void	exec_cmd(t_token *lst, char **env, int *exit_status);
 t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
 void	free_token_list(t_token *lst);
 void	parse_and_exec(char	**output, char **env, int *exit_status);

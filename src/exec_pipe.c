@@ -6,13 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 23:14:28 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 00:23:15 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exec_cmd(t_token *lst, char **env)
+void	exec_cmd(t_token *lst, char **env, int *exit_status)
 {
 	int	status;
 	int	fd[2];
@@ -37,6 +37,10 @@ void	exec_cmd(t_token *lst, char **env)
 		else
 		{
 			wait(&status);
+			if (status == 512)
+				exit_status[0] = 2;
+			if (status == 256)
+				exit_status[0] = 1;
 			close(fd[1]);
 			if (fd_in != 0)
 				close(fd_in);
