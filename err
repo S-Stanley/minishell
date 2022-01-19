@@ -1,0 +1,21 @@
+==46542== Memcheck, a memory error detector
+==46542== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==46542== Using Valgrind-3.18.0.GIT-lbmacos and LibVEX; rerun with -h for copyright info
+==46542== Command: ./minishell
+==46542== 
+--46542-- run: /usr/bin/dsymutil "./minishell"
+==46542== 
+==46542== HEAP SUMMARY:
+==46542==     in use at exit: 35,516 bytes in 169 blocks
+==46542==   total heap usage: 2,301 allocs, 2,132 frees, 80,160 bytes allocated
+==46542== 
+==46542== LEAK SUMMARY:
+==46542==    definitely lost: 21,352 bytes in 64 blocks
+==46542==    indirectly lost: 1,214 bytes in 24 blocks
+==46542==      possibly lost: 8,840 bytes in 7 blocks
+==46542==    still reachable: 4,110 bytes in 74 blocks
+==46542==         suppressed: 0 bytes in 0 blocks
+==46542== Rerun with --leak-check=full to see details of leaked memory
+==46542== 
+==46542== For lists of detected and suppressed errors, rerun with: -s
+==46542== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 401 from 7)

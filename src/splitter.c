@@ -114,8 +114,6 @@ char	**ft_split_input(char *st)
 
 	i = 0;
 	wc = wcount(st);
-	if (wc == -1)
-		return (NULL);
 	table = malloc(sizeof(char *) * (wc + 1));
 	if (table)
 	{

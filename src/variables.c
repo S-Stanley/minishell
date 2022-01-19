@@ -22,7 +22,7 @@
 	3. Go thought the env, split by = and check if the name is exact
 	4. If it's find it, return it, else if just return an empty string
 */
-
+// TODO if given "$$" should return PID and if "$?" - last return value
 char	*get_bash_var(char *var_to_find, char **env)
 {
 	unsigned int	i;
@@ -30,13 +30,14 @@ char	*get_bash_var(char *var_to_find, char **env)
 	char			**env_var;
 	char			*to_return;
 
-	if (!env)
+	if (!env || var_to_find[1] == '$' || var_to_find[1] == '?')
 		return (ft_strdup(""));
 	var_name = ft_strtrim(var_to_find, "$");
 	i = 0;
 	while (env[i])
 	{
 		env_var = ft_split(env[i], '=');
+//		printf("\nenv_var =  %s \n var_name = %s\n", env_var[0], var_name);
 		if (ft_strcmp(env_var[0], var_name) == 0)
 		{
 			to_return = ft_strdup(env_var[1]);

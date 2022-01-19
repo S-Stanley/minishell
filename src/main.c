@@ -20,21 +20,154 @@ int	main(int ac, char **av, char **env)
 	//t_prompt	prompt;
 	
 	char		*input_example;//
-	char		**output_example;//
-	int i = 0;
+	char		**expanded;//
+	int			i;
 
-	(void)env;
-	(void)ac;
 	(void)av;
+	(void)ac;
 
-	input_example = "echo \"hello      there\" how are 'you 'doing? $USER |wc -l >outfile";
-	output_example = ft_split_input(input_example);
-	while (output_example[i])
+	input_example = "echo $HOME \"hello      there\" how are 'you 'doing? $USER |wc -l >outfile";
+	expanded = ft_split_input(input_example);
+	ft_extend_vars(expanded, env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
 	{
-		printf("%s\n", output_example[i]);
+		printf("s:\t%s\n", expanded[i]);
+		fflush(stdout);
 		i++;
 	}
-
+	free_that_matrice(expanded);
+	input_example = " $USER \"$USER\" '$USER' zz$USER 'zz$USER' \"zz$USER\" ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = " $USERff \"$USERff\" '$USERff' zz$USERff 'zz$USERff' \"zz$USERff\" ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "12$USER34 \"12$USER34\" '12$USER34' ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "12$USER34$HOME56 \"12$USER34$HOME56\" '12$USER34$HOME56' ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "12$USER 34$HOME 56 \"12$USER 34$HOME 56\" '12$USER 34$HOME 56' ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = " $USER ff \"$USER ff\" '$USER ff' zz $USER ff 'zz $USER ff' \"zz $USER ff\" ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "12$3USER4 \"12$3USER4\" '12$3USER4'";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "12$U3SER4$HOME56 \"12$U3SER4$HOME56\" '12$U3SER4$HOME56' ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "12$U3SER4$H5OME6 \"12$U3SER4$H5OME6\" '12$U3SER4$H5OME6' ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "12$USER-34$H5OME6 \"12$USER-34$H5OME6\" '12$USER-34$H5OME6' ";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "\"\"\"\"";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
+	input_example = "\'\'\'\'";
+	expanded = ft_extend_vars(ft_split_input(input_example), env);
+	i = 0;
+	printf("input = %s\n", input_example);
+	while (expanded[i])
+	{
+		printf("s:\t%s\n", expanded[i]);
+		i++;
+	}
+	free_that_matrice(expanded);
 
 	// prompt.first_token = NULL;
 	// prompt.env = env;
