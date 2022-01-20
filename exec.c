@@ -6,21 +6,25 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 02:07:00 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:33:23 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct s_lst {
 	int		fd_in;
 	int		fd_out;
 	char	**full_cmd;
+	void	*next;
 }	t_lst;
 
 t_lst	*create_lst(char **cmd, int *redirections)
 {
 	t_lst	*new;
 
-	new = malloc(sizeof(lst));
+	new = malloc(sizeof(t_lst));
 	if (!new)
 		return (NULL);
 	new->fd_in = redirections[0];
