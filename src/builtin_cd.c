@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 00:47:48 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 01:02:12 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 01:16:30 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int ac, char **av)
 	char	*buffer;
 
 	buffer = NULL;
+	if (ac != 2)
+		return (0);
 	printf("Current directory: %s\n", getcwd(buffer, 0));
 	free(buffer);
 	printf("%d\n", builtin_cd(av[1]));

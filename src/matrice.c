@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:09:45 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 01:08:40 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,16 @@ int	ft_len_matrice(char **matrice)
 	while (matrice[i])
 		i++;
 	return (i);
+}
+
+void	read_that_matrice(char **matrice)
+{
+	int	i;
+
+	i = 0;
+	while (matrice[i])
+	{
+		printf("%s\n", matrice[i]);
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:38 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/19 22:47:07 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 01:23:46 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*get_full_path(char *cmd)
 	if (!path)
 		return (NULL);
 	res = find_cmd_in_path(path, cmd);
-	printf("res->%s\n", res);
 	if (res)
 		return (res);
 	free_that_matrice(path);

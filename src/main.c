@@ -6,23 +6,11 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/19 22:47:38 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 01:08:57 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	read_that_matrice(char **matrice)
-{
-	int	i;
-
-	i = 0;
-	while (matrice[i])
-	{
-		printf("%s\n", matrice[i]);
-		i++;
-	}
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -45,7 +33,6 @@ int	main(int ac, char **av, char **env)
 		if (ft_len_matrice(output) == 1 && ft_strcmp(output[0], "exit") == 0)
 			break ;
 		parse_and_exec(output, env, exit_status);
-		printf("exit_status %d\n", exit_status[0]);
 	}
 	return (0);
 }
