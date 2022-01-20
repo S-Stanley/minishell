@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 01:50:22 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 02:03:53 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,34 @@ t_lst	*build_lst(const char **cmd_line)
 
 	lst = NULL;
 	i = -1;
-	while (cmd_line[++i])
+	while (cmd_line[i])
 	{
 		lst = add_lst(lst, full_cmd(&cmd[i]), get_redirection(&cmd_line[i]));
+		if (!lst)
+			return (NULL);
 		while (cmd_line[i] && ft_strcmp(cmd_line[i], "|") != 0)
+			i++;
+		while (ft_strcmp(cmd_line[i], "|") == 0)
 			i++;
 	}
 	return (lst);
 }
 
-void	exec_cmd(void)
+bool	exec_cmd(void)
 {
-	return ;
+	return (true);
 }
 
-void	exec(char **cmd_line)
+bool	exec(char **cmd_line)
 {
 	t_lst	*lst;
 
 	lst = NULL;
 	lst = build_lst(lst, cmd_line);
+	if (!lst)
+		return (false);
 	exec_cmd(lst);
 	free(cmd_line);
 	free_that_matrice(lst);
+	return (true);
 }
