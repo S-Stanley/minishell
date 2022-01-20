@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 02:03:53 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 02:07:00 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ t_lst	*add_lst(t_lst *lst, char **cmd, int *redirections)
 	t_lst	*new;
 	t_lst	*tmp;
 
-	new = create_lst(redirections, args);
+	if (!cmd || !redirections)
+		return (lst);
+	new = create_lst(cmd, redirections);
 	if (!lst)
 		return (new);
 	tmp = lst;
@@ -43,6 +45,18 @@ t_lst	*add_lst(t_lst *lst, char **cmd, int *redirections)
 		lst = lst->next;
 	lst->next = new;
 	return (tmp);
+}
+
+char	**full_cmd(const char *str)
+{
+	(void)str;
+	return (NULL);
+}
+
+int	*get_redirection(const char *str)
+{
+	(void)str;
+	return (NULL);
 }
 
 t_lst	*build_lst(const char **cmd_line)
