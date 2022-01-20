@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 22:36:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 22:51:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 		if (fork() == 0)
 		{
 			dup2(fd_in, STDIN_FILENO);
-			// close(fd_in);
 			if (lst->out_fd != 1)
 			{
 				dup2(lst->out_fd, STDOUT_FILENO);
@@ -36,7 +35,7 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 			else if (lst->next != NULL)
 				dup2(fd[1], STDOUT_FILENO);
 			close(fd[0]);
-			execve(lst->exec_name, lst->cmd, env);
+			execve(lst->cmd[0], lst->cmd, env);
 		}
 		else
 		{
