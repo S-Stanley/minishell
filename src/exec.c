@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 23:07:31 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 23:22:57 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,6 @@ bool	exec(char **cmd_line, char **env, int *exit_status)
 	if (!lst)
 		return (false);
 	exec_cmd(lst, env, exit_status);
-	// free_that_matrice(cmd_line);
 	free_token_list(lst);
 	return (true);
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	char	*cmd[] = {"/usr/bin/ls", "-l", "|", "/usr/bin/wc", 0};
-// 	int		*exit_status;
-
-// 	exit_status = malloc(sizeof(int));
-// 	exit_status[0] = 0;
-// 	exec(cmd, env, exit_status);
-// 	return (0);
-// }

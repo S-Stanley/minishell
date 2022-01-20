@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/20 22:50:12 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 23:22:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		exec(output, env, exit_status);
 	}
+	free(exit_status);
 	return (0);
 }
 
