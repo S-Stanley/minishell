@@ -17,7 +17,7 @@ HEADS = $(addprefix $(HEAD_DIR), $(HEAD))
 
 SRC_DIR = ./src/
 SRC = main.c splitter.c extender.c token.c variables.c \
-	exec_pipe.c exec.c matrice.c print_error.c
+	exec_pipe.c exec.c matrice.c print_error.c exec_path.c
 	#exec_cmd.c exec_lst.c exec_path.c exec_pipe.c matrice.c print_error.c
 #SRC = exec.c main.c splitter.c splitter_1.c variables.c ORIGINAL SRC
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
