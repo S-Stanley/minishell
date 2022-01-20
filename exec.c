@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 20:57:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 21:27:44 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,29 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "include/libft.h"
+#include "include/minishell.h"
 
-typedef struct s_lst {
-	int		fd_in;
-	int		fd_out;
-	char	**full_cmd;
-	void	*next;
-}	t_lst;
-
-t_lst	*create_lst(char **cmd, int *redirections)
+t_token	*create_lst(char **cmd, int *redirections)
 {
-	t_lst	*new;
+	t_token	*new;
 
-	new = malloc(sizeof(t_lst));
+	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-	// new->fd_in = redirections[0];
-	// new->fd_out = redirections[1];
-	new->full_cmd = cmd;
+	new->in_fd = redirections[0];
+	new->out_fd = redirections[1];
+	new->cmd = cmd;
 	new->next = NULL;
 	return (new);
 }
 
-t_lst	*add_lst(t_lst *lst, char **cmd, int *redirections)
+t_token	*add_lst(t_token *lst, char **cmd, int *redirections)
 {
-	t_lst	*new;
-	t_lst	*tmp;
+	t_token	*new;
+	t_token	*tmp;
 
-	// if (!cmd || !redirections)
-	// 	return (lst);
+	if (!cmd || !redirections)
+		return (lst);
 	new = create_lst(cmd, redirections);
 	if (!lst)
 		return (new);
@@ -53,18 +47,81 @@ t_lst	*add_lst(t_lst *lst, char **cmd, int *redirections)
 	return (tmp);
 }
 
-char	**full_cmd(const char **str)
+char	**full_cmd(char **str)
 {
 	return ((char **)str);
 }
 
-int	*get_redirection(const char **str)
+int	get_fd(char *filename, int append, int std)
 {
-	(void)str;
-	return (NULL);
+	int	fd;
+
+	if (!filename)
+		return (std);
+	if (append)
+		fd = open(filename, O_RDWR | O_CREAT | O_APPEND, 0777);
+	else
+		fd = open(filename, O_RDWR | O_CREAT, 0777);
+	if (fd == -1)
+	{
+		close(fd);
+		return (std);
+	}
+	return (fd);
 }
 
-int	count_len_matrice(const char **matrice)
+int	read_from_stdin(char *next_cmd_line)
+{
+	int		reading;
+	char	*buffer;
+	int		fd_to_write;
+	char	*to_stop;
+
+	to_stop = ft_strjoin(next_cmd_line, "\n");
+	fd_to_write = open("/tmp/.listen-stdin", O_RDWR | O_CREAT, 0777);
+	while (1)
+	{
+		buffer = malloc(sizeof(char) * 100);
+		reading = read(0, buffer, 99);
+		buffer[reading] = 0;
+		if (ft_strcmp(buffer, to_stop) == 0)
+		{
+			free(to_stop);
+			write(fd_to_write, buffer, ft_strlen(buffer));
+			close(fd_to_write);
+			free(buffer);
+			break ;
+		}
+		free(buffer);
+	}
+	return (get_fd("/tmp/.listen-stdin", 0, 0));
+}
+
+int	*get_redirection(char **str)
+{
+	unsigned int	i;
+	int				*fd;
+
+	i = 0;
+	fd = malloc(sizeof(int) * 2);
+	fd[0] = 0;
+	fd[1] = 1;
+	while (str[i] && ft_strcmp(str[i], "|") != 0)
+	{
+		if (ft_strcmp(str[i], "<") == 0)
+			fd[0] = get_fd(str[i + 1], 0, 0);
+		if (ft_strcmp(str[i], "<<") == 0)
+			fd[0] = read_from_stdin(str[i + 1]);
+		if (ft_strcmp(str[i], ">") == 0)
+			fd[1] = get_fd(str[i + 1], 0, 1);
+		if (ft_strcmp(str[i], ">>") == 0)
+			fd[1] = get_fd(str[i + 1], 1, 1);
+		i++;
+	}
+	return (fd);
+}
+
+int	count_len_matrice(char **matrice)
 {
 	int		i;
 
@@ -76,10 +133,10 @@ int	count_len_matrice(const char **matrice)
 	return (i);
 }
 
-t_lst	*build_lst(const char **cmd_line)
+t_token	*build_lst(char **cmd_line)
 {
 	unsigned int	i;
-	t_lst			*lst;
+	t_token			*lst;
 	char			*ptr;
 
 	lst = NULL;
@@ -97,38 +154,41 @@ t_lst	*build_lst(const char **cmd_line)
 	return (lst);
 }
 
-bool	exec_cmd(t_lst *lst)
+// bool	exec_cmd(t_token *lst)
+// {
+// 	while (lst)
+// 	{
+// 		printf("%s\n", lst->full_cmd[0]);
+// 		lst = lst->next;
+// 	}
+// 	return (true);
+// }
+
+void	free_lst(t_token *lst)
 {
-	while (lst)
-	{
-		printf("%s\n", lst->full_cmd[0]);
-		lst = lst->next;
-	}
-	return (true);
 }
 
-void	free_lst(t_lst *lst)
+bool	exec(char **cmd_line, char **env, int *exit_status)
 {
-}
-
-bool	exec(char **cmd_line)
-{
-	t_lst	*lst;
+	t_token	*lst;
 
 	lst = NULL;
-	lst = build_lst((const char **)cmd_line);
+	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
-	exec_cmd(lst);
+	exec_cmd(lst, env, exit_status);
 	// free(cmd_line);
 	// free_lst(lst);
 	return (true);
 }
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
 	char	*cmd[] = {"ls", "-l", "|", "wc", 0};
+	int		*exit_status;
 
-	exec(cmd);
+	exit_status = malloc(sizeof(int));
+	exit_status[0] = 0;
+	exec(cmd, env, exit_status);
 	return (0);
 }
