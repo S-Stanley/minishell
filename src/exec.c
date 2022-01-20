@@ -6,15 +6,12 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 21:47:52 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 22:10:29 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include "include/libft.h"
-#include "include/minishell.h"
+#include "../include/libft.h"
+#include "../include/minishell.h"
 
 t_token	*create_lst(char **cmd, int *redirections)
 {
@@ -50,19 +47,17 @@ t_token	*add_lst(t_token *lst, char **cmd, int *redirections)
 int	find_index_matrice(char **matrice, char *to_find)
 {
 	unsigned int	i;
-	int				index;
 
 	i = 0;
 	if (!matrice || !to_find)
 		return (-1);
-	index = -1;
 	while (matrice[i])
 	{
 		if (ft_strcmp(matrice[i], to_find) == 0)
-			return (index);
+			return (i);
 		i++;
 	}
-	return (index);
+	return (i);
 }
 
 char	**ft_matrice_split(char **matrice, char *splitter)
@@ -176,7 +171,6 @@ t_token	*build_lst(char **line)
 {
 	unsigned int	i;
 	t_token			*lst;
-	char			*ptr;
 
 	lst = NULL;
 	i = 0;
@@ -193,28 +187,28 @@ t_token	*build_lst(char **line)
 	return (lst);
 }
 
-bool	read_cmd(t_token *lst, char **env, int *exit_status)
+bool	read_cmd(t_token *lst)
 {
 	int	i;
 
 	while (lst)
 	{
-		printf("%s\n", lst->cmd[0]);
 		i = 0;
 		while (lst->cmd[i])
 		{
 			printf("%s ", lst->cmd[i]);
 			i++;
 		}
+		printf("stdin %d stdout %d", lst->in_fd, lst->out_fd);
 		printf("\n");
 		lst = lst->next;
 	}
 	return (true);
 }
 
-void	free_lst(t_token *lst)
-{
-}
+// void	free_lst(t_token *lst)
+// {
+// }
 
 bool	exec(char **cmd_line, char **env, int *exit_status)
 {
@@ -224,20 +218,20 @@ bool	exec(char **cmd_line, char **env, int *exit_status)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
-	read_cmd(lst, env, exit_status);
+	read_cmd(lst);
 	exec_cmd(lst, env, exit_status);
-	free_that_matrice(cmd_line);
+	// free_that_matrice(cmd_line);
 	// free_lst(lst);
 	return (true);
 }
 
-int main(int ac, char **av, char **env)
-{
-	char	*cmd[] = {"/bin/ls", "-l", "|", "usr/bin/wc", 0};
-	int		*exit_status;
+// int main(int ac, char **av, char **env)
+// {
+// 	char	*cmd[] = {"/usr/bin/ls", "-l", "|", "/usr/bin/wc", 0};
+// 	int		*exit_status;
 
-	exit_status = malloc(sizeof(int));
-	exit_status[0] = 0;
-	exec(cmd, env, exit_status);
-	return (0);
-}
+// 	exit_status = malloc(sizeof(int));
+// 	exit_status[0] = 0;
+// 	exec(cmd, env, exit_status);
+// 	return (0);
+// }

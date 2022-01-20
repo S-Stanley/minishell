@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/20 01:08:50 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 22:06:17 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int		ft_len_matrice(char **matrice);
 char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status);
 bool	is_builtin(char *str);
 void	read_that_matrice(char **matrice);
+bool	exec(char **cmd_line, char **env, int *exit_status);
 
 #endif

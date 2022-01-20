@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/20 01:08:57 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 22:18:37 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	main(int ac, char **av, char **env)
 	{
 		exit_status[0] = 0;
 		command_line = readline("> ");
+		if (!command_line)
+		{
+			write(1, "test\n", 5);
+			exit (0);
+		}
 		add_history(command_line);
 		output = ft_split_input(command_line);
 		if (ft_len_matrice(output) == 1 && ft_strcmp(output[0], "exit") == 0)
