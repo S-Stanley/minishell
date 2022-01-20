@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:39:38 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 23:08:32 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*get_bash_var(char *var_to_find, char **env)
 	while (env[i])
 	{
 		env_var = ft_split(env[i], '=');
-//		printf("\nenv_var =  %s \n var_name = %s\n", env_var[0], var_name);
 		if (ft_strcmp(env_var[0], var_name) == 0)
 		{
 			to_return = ft_strdup(env_var[1]);

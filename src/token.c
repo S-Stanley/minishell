@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 00:42:09 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 23:03:32 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,29 @@ bool	is_builtin(char *str)
 	return (false);
 }
 
-t_token	*create_token(int in_fd, int out_fd, char **cmd)
+t_token	*create_lst(char **cmd, int *redirections)
 {
 	t_token	*new;
 
 	new = malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->in_fd = redirections[0];
+	new->out_fd = redirections[1];
 	new->cmd = cmd;
-	new->exec_name = cmd[0];
-	new->in_fd = in_fd;
-	new->out_fd = out_fd;
-	new->is_builtin = is_builtin(cmd[0]);
+	new->exec_name = get_full_path(cmd[0]);
 	new->next = NULL;
 	return (new);
 }
 
-t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd)
+t_token	*add_lst(t_token *lst, char **cmd, int *redirections)
 {
-	t_token	*tmp;
 	t_token	*new;
+	t_token	*tmp;
 
-	new = create_token(in_fd, out_fd, cmd);
+	if (!cmd || !redirections)
+		return (lst);
+	new = create_lst(cmd, redirections);
 	if (!lst)
 		return (new);
 	tmp = lst;

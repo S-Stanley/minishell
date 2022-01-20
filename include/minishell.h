@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/20 22:06:17 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 23:07:20 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ struct s_token
 	t_token	*next;
 };
 
-/* Splits input by quotes  and whitespaces, returns allocated char[][], or NULL, if quote expression is wrong */
+/* Splits input by quotes  and whitespaces, returns allocated char[][],
+	or NULL, if quote expression is wrong */
 char	**ft_split_input(char *str);
 /* takes splitted (not NULL) input and replaces variable names by it's values */
 char	**ft_extend_vars(char **splitted, char **env);
@@ -91,5 +92,12 @@ char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status);
 bool	is_builtin(char *str);
 void	read_that_matrice(char **matrice);
 bool	exec(char **cmd_line, char **env, int *exit_status);
+char	**ft_matrice_split(char **matrice, char *splitter);
+int		find_index_matrice(char **matrice, char *to_find);
+int		count_len_matrice(char **matrice);
+int		*get_redirection(char **str);
+int		read_from_stdin(char *next_cmd_line);
+t_token	*build_lst(char **line);
+t_token	*add_lst(t_token *lst, char **cmd, int *redirections);
 
 #endif
