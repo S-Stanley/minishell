@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 21:27:44 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/20 21:47:52 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,48 @@ t_token	*add_lst(t_token *lst, char **cmd, int *redirections)
 	return (tmp);
 }
 
+int	find_index_matrice(char **matrice, char *to_find)
+{
+	unsigned int	i;
+	int				index;
+
+	i = 0;
+	if (!matrice || !to_find)
+		return (-1);
+	index = -1;
+	while (matrice[i])
+	{
+		if (ft_strcmp(matrice[i], to_find) == 0)
+			return (index);
+		i++;
+	}
+	return (index);
+}
+
+char	**ft_matrice_split(char **matrice, char *splitter)
+{
+	int		i;
+	char	**to_return;
+
+	i = 0;
+	to_return = malloc(sizeof(char **) * (find_index_matrice(matrice, splitter) + 1));
+	while (matrice[i])
+	{
+		if (ft_strcmp(matrice[i], splitter) == 0)
+			break ;
+		to_return[i] = matrice[i];
+		i++;
+	}
+	to_return[i] = 0;
+	return (to_return);
+}
+
 char	**full_cmd(char **str)
 {
-	return ((char **)str);
+	char	**to_return;
+
+	to_return = ft_matrice_split(str, "|");
+	return (to_return);
 }
 
 int	get_fd(char *filename, int append, int std)
@@ -133,7 +172,7 @@ int	count_len_matrice(char **matrice)
 	return (i);
 }
 
-t_token	*build_lst(char **cmd_line)
+t_token	*build_lst(char **line)
 {
 	unsigned int	i;
 	t_token			*lst;
@@ -141,28 +180,37 @@ t_token	*build_lst(char **cmd_line)
 
 	lst = NULL;
 	i = 0;
-	while (cmd_line[i])
+	while (line[i])
 	{
-		lst = add_lst(lst, full_cmd(&cmd_line[i]), get_redirection(&cmd_line[i]));
+		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]));
 		if (!lst)
 			return (NULL);
-		while (cmd_line[i] && ft_strcmp((char *)cmd_line[i], "|") != 0)
+		while (line[i] && ft_strcmp((char *)line[i], "|") != 0)
 			i++;
-		while (ft_strcmp((char *)cmd_line[i], "|") == 0)
+		while (ft_strcmp((char *)line[i], "|") == 0)
 			i++;
 	}
 	return (lst);
 }
 
-// bool	exec_cmd(t_token *lst)
-// {
-// 	while (lst)
-// 	{
-// 		printf("%s\n", lst->full_cmd[0]);
-// 		lst = lst->next;
-// 	}
-// 	return (true);
-// }
+bool	read_cmd(t_token *lst, char **env, int *exit_status)
+{
+	int	i;
+
+	while (lst)
+	{
+		printf("%s\n", lst->cmd[0]);
+		i = 0;
+		while (lst->cmd[i])
+		{
+			printf("%s ", lst->cmd[i]);
+			i++;
+		}
+		printf("\n");
+		lst = lst->next;
+	}
+	return (true);
+}
 
 void	free_lst(t_token *lst)
 {
@@ -176,15 +224,16 @@ bool	exec(char **cmd_line, char **env, int *exit_status)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
+	read_cmd(lst, env, exit_status);
 	exec_cmd(lst, env, exit_status);
-	// free(cmd_line);
+	free_that_matrice(cmd_line);
 	// free_lst(lst);
 	return (true);
 }
 
 int main(int ac, char **av, char **env)
 {
-	char	*cmd[] = {"ls", "-l", "|", "wc", 0};
+	char	*cmd[] = {"/bin/ls", "-l", "|", "usr/bin/wc", 0};
 	int		*exit_status;
 
 	exit_status = malloc(sizeof(int));
