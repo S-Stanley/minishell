@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/21 21:10:16 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/21 22:09:48 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	child_process(int fd_out, int *fd, t_token *lst, char **env)
 	}
 	else if (lst->next != NULL)
 		dup2(fd[1], STDOUT_FILENO);
+	else
+		close(fd[1]);
 	close(fd[0]);
 	execve(lst->exec_name, lst->cmd, env);
 }
@@ -32,12 +34,16 @@ int	parent_process(int *fd, int fd_in, int fd_out, t_token *lst)
 	if (fd_in != 0)
 		close(fd_in);
 	if (lst->in_fd)
+	{
 		fd_in = lst->in_fd;
+		close(fd[0]);
+	}
 	else
 		fd_in = fd[0];
 	if (fd_out != 1)
 		close(fd_out);
-	// close(fd[0]);
+	if (!lst->next)
+		close(fd[0]);
 	return (fd_in);
 }
 
@@ -51,12 +57,13 @@ void	set_status(int status, int *exit_status)
 
 void	exec_cmd(t_token *lst, char **env, int *exit_status)
 {
-	// int	status;
+	int	status;
 	int	fd[2];
 	int	fd_in;
 	int	fd_out;
 
 	(void)exit_status;
+	status = 0;
 	fd_in = lst->in_fd;
 	while (lst)
 	{
@@ -69,12 +76,14 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 		}
 		else
 		{
+			// if (ft_strcmp(lst->exec_name, "/bin/cat") != 0)
+			// 	wait(&status);
 			// set_status(status, exit_status);
 			fd_in = parent_process(fd, fd_in, fd_out, lst);
 		}
-		// wait(&status);
-		// close(fd[0]);
-		// close(fd[1]);
 		lst = lst->next;
 	}
+	wait(&status);
+	close(fd[0]);
+	close(fd[1]);
 }
