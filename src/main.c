@@ -6,11 +6,21 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/20 23:22:33 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/21 20:59:14 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <signal.h>
+
+void	exit_handler(int nb)
+{
+	(void)nb;
+	close(0);
+	close(1);
+	close(2);
+	exit(0);
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -24,6 +34,7 @@ int	main(int ac, char **av, char **env)
 	exit_status = malloc(sizeof(int));
 	if (!exit_status)
 		return (0);
+	signal(SIGINT, exit_handler);
 	while (1)
 	{
 		exit_status[0] = 0;

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 23:33:48 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/21 21:10:16 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	child_process(int fd_out, int *fd, t_token *lst, char **env)
 {
+	// close(fd[0]);
 	if (lst->out_fd != 1)
 	{
 		dup2(lst->out_fd, STDOUT_FILENO);
@@ -36,6 +37,7 @@ int	parent_process(int *fd, int fd_in, int fd_out, t_token *lst)
 		fd_in = fd[0];
 	if (fd_out != 1)
 		close(fd_out);
+	// close(fd[0]);
 	return (fd_in);
 }
 
@@ -49,11 +51,12 @@ void	set_status(int status, int *exit_status)
 
 void	exec_cmd(t_token *lst, char **env, int *exit_status)
 {
-	int	status;
+	// int	status;
 	int	fd[2];
 	int	fd_in;
 	int	fd_out;
 
+	(void)exit_status;
 	fd_in = lst->in_fd;
 	while (lst)
 	{
@@ -66,10 +69,12 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 		}
 		else
 		{
-			wait(&status);
-			set_status(status, exit_status);
+			// set_status(status, exit_status);
 			fd_in = parent_process(fd, fd_in, fd_out, lst);
 		}
+		// wait(&status);
+		// close(fd[0]);
+		// close(fd[1]);
 		lst = lst->next;
 	}
 }
