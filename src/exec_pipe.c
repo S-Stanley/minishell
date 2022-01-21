@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/21 22:09:48 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 00:46:37 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 	fd_in = lst->in_fd;
 	while (lst)
 	{
-		fd_out = lst->out_fd;
 		pipe(fd);
+		fd_out = lst->out_fd;
 		if (fork() == 0)
 		{
 			dup2(fd_in, STDIN_FILENO);
@@ -76,14 +76,14 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 		}
 		else
 		{
-			// if (ft_strcmp(lst->exec_name, "/bin/cat") != 0)
-			// 	wait(&status);
+			if (ft_strcmp(lst->exec_name, "/bin/cat") != 0)
+				wait(&status);
 			// set_status(status, exit_status);
 			fd_in = parent_process(fd, fd_in, fd_out, lst);
 		}
+		// close(fd[0]);
+		// close(fd[1]);
 		lst = lst->next;
 	}
 	wait(&status);
-	close(fd[0]);
-	close(fd[1]);
 }
