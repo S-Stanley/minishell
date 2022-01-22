@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 15:55:16 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:10:42 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,12 @@ t_pid	*add_pid(t_pid *pid, pid_t new_pid)
 	return (tmp);
 }
 
-void	wait_all_pid(t_pid *pid)
+void	wait_all_pid(t_pid *pid, int *exit_status)
 {
 	while (pid)
 	{
 		waitpid(pid->pid, &pid->status, 2);
+		set_status(pid->status, exit_status);
 		pid = pid->next;
 	}
 }
@@ -106,7 +107,6 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 	pid_t	new_pid;
 
 	pid = NULL;
-	(void)exit_status;
 	fd_in = lst->in_fd;
 	while (lst)
 	{
@@ -122,13 +122,9 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 		else
 		{
 			pid = add_pid(pid, new_pid);
-			// set_status(status, exit_status);
 			fd_in = parent_process(fd, fd_in, fd_out, lst);
 		}
-		// close(fd[0]);
-		// close(fd[1]);
 		lst = lst->next;
 	}
-	wait_all_pid(pid);
-	// wait(NULL);
+	wait_all_pid(pid, exit_status);
 }

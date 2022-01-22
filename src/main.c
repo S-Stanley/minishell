@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 15:57:28 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:15:30 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,22 @@ void	exit_handler(int nb)
 	exit(0);
 }
 
+char	*get_prompt(void)
+{
+	char	*prompt;
+	char	*buffer;
+
+	buffer = NULL;
+	prompt = ft_strjoin(getcwd(buffer, -1), "> ");
+	return (prompt);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char		**output;
 	char		*command_line;
 	int			*exit_status;
+	char		*prompt;
 
 	(void)av;
 	if (ac != 1)
@@ -38,7 +49,9 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		exit_status[0] = 0;
-		command_line = readline("> ");
+		prompt = get_prompt();
+		command_line = readline(prompt);
+		free(prompt);
 		if (!command_line)
 		{
 			write(1, "test\n", 5);
