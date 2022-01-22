@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 21:24:25 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:38:21 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,23 @@ bool	exec(char **cmd_line, char ***env, int *exit_status)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
-	if (ft_strcmp(lst->cmd[0], "export") == 0)
+	if (ft_strcmp(lst->cmd[0], "export") == 0 && !lst->cmd[1])
+	{
+		read_export(*env);
+		if (lst->next)
+			exec_cmd(lst->next, env, exit_status);
+	}
+	else if (ft_strcmp(lst->cmd[0], "export") == 0)
 	{
 		*env = add_item_env(lst->cmd, *env);
 		if (lst->next)
-			exec_cmd(lst, env, exit_status);
+			exec_cmd(lst->next, env, exit_status);
 	}
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
 		*env = remove_item_env(lst->cmd, *env);
 		if (lst->next)
-			exec_cmd(lst, env, exit_status);
+			exec_cmd(lst->next, env, exit_status);
 	}
 	else
 		exec_cmd(lst, env, exit_status);

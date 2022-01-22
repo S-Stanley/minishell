@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 21:30:04 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:41:28 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,21 @@ char	**remove_item_env(char **cmd, char **env)
 	}
 	to_return[i] = 0;
 	return (to_return);
+}
+
+void	read_export(char **env)
+{
+	int		i;
+	char	**var;
+
+	if (!env)
+		return ;
+	i = 0;
+	while (env[i])
+	{
+		var = ft_split(env[i], '=');
+		printf("declare -x %s=\"%s\"\n", var[0], var[1]);
+		free_that_matrice(var);
+		i++;
+	}
 }
