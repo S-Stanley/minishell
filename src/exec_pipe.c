@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 20:51:53 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:30:43 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	exec_buildint(t_token *lst, char ***env)
 	if (ft_strcmp(lst->cmd[0], "pwd") == 0)
 		builtin_pwd();
 	if (ft_strcmp(lst->cmd[0], "env") == 0)
-		read_that_matrice(*env);
+		read_env(*env);
 	if (ft_strcmp(lst->cmd[0], "export") == 0)
 		*env = add_item_env(lst->cmd, *env);
 	exit(0);
