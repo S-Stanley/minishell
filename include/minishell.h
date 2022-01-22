@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 17:52:58 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 18:16:36 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,12 @@ struct s_token
 	int		out_fd;
 	t_token	*next;
 };
+
+typedef struct s_pid {
+	pid_t			pid;
+	int				status;
+	struct s_pid	*next;
+}	t_pid;
 
 /* Splits input by quotes  and whitespaces, returns allocated char[][],
 	or NULL, if quote expression is wrong */

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 18:00:25 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 18:16:31 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ void	set_status(int status, int *exit_status)
 		exit_status[0] = 1;
 }
 
-typedef struct s_pid {
-	pid_t			pid;
-	int				status;
-	struct s_pid	*next;
-}	t_pid;
-
 t_pid	*create_pid(pid_t new_pid)
 {
 	t_pid	*new;
@@ -104,6 +98,18 @@ void	exec_buildint(t_token *lst)
 		builtin_cd(lst->cmd[1]);
 }
 
+void	free_pid(t_pid *pid)
+{
+	t_pid	*tmp;
+
+	while (pid)
+	{
+		tmp = pid->next;
+		free(pid);
+		pid = tmp;
+	}
+}
+
 void	exec_cmd(t_token *lst, char **env, int *exit_status)
 {
 	int		fd[2];
@@ -138,4 +144,5 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 		lst = lst->next;
 	}
 	wait_all_pid(pid, exit_status);
+	free_pid(pid);
 }
