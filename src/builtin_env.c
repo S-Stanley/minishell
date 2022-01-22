@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 21:41:28 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:44:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	**remove_item_env(char **cmd, char **env)
 {
 	int		i;
 	char	**to_return;
+	int		x;
 
 	if (!cmd || !env)
 		return (env);
@@ -95,13 +96,17 @@ char	**remove_item_env(char **cmd, char **env)
 	if (!to_return)
 		return (env);
 	i = 0;
+	x = 0;
 	while (env[i])
 	{
 		if (!find_string_in_matrice(env[i], &cmd[1]))
-			to_return[i] = ft_strdup(env[i]);
+		{
+			to_return[x] = ft_strdup(env[i]);
+			x++;
+		}
 		i++;
 	}
-	to_return[i] = 0;
+	to_return[x] = 0;
 	return (to_return);
 }
 
