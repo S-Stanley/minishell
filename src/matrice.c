@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 23:02:16 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 15:48:20 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,49 @@ void	read_that_matrice(char **matrice)
 	}
 }
 
-int	find_index_matrice(char **matrice, char *to_find)
+int	find_index_matrice(char **matrice, char **to_find)
 {
 	unsigned int	i;
+	unsigned int	x;
 
 	i = 0;
 	if (!matrice || !to_find)
 		return (-1);
 	while (matrice[i])
 	{
-		if (ft_strcmp(matrice[i], to_find) == 0)
-			return (i);
+		x = 0;
+		while (to_find[x])
+		{
+			if (ft_strcmp(matrice[i], to_find[x]) == 0)
+				return (i);
+			x++;
+		}
 		i++;
 	}
 	return (i);
 }
 
-char	**ft_matrice_split(char **matrice, char *splitter)
+char	**ft_matrice_split(char **matrice, char **splitter)
 {
 	int		i;
 	char	**to_return;
+	int		x;
 
 	i = 0;
 	to_return = malloc(sizeof(char **)
 			* (find_index_matrice(matrice, splitter) + 1));
 	while (matrice[i])
 	{
-		if (ft_strcmp(matrice[i], splitter) == 0)
-			break ;
+		x = 0;
+		while (splitter[x])
+		{
+			if (ft_strcmp(matrice[i], splitter[x]) == 0)
+			{
+				to_return[i] = 0;
+				return (to_return);
+			}
+			x++;
+		}
 		to_return[i] = matrice[i];
 		i++;
 	}

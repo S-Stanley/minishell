@@ -6,17 +6,33 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 23:22:57 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 15:47:35 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+char	**get_splitter(void)
+{
+	char	**splitter;
+
+	splitter = malloc(sizeof(char **) * 6);
+	splitter[0] = "|";
+	splitter[1] = "<";
+	splitter[2] = "<<";
+	splitter[3] = ">";
+	splitter[4] = ">>";
+	splitter[5] = 0;
+	return (splitter);
+}
+
 char	**full_cmd(char **str)
 {
 	char	**to_return;
+	char	**to_split;
 
-	to_return = ft_matrice_split(str, "|");
+	to_split = get_splitter();
+	to_return = ft_matrice_split(str, to_split);
 	return (to_return);
 }
 
