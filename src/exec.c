@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 15:47:35 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 16:09:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ char	**full_cmd(char **str)
 	to_split = get_splitter();
 	to_return = ft_matrice_split(str, to_split);
 	return (to_return);
+}
+
+void	read_lst(t_token *lst)
+{
+	int	i;
+
+	while (lst)
+	{
+		i = 0;
+		while (lst->cmd[i])
+		{
+			printf("%s ", lst->cmd[i]);
+			i++;
+		}
+		printf("\n");
+		lst = lst->next;
+	}
 }
 
 t_token	*build_lst(char **line)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extractor.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:49:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/20 15:49:39 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/01/22 16:09:53 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ char		**ft_extract_operators(char **extended)
 	while (extended[old_len])
 		old_len++;
 	new_len = count_new_tab_size(extended);
-	printf("> new_len %d\n", new_len);
 	if (old_len == new_len)
 		return (extended);
 	ret = copy_n_extract(extended, new_len);
