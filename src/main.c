@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 17:15:30 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:52:46 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ void	exit_handler(int nb)
 	close(1);
 	close(2);
 	exit(0);
-}
-
-char	*get_prompt(void)
-{
-	char	*prompt;
-	char	*buffer;
-
-	buffer = NULL;
-	prompt = ft_strjoin(getcwd(buffer, -1), "> ");
-	return (prompt);
 }
 
 int	main(int ac, char **av, char **env)

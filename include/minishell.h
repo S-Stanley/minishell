@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 15:48:54 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 17:52:58 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,8 @@ int		*get_redirection(char **str);
 int		read_from_stdin(char *next_cmd_line);
 t_token	*build_lst(char **line);
 t_token	*add_lst(t_token *lst, char **cmd, int *redirections);
+bool	builtin_cd(char *path);
+int		find_index(const char *str, char c);
+char	*get_prompt(void);
 
 #endif
