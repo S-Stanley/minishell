@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 00:46:37 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 15:04:40 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,73 @@ void	set_status(int status, int *exit_status)
 		exit_status[0] = 1;
 }
 
+typedef struct s_pid {
+	pid_t			pid;
+	int				status;
+	struct s_pid	*next;
+}	t_pid;
+
+t_pid	*create_pid(pid_t new_pid)
+{
+	t_pid	*new;
+
+	new = malloc(sizeof(t_pid));
+	new->pid = new_pid;
+	new->next = NULL;
+	return (new);
+}
+
+t_pid	*add_pid(t_pid *pid, pid_t new_pid)
+{
+	t_pid	*new;
+	t_pid	*tmp;
+
+	new = create_pid(new_pid);
+	if (!new)
+		return (pid);
+	if (!pid)
+		return (new);
+	tmp = pid;
+	while (pid->next)
+		pid = pid->next;
+	pid->next = new;
+	return (tmp);
+}
+
+void	wait_all_pid(t_pid *pid)
+{
+	while (pid)
+	{
+		waitpid(pid->pid, &pid->status, 2);
+		pid = pid->next;
+	}
+}
+
 void	exec_cmd(t_token *lst, char **env, int *exit_status)
 {
-	int	status;
-	int	fd[2];
-	int	fd_in;
-	int	fd_out;
+	int		fd[2];
+	int		fd_in;
+	int		fd_out;
+	t_pid	*pid;
+	pid_t	new_pid;
 
+	pid = NULL;
 	(void)exit_status;
-	status = 0;
 	fd_in = lst->in_fd;
 	while (lst)
 	{
 		pipe(fd);
 		fd_out = lst->out_fd;
-		if (fork() == 0)
+		new_pid = fork();
+		if (new_pid == 0)
 		{
+			pid = add_pid(pid, new_pid);
 			dup2(fd_in, STDIN_FILENO);
 			child_process(fd_out, fd, lst, env);
 		}
 		else
 		{
-			if (ft_strcmp(lst->exec_name, "/bin/cat") != 0)
-				wait(&status);
+			pid = add_pid(pid, new_pid);
 			// set_status(status, exit_status);
 			fd_in = parent_process(fd, fd_in, fd_out, lst);
 		}
@@ -85,5 +129,6 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 		// close(fd[1]);
 		lst = lst->next;
 	}
-	wait(&status);
+	wait_all_pid(pid);
+	// wait(NULL);
 }
