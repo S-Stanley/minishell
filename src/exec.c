@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 21:38:21 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:40:42 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ bool	exec(char **cmd_line, char ***env, int *exit_status)
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
 		*env = remove_item_env(lst->cmd, *env);
+		if (lst->next)
+			exec_cmd(lst->next, env, exit_status);
+	}
+	else if (ft_strcmp(lst->cmd[0], "cd") == 0)
+	{
+		builtin_cd(lst->cmd[1]);
 		if (lst->next)
 			exec_cmd(lst->next, env, exit_status);
 	}

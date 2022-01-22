@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:30:43 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:39:44 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ void	wait_all_pid(t_pid *pid, int *exit_status)
 
 void	exec_buildint(t_token *lst, char ***env)
 {
-	if (ft_strcmp(lst->cmd[0], "cd") == 0)
-		builtin_cd(lst->cmd[1]);
 	if (ft_strcmp(lst->cmd[0], "pwd") == 0)
 		builtin_pwd();
 	if (ft_strcmp(lst->cmd[0], "env") == 0)
