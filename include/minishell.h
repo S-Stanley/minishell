@@ -21,6 +21,11 @@
 # define CYAN		"\x1b[36m"
 # define RESET		"\x1b[0m"
 
+# define ARR_L 1
+# define ARR_R 2
+# define D_A_L 3
+# define D_A_R 4
+# define PIPE 5
 # define COMMAND_NOT_FOUND	0
 
 # include "libft.h"
@@ -79,6 +84,13 @@ struct s_token
 char	**ft_split_input(char *str);
 /* takes splitted (not NULL) input and replaces variable names by it's values */
 char	**ft_extend_vars(char **splitted, char **env);
+/* takes replaced list of strings and separates characters < > >> << | */
+char	**ft_extract_operators(char **extended);
+/* extract_operators extending function */
+char	**copy_n_extract(char **extended, int newtab_size);
+/* extract_operators defining function */
+int		get_operator(char *s);
+
 char	*get_bash_var(char *var_to_find, char **env);
 void	exec_cmd(t_token *lst, char **env, int *exit_status);
 t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);

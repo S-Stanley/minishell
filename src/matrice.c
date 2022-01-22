@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/minishell.h"
+
 int	ft_len_matrice(char **matrice)
 {
 	int		i;
