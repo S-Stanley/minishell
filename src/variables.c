@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/20 23:08:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 23:16:32 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ char	*get_bash_var(char *var_to_find, char **env)
 	char			**env_var;
 	char			*to_return;
 
-	if (!env || var_to_find[1] == '$' || var_to_find[1] == '?')
+	if (!env || !var_to_find || var_to_find[1] == '$')
 		return (ft_strdup(""));
+	if (ft_strcmp(var_to_find, "$?") == 0)
+		return (ft_itoa(0));
 	var_name = ft_strtrim(var_to_find, "$");
 	i = 0;
 	while (env[i])

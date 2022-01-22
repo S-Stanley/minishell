@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:38:38 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 23:13:31 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int ac, char **av, char **env)
 	exit_status = malloc(sizeof(int));
 	if (!exit_status)
 		return (0);
+	exit_status[0] = 0;
 	environnement = get_env(env);
 	signal(SIGINT, exit_handler);
 	while (1)
