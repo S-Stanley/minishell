@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 17:52:46 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 19:10:10 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av, char **env)
 	char		*command_line;
 	int			*exit_status;
 	char		*prompt;
+	char		**environnement;
 
 	(void)av;
 	if (ac != 1)
@@ -35,6 +36,7 @@ int	main(int ac, char **av, char **env)
 	exit_status = malloc(sizeof(int));
 	if (!exit_status)
 		return (0);
+	environnement = get_env(env);
 	signal(SIGINT, exit_handler);
 	while (1)
 	{
@@ -48,10 +50,10 @@ int	main(int ac, char **av, char **env)
 			exit (0);
 		}
 		add_history(command_line);
-		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), env));
+		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), environnement));
 		if (ft_len_matrice(output) == 1 && ft_strcmp(output[0], "exit") == 0)
 			break ;
-		exec(output, env, exit_status);
+		exec(output, &environnement, exit_status);
 	}
 	free(exit_status);
 	return (0);

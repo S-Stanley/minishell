@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 16:09:22 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 19:07:40 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_token	*build_lst(char **line)
 	return (lst);
 }
 
-bool	exec(char **cmd_line, char **env, int *exit_status)
+bool	exec(char **cmd_line, char ***env, int *exit_status)
 {
 	t_token	*lst;
 

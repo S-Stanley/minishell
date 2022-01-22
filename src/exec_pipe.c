@@ -6,13 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 18:34:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 19:08:45 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	child_process(int fd_out, int *fd, t_token *lst, char **env)
+void	child_process(int fd_out, int *fd, t_token *lst, char ***env)
 {
 	// close(fd[0]);
 	if (lst->out_fd != 1)
@@ -26,9 +26,9 @@ void	child_process(int fd_out, int *fd, t_token *lst, char **env)
 		close(fd[1]);
 	close(fd[0]);
 	if (lst->is_builtin)
-		exec_buildint(lst);
+		exec_buildint(lst, env);
 	else
-		execve(lst->exec_name, lst->cmd, env);
+		execve(lst->exec_name, lst->cmd, *env);
 }
 
 int	parent_process(int *fd, int fd_in, int fd_out, t_token *lst)
@@ -95,12 +95,16 @@ void	wait_all_pid(t_pid *pid, int *exit_status)
 	}
 }
 
-void	exec_buildint(t_token *lst)
+void	exec_buildint(t_token *lst, char ***env)
 {
 	if (ft_strcmp(lst->cmd[0], "cd") == 0)
 		builtin_cd(lst->cmd[1]);
 	if (ft_strcmp(lst->cmd[0], "pwd") == 0)
 		builtin_pwd();
+	if (ft_strcmp(lst->cmd[0], "env") == 0)
+		read_that_matrice(*env);
+	if (ft_strcmp(lst->cmd[0], "export") == 0)
+		*env = add_item_env(lst->cmd, *env);
 	exit(0);
 }
 
@@ -116,7 +120,7 @@ void	free_pid(t_pid *pid)
 	}
 }
 
-void	exec_cmd(t_token *lst, char **env, int *exit_status)
+void	exec_cmd(t_token *lst, char ***env, int *exit_status)
 {
 	int		fd[2];
 	int		fd_in;

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 18:33:19 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 19:09:03 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	**copy_n_extract(char **extended, int newtab_size);
 int		get_operator(char *s);
 
 char	*get_bash_var(char *var_to_find, char **env);
-void	exec_cmd(t_token *lst, char **env, int *exit_status);
+void	exec_cmd(t_token *lst, char ***env, int *exit_status);
 t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
 void	free_token_list(t_token *lst);
 void	parse_and_exec(char	**output, char **env, int *exit_status);
@@ -109,7 +109,7 @@ int		ft_len_matrice(char **matrice);
 char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status);
 bool	is_builtin(char *str);
 void	read_that_matrice(char **matrice);
-bool	exec(char **cmd_line, char **env, int *exit_status);
+bool	exec(char **cmd_line, char ***env, int *exit_status);
 char	**ft_matrice_split(char **matrice, char **splitter);
 int		find_index_matrice(char **matrice, char **to_find);
 int		count_len_matrice(char **matrice);
@@ -121,6 +121,8 @@ bool	builtin_cd(char *path);
 int		find_index(const char *str, char c);
 char	*get_prompt(void);
 void	builtin_pwd(void);
-void	exec_buildint(t_token *lst);
+void	exec_buildint(t_token *lst, char ***env);
+char	**get_env(char **env);
+char	**add_item_env(char **cmd, char **env);
 
 #endif
