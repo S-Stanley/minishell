@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 18:16:31 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 18:34:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	child_process(int fd_out, int *fd, t_token *lst, char **env)
 	else
 		close(fd[1]);
 	close(fd[0]);
-	execve(lst->exec_name, lst->cmd, env);
+	if (lst->is_builtin)
+		exec_buildint(lst);
+	else
+		execve(lst->exec_name, lst->cmd, env);
 }
 
 int	parent_process(int *fd, int fd_in, int fd_out, t_token *lst)
@@ -96,6 +99,9 @@ void	exec_buildint(t_token *lst)
 {
 	if (ft_strcmp(lst->cmd[0], "cd") == 0)
 		builtin_cd(lst->cmd[1]);
+	if (ft_strcmp(lst->cmd[0], "pwd") == 0)
+		builtin_pwd();
+	exit(0);
 }
 
 void	free_pid(t_pid *pid)
@@ -122,24 +128,19 @@ void	exec_cmd(t_token *lst, char **env, int *exit_status)
 	fd_in = lst->in_fd;
 	while (lst)
 	{
-		if (lst->is_builtin)
-			exec_buildint(lst);
+		pipe(fd);
+		fd_out = lst->out_fd;
+		new_pid = fork();
+		if (new_pid == 0)
+		{
+			pid = add_pid(pid, new_pid);
+			dup2(fd_in, STDIN_FILENO);
+			child_process(fd_out, fd, lst, env);
+		}
 		else
 		{
-			pipe(fd);
-			fd_out = lst->out_fd;
-			new_pid = fork();
-			if (new_pid == 0)
-			{
-				pid = add_pid(pid, new_pid);
-				dup2(fd_in, STDIN_FILENO);
-				child_process(fd_out, fd, lst, env);
-			}
-			else
-			{
-				pid = add_pid(pid, new_pid);
-				fd_in = parent_process(fd, fd_in, fd_out, lst);
-			}
+			pid = add_pid(pid, new_pid);
+			fd_in = parent_process(fd, fd_in, fd_out, lst);
 		}
 		lst = lst->next;
 	}
