@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 19:10:10 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/22 20:49:51 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **env)
 			exit (0);
 		}
 		add_history(command_line);
-		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), environnement));
+		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), env));
 		if (ft_len_matrice(output) == 1 && ft_strcmp(output[0], "exit") == 0)
 			break ;
 		exec(output, &environnement, exit_status);
