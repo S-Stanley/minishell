@@ -6,19 +6,22 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:51:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 16:02:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:48:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exit_and_free(int exit_code, t_token *lst)
+void	exit_and_free(int exit_code, t_token *lst,
+	char ***env, t_history *history)
 {
+	free_that_matrice(*env);
 	free_token_list(lst);
+	free_history(history);
 	exit(exit_code);
 }
 
-bool	check_if_alphanum(t_token *lst)
+bool	check_if_alphanum(t_token *lst, char ***env, t_history *history)
 {
 	int		i;
 	char	*value_err;
@@ -39,24 +42,24 @@ bool	check_if_alphanum(t_token *lst)
 			print_error(2, lst->exec_name);
 			free(value_err2);
 			free(value_err);
-			exit_and_free(255, lst);
+			exit_and_free(255, lst, env, history);
 		}
 		i++;
 	}
 	return (true);
 }
 
-bool	builtin_exit(t_token *lst)
+bool	builtin_exit(t_token *lst, char ***env, t_history *history)
 {
 	int	exit_code;
 
 	if (count_len_matrice(lst->cmd) == 1)
-		exit_and_free(0, lst);
-	if (!check_if_alphanum(lst))
+		exit_and_free(0, lst, env, history);
+	if (!check_if_alphanum(lst, env, history))
 		return (false);
 	exit_code = ft_atoi(lst->cmd[1]);
 	if (exit_code > 255 || exit_code < 0)
-		exit_and_free(2, lst);
-	exit_and_free(exit_code, lst);
+		exit_and_free(2, lst, env, history);
+	exit_and_free(exit_code, lst, env, history);
 	return (true);
 }

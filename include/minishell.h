@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 16:58:13 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:48:38 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int			ft_len_matrice(char **matrice);
 char		*get_cmd_arr(char **cmd, int x, char *output);
 bool		is_builtin(char *str);
 void		read_that_matrice(char **matrice);
-bool		exec(char **cmd_line, char ***env);
+bool		exec(char **cmd_line, char ***env, t_history *history);
 char		**ft_matrice_split(char **matrice, char **splitter);
 int			find_index_matrice(char **matrice, char **to_find);
 int			count_len_matrice(char **matrice);
@@ -133,7 +133,7 @@ char		**add_item_env(char **cmd, char **env);
 char		**remove_item_env(char **cmd, char **env);
 void		read_export(char **env);
 void		read_env(char **env);
-bool		builtin_exit(t_token *lst);
+bool		builtin_exit(t_token *lst, char ***env, t_history *history);
 bool		builtin_echo(char **cmd);
 t_history	*add_cmd_line(t_history *cmd, char *to_add);
 void		free_history(t_history *history);

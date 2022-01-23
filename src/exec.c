@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:07:48 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:48:43 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_token	*build_lst(char **line)
 	return (lst);
 }
 
-bool	exec(char **cmd_line, char ***env)
+bool	exec(char **cmd_line, char ***env, t_history *history)
 {
 	t_token	*lst;
 
@@ -108,7 +108,7 @@ bool	exec(char **cmd_line, char ***env)
 	}
 	else if (ft_strcmp(lst->cmd[0], "exit") == 0)
 	{
-		builtin_exit(lst);
+		builtin_exit(lst, env, history);
 		return (false);
 	}
 	else if (ft_strcmp(lst->cmd[0], "echo") == 0)
