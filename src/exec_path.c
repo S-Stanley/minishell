@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:38 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 15:59:25 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:20:49 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*get_full_path(char *cmd)
 	if (res)
 	{
 		free_that_matrice(path);
-		// read_that_matrice(path);
 		return (res);
 	}
 	free_that_matrice(path);
