@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 16:26:52 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 16:32:42 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	free_token_list(t_token *lst)
 	while (lst)
 	{
 		tmp = lst->next;
-		if (!lst->is_builtin)
-		{
-			free(lst->exec_name);
-		}
+		free(lst->exec_name);
 		free(lst->cmd);
 		free(lst);
 		lst = tmp;
