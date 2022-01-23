@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:48:38 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 20:20:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ struct s_token
 	bool	is_builtin;
 	int		in_fd;
 	int		out_fd;
+	char	*infile;
+	char	*outfile;
 	t_token	*next;
 };
 
@@ -119,10 +121,10 @@ bool		exec(char **cmd_line, char ***env, t_history *history);
 char		**ft_matrice_split(char **matrice, char **splitter);
 int			find_index_matrice(char **matrice, char **to_find);
 int			count_len_matrice(char **matrice);
-int			*get_redirection(char **str);
-int			read_from_stdin(char *next_cmd_line);
+char		**get_redirection(char **str);
+char		*read_from_stdin(char *next_cmd_line);
 t_token		*build_lst(char **line);
-t_token		*add_lst(t_token *lst, char **cmd, int *redirections);
+t_token		*add_lst(t_token *lst, char **cmd, char **redirections);
 bool		builtin_cd(char *path, char **env);
 int			find_index(const char *str, char c);
 char		*get_prompt(void);

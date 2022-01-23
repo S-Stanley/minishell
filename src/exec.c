@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:48:43 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 20:16:03 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	read_lst(t_token *lst)
 			printf("%s ", lst->cmd[i]);
 			i++;
 		}
+		printf("in %s out %s %d", lst->infile, lst->outfile, lst->is_builtin);
 		printf("\n");
 		lst = lst->next;
 	}
@@ -82,6 +83,7 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
+	read_lst(lst);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && !lst->cmd[1])
 	{
 		read_export(*env);

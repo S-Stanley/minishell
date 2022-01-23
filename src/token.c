@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:41:04 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 20:15:13 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ bool	is_builtin(char *str)
 	return (false);
 }
 
-t_token	*create_lst(char **cmd, int *redirections)
+t_token	*create_lst(char **cmd, char **redirections)
 {
 	t_token	*new;
 
 	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->in_fd = redirections[0];
-	new->out_fd = redirections[1];
+	new->infile = redirections[0];
+	new->outfile = redirections[0];
 	new->is_builtin = is_builtin(cmd[0]);
 	new->cmd = cmd;
 	new->exec_name = get_full_path(cmd[0]);
@@ -73,7 +73,7 @@ t_token	*create_lst(char **cmd, int *redirections)
 	return (new);
 }
 
-t_token	*add_lst(t_token *lst, char **cmd, int *redirections)
+t_token	*add_lst(t_token *lst, char **cmd, char **redirections)
 {
 	t_token	*new;
 	t_token	*tmp;
