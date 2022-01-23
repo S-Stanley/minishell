@@ -6,11 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:10 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 11:10:45 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 15:12:27 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static int	g_exit_status;
 
 void	print_error(int code, char *value)
 {

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 11:35:17 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 15:30:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ bool	exec(char **cmd_line, char ***env)
 	}
 	else if (ft_strcmp(lst->cmd[0], "cd") == 0)
 	{
-		builtin_cd(lst->cmd[1]);
+		builtin_cd(lst->cmd[1], *env);
 		if (lst->next)
 			exec_cmd(lst->next, env);
 	}
@@ -116,7 +116,9 @@ bool	exec(char **cmd_line, char ***env)
 		return (false);
 	}
 	else
+	{
 		exec_cmd(lst, env);
-	free_token_list(lst);
+		free_token_list(lst);
+	}
 	return (true);
 }

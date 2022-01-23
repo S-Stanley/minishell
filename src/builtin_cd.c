@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 00:47:48 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:39:12 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 15:29:59 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,18 @@ char	*get_forward_path(char *cwd, char *path)
 	return (full_path);
 }
 
-bool	builtin_cd(char *path)
+bool	builtin_cd(char *path, char **env)
 {
 	char	*full_path;
 	char	*cwd;
 
-	cwd = NULL;
-	cwd = getcwd(cwd, -1);
-	if (ft_strcmp(path, "..") == 0 || ft_strcmp(path, "-") == 0)
+	cwd = malloc(sizeof(char) * 100);
+	if (!cwd)
+		return (false);
+	getcwd(cwd, 100);
+	if (!path || ft_strcmp(path, "~") == 0)
+		full_path = get_bash_var("$HOME", env);
+	else if (ft_strcmp(path, "..") == 0 || ft_strcmp(path, "-") == 0)
 		full_path = get_backward_path(cwd);
 	else if (find_index(path, '/') == 0)
 		full_path = path;
@@ -80,8 +84,11 @@ char	*get_prompt(void)
 	char	*prompt;
 	char	*cwd;
 
-	cwd = NULL;
-	cwd = getcwd(cwd, -1);
+	cwd = malloc(sizeof(char) * 100);
+	if (!cwd)
+		return (ft_strdup(""));
+	cwd = getcwd(cwd, 100);
 	prompt = ft_strjoin(cwd, "> ");
+	free(cwd);
 	return (prompt);
 }

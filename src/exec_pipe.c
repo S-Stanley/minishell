@@ -6,11 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 10:50:34 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 15:12:18 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static int	g_exit_status;
 
 void	child_process(int fd_out, int *fd, t_token *lst, char ***env)
 {

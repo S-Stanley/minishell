@@ -6,12 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 11:16:11 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 15:13:32 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <signal.h>
+
+static int	g_exit_status;
 
 void	exit_handler(int nb)
 {

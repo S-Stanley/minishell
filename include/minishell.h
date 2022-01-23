@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 11:34:15 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 15:30:21 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,16 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <signal.h>
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
-int						g_exit_status;
+// extern int				g_exit_status;
 
 /*
  *	Structure to hold all prompt info
  *	> line, given as an input
- *	> linked list of tokens (parsed commands)
+ *	> linked list of tokenes (parsed commands)
  *	> amount of tokens
  *	> array of strings representing environment variables
  *	> pointer to currently executing command
@@ -117,7 +118,7 @@ int		*get_redirection(char **str);
 int		read_from_stdin(char *next_cmd_line);
 t_token	*build_lst(char **line);
 t_token	*add_lst(t_token *lst, char **cmd, int *redirections);
-bool	builtin_cd(char *path);
+bool	builtin_cd(char *path, char **env);
 int		find_index(const char *str, char c);
 char	*get_prompt(void);
 void	builtin_pwd(void);
