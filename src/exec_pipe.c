@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 20:56:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 21:02:47 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	exec_cmd(t_token *lst, char ***env)
 	pid_t	new_pid;
 	int		infile;
 	int		fd_in;
+	int		outfile;
 
 	pid = NULL;
 	fd_in = 0;
@@ -135,6 +136,11 @@ void	exec_cmd(t_token *lst, char ***env)
 			}
 			if (lst->next)
 				dup2(fd[1], STDOUT_FILENO);
+			if (lst->outfile)
+			{
+				outfile = open(lst->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
+				dup2(outfile, STDOUT_FILENO);
+			}
 			execve(lst->exec_name, lst->cmd, *env);
 		}
 		else
