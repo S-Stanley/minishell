@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 15:12:18 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 16:57:09 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,43 +59,6 @@ void	set_status(int status)
 		g_exit_status = 1;
 }
 
-t_pid	*create_pid(pid_t new_pid)
-{
-	t_pid	*new;
-
-	new = malloc(sizeof(t_pid));
-	new->pid = new_pid;
-	new->next = NULL;
-	return (new);
-}
-
-t_pid	*add_pid(t_pid *pid, pid_t new_pid)
-{
-	t_pid	*new;
-	t_pid	*tmp;
-
-	new = create_pid(new_pid);
-	if (!new)
-		return (pid);
-	if (!pid)
-		return (new);
-	tmp = pid;
-	while (pid->next)
-		pid = pid->next;
-	pid->next = new;
-	return (tmp);
-}
-
-void	wait_all_pid(t_pid *pid)
-{
-	while (pid)
-	{
-		waitpid(pid->pid, &pid->status, 2);
-		set_status(pid->status);
-		pid = pid->next;
-	}
-}
-
 void	exec_buildint(t_token *lst, char ***env)
 {
 	if (ft_strcmp(lst->cmd[0], "pwd") == 0)
@@ -105,18 +68,6 @@ void	exec_buildint(t_token *lst, char ***env)
 	if (ft_strcmp(lst->cmd[0], "export") == 0)
 		*env = add_item_env(lst->cmd, *env);
 	exit(0);
-}
-
-void	free_pid(t_pid *pid)
-{
-	t_pid	*tmp;
-
-	while (pid)
-	{
-		tmp = pid->next;
-		free(pid);
-		pid = tmp;
-	}
 }
 
 void	exec_cmd(t_token *lst, char ***env)
