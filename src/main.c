@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 20:43:34 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/24 00:17:58 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, exit_handler);
 	while (1)
 	{
+		if (!isatty(STDIN_FILENO))
+			break ;
 		prompt = get_prompt();
 		command_line = readline(prompt);
 		history = add_cmd_line(history, command_line);
