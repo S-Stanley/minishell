@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:39:44 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 10:47:47 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	child_process(int fd_out, int *fd, t_token *lst, char ***env)
 {
-	// close(fd[0]);
 	if (lst->out_fd != 1)
 	{
 		dup2(lst->out_fd, STDOUT_FILENO);
@@ -50,12 +49,12 @@ int	parent_process(int *fd, int fd_in, int fd_out, t_token *lst)
 	return (fd_in);
 }
 
-void	set_status(int status, int *exit_status)
+void	set_status(int status)
 {
 	if (status == 512)
-		exit_status[0] = 2;
+		g_exit_status = 2;
 	if (status == 256)
-		exit_status[0] = 1;
+		g_exit_status = 1;
 }
 
 t_pid	*create_pid(pid_t new_pid)
@@ -85,12 +84,12 @@ t_pid	*add_pid(t_pid *pid, pid_t new_pid)
 	return (tmp);
 }
 
-void	wait_all_pid(t_pid *pid, int *exit_status)
+void	wait_all_pid(t_pid *pid)
 {
 	while (pid)
 	{
 		waitpid(pid->pid, &pid->status, 2);
-		set_status(pid->status, exit_status);
+		set_status(pid->status);
 		pid = pid->next;
 	}
 }
@@ -118,7 +117,7 @@ void	free_pid(t_pid *pid)
 	}
 }
 
-void	exec_cmd(t_token *lst, char ***env, int *exit_status)
+void	exec_cmd(t_token *lst, char ***env)
 {
 	int		fd[2];
 	int		fd_in;
@@ -146,6 +145,6 @@ void	exec_cmd(t_token *lst, char ***env, int *exit_status)
 		}
 		lst = lst->next;
 	}
-	wait_all_pid(pid, exit_status);
+	wait_all_pid(pid);
 	free_pid(pid);
 }

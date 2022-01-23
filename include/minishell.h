@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 23:16:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 10:47:17 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
+int						g_exit_status;
 
 /*
  *	Structure to hold all prompt info
@@ -99,17 +100,16 @@ char	**copy_n_extract(char **extended, int newtab_size);
 int		get_operator(char *s);
 
 char	*get_bash_var(char *var_to_find, char **env);
-void	exec_cmd(t_token *lst, char ***env, int *exit_status);
+void	exec_cmd(t_token *lst, char ***env);
 t_token	*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
 void	free_token_list(t_token *lst);
-void	parse_and_exec(char	**output, char **env, int *exit_status);
 char	*get_full_path(char *cmd);
-void	print_error(int code, char *value, int *exit_status);
+void	print_error(int code, char *value);
 int		ft_len_matrice(char **matrice);
-char	*get_cmd_arr(char **cmd, int x, char *output, int *exit_status);
+char	*get_cmd_arr(char **cmd, int x, char *output);
 bool	is_builtin(char *str);
 void	read_that_matrice(char **matrice);
-bool	exec(char **cmd_line, char ***env, int *exit_status);
+bool	exec(char **cmd_line, char ***env);
 char	**ft_matrice_split(char **matrice, char **splitter);
 int		find_index_matrice(char **matrice, char **to_find);
 int		count_len_matrice(char **matrice);

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:41:37 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 10:46:10 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_token	*build_lst(char **line)
 	return (lst);
 }
 
-bool	exec(char **cmd_line, char ***env, int *exit_status)
+bool	exec(char **cmd_line, char ***env)
 {
 	t_token	*lst;
 
@@ -85,28 +85,28 @@ bool	exec(char **cmd_line, char ***env, int *exit_status)
 	{
 		read_export(*env);
 		if (lst->next)
-			exec_cmd(lst->next, env, exit_status);
+			exec_cmd(lst->next, env);
 	}
 	else if (ft_strcmp(lst->cmd[0], "export") == 0)
 	{
 		*env = add_item_env(lst->cmd, *env);
 		if (lst->next)
-			exec_cmd(lst->next, env, exit_status);
+			exec_cmd(lst->next, env);
 	}
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
 		*env = remove_item_env(lst->cmd, *env);
 		if (lst->next)
-			exec_cmd(lst->next, env, exit_status);
+			exec_cmd(lst->next, env);
 	}
 	else if (ft_strcmp(lst->cmd[0], "cd") == 0)
 	{
 		builtin_cd(lst->cmd[1]);
 		if (lst->next)
-			exec_cmd(lst->next, env, exit_status);
+			exec_cmd(lst->next, env);
 	}
 	else
-		exec_cmd(lst, env, exit_status);
+		exec_cmd(lst, env);
 	free_token_list(lst);
 	return (true);
 }
