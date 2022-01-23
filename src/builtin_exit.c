@@ -6,11 +6,17 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:51:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 11:23:14 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 16:02:56 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	exit_and_free(int exit_code, t_token *lst)
+{
+	free_token_list(lst);
+	exit(exit_code);
+}
 
 bool	check_if_alphanum(t_token *lst)
 {
@@ -33,7 +39,7 @@ bool	check_if_alphanum(t_token *lst)
 			print_error(2, lst->exec_name);
 			free(value_err2);
 			free(value_err);
-			exit(255);
+			exit_and_free(255, lst);
 		}
 		i++;
 	}
@@ -45,11 +51,12 @@ bool	builtin_exit(t_token *lst)
 	int	exit_code;
 
 	if (count_len_matrice(lst->cmd) == 1)
-		exit(0);
+		exit_and_free(0, lst);
 	if (!check_if_alphanum(lst))
 		return (false);
 	exit_code = ft_atoi(lst->cmd[1]);
 	if (exit_code > 255 || exit_code < 0)
-		exit(2);
-	exit(exit_code);
+		exit_and_free(2, lst);
+	exit_and_free(exit_code, lst);
+	return (true);
 }

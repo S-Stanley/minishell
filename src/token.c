@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 10:39:03 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 16:06:10 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	free_token_list(t_token *lst)
 	while (lst)
 	{
 		tmp = lst->next;
-		free(lst->exec_name);
 		free_that_matrice(lst->cmd);
 		free(lst);
 		lst = tmp;

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:38 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 15:36:14 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 15:59:25 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ char	*find_cmd_in_path(char **path, char *cmd)
 		full_path = ft_strjoin(path_with_slash, cmd);
 		free(path_with_slash);
 		if (access(full_path, X_OK) == 0)
-		{
-			free_that_matrice(path);
 			return (full_path);
-		}
 		free(full_path);
 		i++;
 	}
@@ -75,6 +72,7 @@ char	*get_full_path(char *cmd)
 	if (res)
 	{
 		free_that_matrice(path);
+		// read_that_matrice(path);
 		return (res);
 	}
 	free_that_matrice(path);
