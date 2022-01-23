@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:13:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:17:49 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char	**remove_item_env(char **cmd, char **env)
 		i++;
 	}
 	to_return[x] = 0;
+	free_that_matrice(env);
 	return (to_return);
 }
 
