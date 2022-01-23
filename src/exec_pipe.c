@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 21:02:47 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/24 00:02:47 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,52 +70,15 @@ void	exec_buildint(t_token *lst, char ***env)
 	exit(0);
 }
 
-// void	exec_cmd(t_token *lst, char ***env)
-// {
-// 	int		fd[2];
-// 	int		fd_in;
-// 	int		fd_out;
-// 	t_pid	*pid;
-// 	pid_t	new_pid;
-
-// 	pid = NULL;
-// 	fd_in = lst->in_fd;
-// 	while (lst)
-// 	{
-// 		pipe(fd);
-// 		fd_out = lst->out_fd;
-// 		new_pid = fork();
-// 		if (new_pid == 0)
-// 		{
-// 			pid = add_pid(pid, new_pid);
-// 			dup2(fd_in, STDIN_FILENO);
-// 			dup2(STDOUT_FILENO, fd[1]);
-// 			// close(fd_in);
-// 			child_process(fd_out, fd, lst, env);
-// 		}
-// 		else
-// 		{
-// 			dup2(fd[0], STDIN_FILENO);
-// 			pid = add_pid(pid, new_pid);
-// 			parent_process(fd, fd_in, fd_out, lst);
-// 		}
-// 		lst = lst->next;
-// 	}
-// 	wait_all_pid(pid);
-// 	free_pid(pid);
-// }
-
 void	exec_cmd(t_token *lst, char ***env)
 {
 	int		fd[2];
 	t_pid	*pid;
 	pid_t	new_pid;
 	int		infile;
-	int		fd_in;
 	int		outfile;
 
 	pid = NULL;
-	fd_in = 0;
 	while (lst)
 	{
 		pipe(fd);
@@ -158,79 +121,3 @@ void	exec_cmd(t_token *lst, char ***env)
 	wait_all_pid(pid);
 	free_pid(pid);
 }
-
-// is kind of working 1
-// void	exec_cmd(t_token *lst, char ***env)
-// {
-// 	int		fd[2];
-// 	int		fd_in;
-// 	int		fd_out;
-// 	t_pid	*pid;
-// 	pid_t	new_pid;
-
-// 	pid = NULL;
-// 	fd_in = lst->in_fd;
-// 	while (lst)
-// 	{
-// 		pipe(fd);
-// 		fd_out = lst->out_fd;
-// 		new_pid = fork();
-// 		if (new_pid == 0)
-// 		{
-// 			pid = add_pid(pid, new_pid);
-// 			close(fd[0]);
-// 			dup2(lst->in_fd, STDIN_FILENO);
-// 			if (lst->next)
-// 				dup2(fd[1], STDOUT_FILENO);
-// 			execve(lst->exec_name, lst->cmd, *env);
-// 		}
-// 		else
-// 		{
-// 			close(fd[1]);
-// 			if (lst->next)
-// 				dup2(fd[0], STDIN_FILENO);
-// 			pid = add_pid(pid, new_pid);
-// 			parent_process(fd, fd_in, fd_out, lst);
-// 		}
-// 		lst = lst->next;
-// 	}
-// 	wait_all_pid(pid);
-// 	free_pid(pid);
-// }
-
-// is kind of working 0
-// void	exec_cmd(t_token *lst, char ***env)
-// {
-// 	int		fd[2];
-// 	int		fd_in;
-// 	int		fd_out;
-// 	t_pid	*pid;
-// 	pid_t	new_pid;
-
-// 	pid = NULL;
-// 	fd_in = lst->in_fd;
-// 	while (lst)
-// 	{
-// 		pipe(fd);
-// 		fd_out = lst->out_fd;
-// 		new_pid = fork();
-// 		if (new_pid == 0)
-// 		{
-// 			pid = add_pid(pid, new_pid);
-// 			close(fd[0]);
-// 			dup2(lst->in_fd, STDIN_FILENO);			
-// 			dup2(fd[1], STDOUT_FILENO);
-// 			execve(lst->exec_name, lst->cmd, *env);
-// 		}
-// 		else
-// 		{
-// 			close(fd[1]);
-// 			dup2(fd[0], STDIN_FILENO);
-// 			pid = add_pid(pid, new_pid);
-// 			parent_process(fd, fd_in, fd_out, lst);
-// 		}
-// 		lst = lst->next;
-// 	}
-// 	wait_all_pid(pid);
-// 	free_pid(pid);
-// }
