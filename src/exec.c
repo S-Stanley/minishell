@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 10:46:10 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 11:24:05 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,11 @@ bool	exec(char **cmd_line, char ***env)
 		builtin_cd(lst->cmd[1]);
 		if (lst->next)
 			exec_cmd(lst->next, env);
+	}
+	else if (ft_strcmp(lst->cmd[0], "exit") == 0)
+	{
+		builtin_exit(lst);
+		return (false);
 	}
 	else
 		exec_cmd(lst, env);

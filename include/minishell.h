@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 10:47:17 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 11:13:31 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ char	**add_item_env(char **cmd, char **env);
 char	**remove_item_env(char **cmd, char **env);
 void	read_export(char **env);
 void	read_env(char **env);
+bool	builtin_exit(t_token *lst);
 
 #endif
