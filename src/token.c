@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 16:32:42 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 17:11:43 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	free_token_list(t_token *lst)
 	while (lst)
 	{
 		tmp = lst->next;
-		free(lst->exec_name);
+		if (ft_strcmp(lst->exec_name, "export") != 0)
+			free(lst->exec_name);
 		free(lst->cmd);
 		free(lst);
 		lst = tmp;
