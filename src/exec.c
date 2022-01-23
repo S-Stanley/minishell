@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 15:36:46 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 16:24:35 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ bool	exec(char **cmd_line, char ***env)
 	}
 	else
 		exec_cmd(lst, env);
-	// free_token_list(lst);
+	free_token_list(lst);
 	return (true);
 }
