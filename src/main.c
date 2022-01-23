@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 16:54:40 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/23 16:59:21 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,57 +54,3 @@ int	main(int ac, char **av, char **env)
 	free_history(history);
 	return (0);
 }
-
-//	Original main() function
-//int	main(int ac, char **av, char **env)
-//{
-//	char		*command_line;
-//	t_prompt	prompt;
-//
-//	(void)env;
-//	(void)ac;
-//	(void)av;
-//
-//	prompt.first_token = NULL;
-//	prompt.env = env;
-//	prompt.token_len = 0;
-//	prompt.line = NULL;
-//	while (1)
-//	{
-//		command_line = readline("> ");
-//		add_history(command_line);
-//	}
-//	return (0);
-//}
-
-//===================================
-// Some tests
-//	
-//	input_example = "echo \"hello   '   there\" how are you 'doing? $USER |wc -l >outfile";
-//	output_example = ft_split_input(input_example);
-//	if (output_example == NULL)
-//		printf("wrong quote placing!\n");
-//
-//	
-//	input_example = "echo '\"hello   '   there\" how are 'you 'doing? $USER |wc -l >outfile";
-//	output_example = ft_split_input(input_example);
-//	if (output_example == NULL)
-//		printf("wrong quote placing!\n");
-//
-//
-
-//==================================
-// Just notes!
-//=====================================
-
-/*
-char *exec = "ls";
-char **arg = {"-l", 0}
-
-// check if it's a built in
-char *full_path = get_full_path(exec); // return /bin/ls
-if (full_path)
-	char **cmd = {full_path, "-l", 0}
-execve(cmd[0], cmd, env);
-
-*/
