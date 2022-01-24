@@ -121,6 +121,11 @@ char		**ft_extend_vars(char **splitted, char **env)
 	while (splitted[i])
 	{
 		j = 0;
+		if (ft_strcmp(splitted[i], "~") == 0)
+		{
+			free(splitted[i]);
+			splitted[i] = get_bash_var("$HOME", env);
+		}
 		while (splitted[i][j] && splitted[i][0] != '\'' && splitted[i][j] != '$')
 			j++;
 		if (splitted[i][0] != '\'' && splitted[i][j] == '$')

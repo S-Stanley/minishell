@@ -55,7 +55,13 @@ static int	get_linelen(char *line)
 	}
 }
 
-char	**copy_n_extract(char **extended, int newtab_size)
+static void	replace_single_tilda(char **ret, char **env, int j)
+{
+	free(ret[j]);
+	ret[j] = get_bash_var("$HOME", env);
+}
+
+char	**copy_n_extract(char **extended, int newtab_size, char **env)
 {
 	char	**ret;
 	char	*ptr;
@@ -73,6 +79,8 @@ char	**copy_n_extract(char **extended, int newtab_size)
 		{
 			len = get_linelen(ptr);
 			ret[j] = ft_strndup(ptr, len);
+			if (len == 1 && *ptr == '~')
+				replace_single_tilda(ret, env, j);
 			ptr += len;
 			j++;
 		}

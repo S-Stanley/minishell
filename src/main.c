@@ -52,10 +52,10 @@ int	main(int ac, char **av, char **env)
 		if (!command_line)
 		{
 			printf("exit ctrl+d\n");
-			break ;
+			break;
 		}
 		add_history(command_line);
-		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), env));
+		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), env), env);
 		
 		// check errors in prompt
 		if (!check_input(command_line))

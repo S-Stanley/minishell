@@ -102,7 +102,7 @@ static int	count_new_tab_size(char **extended)
 	return (res);
 }
 
-char		**ft_extract_operators(char **extended)
+char		**ft_extract_operators(char **extended, char **env)
 {
 	int		new_len;
 	int		old_len;
@@ -115,7 +115,7 @@ char		**ft_extract_operators(char **extended)
 	new_len = count_new_tab_size(extended);
 	if (old_len == new_len)
 		return (extended);
-	ret = copy_n_extract(extended, new_len);
+	ret = copy_n_extract(extended, new_len, env);
 	free_that_matrice(extended);
 	return (ret);
 }
