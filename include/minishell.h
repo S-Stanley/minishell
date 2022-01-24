@@ -106,6 +106,8 @@ char		**ft_extract_operators(char **extended);
 char		**copy_n_extract(char **extended, int newtab_size);
 /* extract_operators defining function */
 int			get_operator(char *s);
+/* checks for arrow and pipe misuse */
+int			check_input(char *command_line);
 
 char		*get_bash_var(char *var_to_find, char **env);
 void		exec_cmd(t_token *lst, char ***env);

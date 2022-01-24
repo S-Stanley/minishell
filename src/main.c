@@ -50,8 +50,18 @@ int	main(int ac, char **av, char **env)
 			break ;
 		add_history(command_line);
 		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), env));
-		exec(output, &environnement, history);
-		free_that_matrice(output);
+		
+		// check errors in prompt
+		if (!check_input(command_line))
+		{
+			free_that_matrice(output);
+			printf("wrong input\n");
+		}
+		else
+		{
+			exec(output, &environnement, history);
+			free_that_matrice(output);
+		}
 	}
 	// rl_clear_history();
 	free_that_matrice(environnement);
