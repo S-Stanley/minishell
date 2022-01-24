@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/24 00:02:47 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:17:46 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ void	exec_cmd(t_token *lst, char ***env)
 				dup2(infile, STDIN_FILENO);
 				close(infile);
 			}
-			else
-			{
-				dup2(infile, STDIN_FILENO);
-			}
+			// else
+			// {
+				// dup2(infile, STDIN_FILENO);
+			// }
 			if (lst->next)
 				dup2(fd[1], STDOUT_FILENO);
 			if (lst->outfile)
