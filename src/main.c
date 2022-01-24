@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/24 00:17:58 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/24 19:41:08 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static int	g_exit_status;
 
 void	exit_handler(int nb)
 {
-	(void)nb;
+	if (nb == 3)
+		return ;
+	printf("%d\n", nb);
 	close(0);
 	close(1);
 	close(2);
@@ -38,6 +40,7 @@ int	main(int ac, char **av, char **env)
 	g_exit_status = 0;
 	environnement = get_env(env);
 	signal(SIGINT, exit_handler);
+	signal(SIGQUIT, exit_handler);
 	while (1)
 	{
 		if (!isatty(STDIN_FILENO))
