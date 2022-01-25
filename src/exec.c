@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 00:33:10 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 00:43:48 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,11 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
-	// if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
-	// {
-	// 	*env = update_env(lst->cmd, *env);
-	// 	if (lst->next)
-	// 		exec_cmd(lst->next, env);
-	// }
+	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
+	{
+		*env = update_env(lst->cmd, *env);
+			exec_cmd(lst, env);
+	}
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
 		*env = remove_item_env(lst->cmd, *env);
