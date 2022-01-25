@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/23 20:20:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 23:55:35 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char		*get_prompt(void);
 void		builtin_pwd(void);
 void		exec_buildint(t_token *lst, char ***env);
 char		**get_env(char **env);
-char		**add_item_env(char **cmd, char **env);
+char		**update_env(char **cmd, char **env);
 char		**remove_item_env(char **cmd, char **env);
 void		read_export(char **env);
 void		read_env(char **env);

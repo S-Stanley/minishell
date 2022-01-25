@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/25 20:38:51 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 23:57:44 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	}
 	else if (ft_strcmp(lst->cmd[0], "export") == 0)
 	{
-		*env = add_item_env(lst->cmd, *env);
+		*env = update_env(lst->cmd, *env);
 		if (lst->next)
 			exec_cmd(lst->next, env);
 	}
@@ -115,12 +115,6 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 		builtin_exit(lst, env, history);
 		return (false);
 	}
-	// else if (ft_strcmp(lst->cmd[0], "echo") == 0)
-	// {
-	// 	builtin_echo(lst->cmd);
-	// 	free_token_list(lst);
-	// 	return (false);
-	// }
 	else
 		exec_cmd(lst, env);
 	free_token_list(lst);

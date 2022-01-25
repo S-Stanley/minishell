@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/25 20:39:09 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 23:55:09 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_buildint(t_token *lst, char ***env)
 	if (ft_strcmp(lst->cmd[0], "env") == 0)
 		read_env(*env);
 	if (ft_strcmp(lst->cmd[0], "export") == 0)
-		*env = add_item_env(lst->cmd, *env);
+		*env = update_env(lst->cmd, *env);
 	if (ft_strcmp(lst->cmd[0], "echo") == 0)
 	{
 		builtin_echo(lst->cmd);

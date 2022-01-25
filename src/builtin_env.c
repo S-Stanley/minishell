@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/25 01:08:51 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 00:09:36 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,95 @@ char	**get_env(char **env)
 	return (to_return);
 }
 
-char	**add_item_env(char **cmd, char **env)
+bool	is_env_var_exist(char **env, char *to_add)
 {
-	int		i;
-	char	**to_return;
-	int		x;
+	unsigned int	i;
+	char			**to_add_split;
+	char			**env_var_split;
 
-	if (!env || !cmd)
+	i = 0;
+	to_add_split = ft_split(to_add, '=');
+	if (!to_add_split)
+		return (false);
+	while (env[i])
+	{
+		env_var_split = ft_split(env[i], '=');
+		if (ft_strcmp(env_var_split[0], to_add_split[0]) == 0)
+		{
+			free_that_matrice(env_var_split);
+			free_that_matrice(to_add_split);
+			return (true);
+		}
+		free_that_matrice(env_var_split);
+		i++;
+	}
+	free_that_matrice(to_add_split);
+	return (false);
+}
+
+char	**update_env_var(char **env, char *to_add)
+{
+	unsigned int	i;
+	char			**to_add_split;
+	char			**env_var_split;
+
+	i = 0;
+	to_add_split = ft_split(to_add, '=');
+	if (!to_add_split)
 		return (env);
-	to_return = malloc(sizeof(char *)
-			* (count_len_matrice(env) + count_len_matrice(&cmd[1]) + 1));
+	while (env[i])
+	{
+		env_var_split = ft_split(env[i], '=');
+		if (ft_strcmp(env_var_split[0], to_add_split[0]) == 0)
+		{
+			if (!to_add_split[1])
+				return (env);
+			free(env[i]);
+			env[i] = ft_strdup(to_add);
+			free_that_matrice(env_var_split);
+			free_that_matrice(to_add_split);
+			return (env);
+		}
+		free_that_matrice(env_var_split);
+		i++;
+	}
+	free_that_matrice(to_add_split);
+	return (env);
+}
+
+char	**add_env_var(char **env, char *to_add)
+{
+	unsigned int	i;
+	char			**to_return;
+
+	to_return = malloc(sizeof(char *) * (count_len_matrice(env) + 2));
 	if (!to_return)
 		return (env);
 	i = 0;
 	while (env[i])
 	{
-		to_return[i] = ft_strdup(env[i]);
+		to_return[i] = env[i];
 		i++;
 	}
-	x = 1;
-	while (cmd[x])
-	{
-		to_return[i] = ft_strdup(cmd[x]);
-		x++;
-		i++;
-	}
-	to_return[i] = 0;
-	free_that_matrice(env);
+	to_return[i] = ft_strdup(to_add);
+	to_return[++i] = 0;
 	return (to_return);
+}
+
+char	**update_env(char **cmd, char **env)
+{
+	unsigned int	i;
+
+	i = 1;
+	while (cmd[i])
+	{
+		if (is_env_var_exist(env, cmd[i]))
+			env = update_env_var(env, cmd[i]);
+		else
+			env = add_env_var(env, cmd[i]);
+		i++;
+	}
+	return (env);
 }
 
 bool	find_string_in_matrice(char *to_find, char **matrice)
