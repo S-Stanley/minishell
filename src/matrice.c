@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 15:48:20 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 20:19:25 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,40 @@ int	find_index_matrice(char **matrice, char **to_find)
 	return (i);
 }
 
+bool	is_splitter(char *str, char **splitter)
+{
+	int		i;
+
+	i = 0;
+	while (splitter[i])
+	{
+		if (ft_strcmp(str, splitter[i]) == 0)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 char	**ft_matrice_split(char **matrice, char **splitter)
 {
 	int		i;
 	char	**to_return;
 	int		x;
+	int		y;
 
 	i = 0;
 	to_return = malloc(sizeof(char **)
 			* (find_index_matrice(matrice, splitter) + 1));
+	if (matrice[0] && is_splitter(matrice[i], splitter))
+	{
+		while (matrice[i] && is_splitter(matrice[i], splitter))
+			i++;
+		while (matrice[i] && !is_splitter(matrice[i], splitter))
+			i++;
+		while (matrice[i] && is_splitter(matrice[i], splitter))
+			i++;
+	}
+	y = 0;
 	while (matrice[i])
 	{
 		x = 0;
@@ -79,10 +104,11 @@ char	**ft_matrice_split(char **matrice, char **splitter)
 			}
 			x++;
 		}
-		to_return[i] = matrice[i];
+		to_return[y] = matrice[i];
 		i++;
+		y++;
 	}
-	to_return[i] = 0;
+	to_return[y] = 0;
 	return (to_return);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:20:08 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 19:44:26 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_token	*add_lst(t_token *lst, char **cmd, char **redirections)
 	if (!new)
 	{
 		free(lst);
-		return (NULL);
+		return (lst);
 	}
 	if (!lst)
 		return (new);
