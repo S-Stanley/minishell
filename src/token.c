@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/25 19:44:26 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 20:29:15 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ t_token	*create_lst(char **cmd, char **redirections)
 	new->is_builtin = is_builtin(cmd[0]);
 	new->cmd = cmd;
 	new->exec_name = get_full_path(cmd[0]);
-	if (!new->exec_name)
-	{
-		free(redirections);
-		free(new);
-		free(cmd);
-		return (NULL);
-	}
+	// if (!new->exec_name)
+	// {
+	// 	free(redirections);
+	// 	free(new);
+	// 	free(cmd);
+	// 	return (NULL);
+	// }
 	new->next = NULL;
 	free(redirections);
 	return (new);
