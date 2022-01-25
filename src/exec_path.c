@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:38 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:20:49 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 02:06:36 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char	*find_cmd_in_path(char **path, char *cmd)
 	}
 	if (is_builtin(cmd))
 		return (cmd);
-	print_error(0, cmd);
+	if (cmd)
+		print_error(0, cmd);
 	return (NULL);
 }
 

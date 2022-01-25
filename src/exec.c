@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/25 01:12:30 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 02:08:58 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,28 @@ t_token	*build_lst(char **line)
 
 	lst = NULL;
 	i = 0;
+	read_that_matrice(line);
 	while (line[i])
 	{
+		/*
+			Problem:
+				1. do no wait for stdin (probably because it do not pipe)
+				2. seem like for << ok | wc bash is just taking 0 0 0 at all so no stdin anyway (but he listend to it)
+				3. peut-être qu'il vaut mieux faire le access dans le pipe directement
+		if (ft_strcmp(line[i], "<<") == 0)
+		{
+			while (ft_strcmp(line[i], "|") != 0)
+				i++;
+			i++;
+		}
+		printf("*%s\n", line[i]);
+		*/
 		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]));
 		if (!lst)
+		{
+			printf("error\n");
 			return (NULL);
+		}
 		while (line[i] && ft_strcmp((char *)line[i], "|") != 0)
 			i++;
 		while (ft_strcmp((char *)line[i], "|") == 0)
