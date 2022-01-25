@@ -6,11 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/22 23:16:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 00:21:56 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static int	g_exit_status;
 
 /*
 	get_bash_var get a variable as argument (ex: $USER)
@@ -33,7 +35,7 @@ char	*get_bash_var(char *var_to_find, char **env)
 	if (!env || !var_to_find || var_to_find[1] == '$')
 		return (ft_strdup(""));
 	if (ft_strcmp(var_to_find, "$?") == 0)
-		return (ft_itoa(0));
+		return (ft_itoa(g_exit_status));
 	var_name = ft_strtrim(var_to_find, "$");
 	i = 0;
 	while (env[i])
