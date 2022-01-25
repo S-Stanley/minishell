@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:17:46 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 01:12:24 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ void	exec_cmd(t_token *lst, char ***env)
 				outfile = open(lst->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
 				dup2(outfile, STDOUT_FILENO);
 			}
-			execve(lst->exec_name, lst->cmd, *env);
+			if (lst->is_builtin)
+				exec_buildint(lst, env);
+			else
+				execve(lst->exec_name, lst->cmd, *env);
 		}
 		else
 		{
