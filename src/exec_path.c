@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:38 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/25 19:32:27 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 00:46:54 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_full_path(char *cmd)
 	if (find_index(cmd, '/') != -1)
 	{
 		if (access(cmd, X_OK) == 0)
-			return (cmd);
+			return (ft_strdup(cmd));
 	}
 	path_env = getenv("PATH");
 	if (!path_env)
