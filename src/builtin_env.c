@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:17:49 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/25 01:06:17 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	read_export(char **env)
 {
 	int		i;
 	char	**var;
-	char	*value;
 
 	if (!env)
 		return ;
@@ -125,10 +124,11 @@ void	read_export(char **env)
 	{
 		var = ft_split(env[i], '=');
 		if (var[1])
-			value = var[1];
+			printf("declare -x %s=\"%s\"\n", var[0], var[1]);
 		else
-			value = "";
-		printf("declare -x %s=\"%s\"\n", var[0], value);
+		{
+			printf("declare -x %s\n", var[0]);
+		}
 		free_that_matrice(var);
 		i++;
 	}
