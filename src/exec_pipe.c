@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/25 23:55:09 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 00:33:03 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void	exec_buildint(t_token *lst, char ***env)
 		builtin_pwd();
 	if (ft_strcmp(lst->cmd[0], "env") == 0)
 		read_env(*env);
-	if (ft_strcmp(lst->cmd[0], "export") == 0)
+	if (ft_strcmp(lst->cmd[0], "export") == 0 && !lst->cmd[1])
+		read_export(*env);
+	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 		*env = update_env(lst->cmd, *env);
 	if (ft_strcmp(lst->cmd[0], "echo") == 0)
-	{
 		builtin_echo(lst->cmd);
-		// free_token_list(lst);
-	}
 	exit(0);
 }
 
