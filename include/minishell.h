@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/25 23:55:35 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 00:53:55 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <signal.h>
+
+int						g_exit_status;
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;

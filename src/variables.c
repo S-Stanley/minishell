@@ -6,13 +6,11 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 00:21:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 00:53:43 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-static int	g_exit_status;
 
 /*
 	get_bash_var get a variable as argument (ex: $USER)
