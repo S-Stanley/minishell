@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 19:57:28 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 20:53:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,16 @@ void	exec_cmd(t_token *lst, char ***env)
 			if (lst->is_builtin)
 				exec_buildint(lst, env);
 			else
-				execve(lst->exec_name, lst->cmd, *env);
+			{
+				if (access(lst->exec_name, X_OK) != 0)
+				{
+					perror(lst->exec_name);
+					g_exit_status = 127;
+					exit(127);
+				}
+				else
+					execve(lst->exec_name, lst->cmd, *env);
+			}
 		}
 		else
 		{
