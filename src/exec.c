@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 19:55:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/26 21:16:07 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,8 @@ t_token	*build_lst(char **line)
 	{
 		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]));
 		if (!lst)
-		{
-			// printf("error %s\n");
 			return (NULL);
-		}
-		while (line[i] && ft_strcmp((char *)line[i], "|") != 0)
-			i++;
-		while (ft_strcmp((char *)line[i], "|") == 0)
+		while (line[i] && string_is_separator(line[i], "< << > >> |"))
 			i++;
 	}
 	return (lst);
@@ -86,10 +81,11 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
+	read_lst(lst);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
-			exec_cmd(lst, env);
+		exec_cmd(lst, env);
 	}
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
