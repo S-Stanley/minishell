@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 21:16:07 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/27 19:45:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_token	*build_lst(char **line)
 			return (NULL);
 		while (line[i] && string_is_separator(line[i], "< << > >> |"))
 			i++;
+		while (line[i] && !string_is_separator(line[i], "< << > >> |"))
+			i++;
 	}
 	return (lst);
 }
@@ -81,7 +83,6 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
-	read_lst(lst);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
