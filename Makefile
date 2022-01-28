@@ -20,7 +20,7 @@ SRC = main.c splitter.c extender.c token.c variables.c \
 	exec_pipe.c exec.c matrice.c print_error.c exec_path.c \
 	file_descriptor.c extractor.c extractor_1.c builtin_cd.c \
 	builtin_pwd.c builtin_env.c builtin_exit.c builtin_echo.c \
-	history.c pid.c input_checker.c
+	history.c pid.c input_checker.c unquoter.c
 
 #SRC = exec.c main.c splitter.c splitter_1.c variables.c ORIGINAL SRC
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

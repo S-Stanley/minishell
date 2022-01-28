@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 23:37:10 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 23:52:37 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,13 @@ t_token	*build_lst(char **line)
 
 bool	what_to_exec(t_token *lst, char ***env, t_history *history)
 {
+	t_token	*lst;
+
+	lst = NULL;
+	lst = build_lst((char **)cmd_line);
+	if (!lst)
+		return (false);
+	unquote(lst->cmd);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
