@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 22:19:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 22:31:52 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ bool	create_all_files(char **line)
 {
 	unsigned int	i;
 	unsigned int	x;
+	int				fd;
 
 	i = 0;
 	x = 0;
@@ -66,9 +67,17 @@ bool	create_all_files(char **line)
 	{
 		if (ft_strcmp(line[i], "|") == 0)
 			break ;
-		if (ft_strcmp(line[i], ">") == 0 && line[i + 1])
+		if ((ft_strcmp(line[i], ">") == 0 || ft_strcmp(line[i], ">>") == 0)
+			&& line[i + 1])
 		{
-			printf("file will be %s\n", line[i + 1]);
+			fd = open(line[i + 1], O_RDWR | O_CREAT, 0777);
+			printf("creating %s %d\n", line[i + 1], fd);
+			if (fd == -1)
+			{
+				printf("%s\n", strerror(errno));
+				return (false);
+			}
+			close(fd);
 		}
 		i++;
 	}
@@ -84,7 +93,7 @@ t_token	*build_lst(char **line)
 	i = 0;
 	while (line[i])
 	{
-		//create_all_files(&line[i]);
+		create_all_files(&line[i]);
 		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]));
 		if (!lst)
 			return (NULL);

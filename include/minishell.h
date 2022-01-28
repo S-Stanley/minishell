@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/26 21:13:38 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 22:27:49 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <errno.h>
 
 static int						g_exit_status = 0;
 
