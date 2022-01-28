@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 22:13:07 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 23:10:12 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	exec_cmd(t_token *lst, char ***env)
 			{
 				if (access(lst->exec_name, X_OK) != 0)
 				{
-					// perror(lst->exec_name);
+					perror(lst->exec_name);
 					g_exit_status = 127;
 					exit(127);
 				}
