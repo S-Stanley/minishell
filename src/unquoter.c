@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquoter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:17:24 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/28 15:17:27 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/01/28 23:56:24 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,16 @@ static int		get_unquoted_len(char *str)
 	return (newlen);
 }
 
-void    unquote(char **splitted)
+char	**unquote(char **splitted)
 {
 	int		i;
 	int		newlen;
 	char	*unquoted;
 
 	if (!splitted || !(*splitted))
-		return;
+		return (NULL);
 	i = 1;
-	while(splitted[i])
+	while (splitted[i])
 	{
 		newlen = get_unquoted_len(splitted[i]);
 		if ((size_t)newlen != ft_strlen(splitted[i]))
@@ -97,4 +97,5 @@ void    unquote(char **splitted)
 		}
 		i++;
 	}
+	return (splitted);
 }
