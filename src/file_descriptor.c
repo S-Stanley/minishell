@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 23:04:19 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 21:12:51 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 20:10:40 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	**get_redirection(char **str)
 	files[1] = NULL;
 	while (str[i])
 	{
-		printf("%s\n", str[i]);
 		if (ft_strcmp(str[i], "<") == 0)
 			files[0] = get_fd(str[i + 1]);
 		if (ft_strcmp(str[i], "<<") == 0)
