@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 23:31:26 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 23:37:10 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,8 @@ t_token	*build_lst(char **line)
 	return (lst);
 }
 
-bool	exec(char **cmd_line, char ***env, t_history *history)
+bool	what_to_exec(t_token *lst, char ***env, t_history *history)
 {
-	t_token	*lst;
-
-	lst = NULL;
-	lst = build_lst((char **)cmd_line);
-	read_lst(lst);
-	if (!lst)
-		return (false);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
@@ -135,6 +128,18 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 		builtin_exit(lst, env, history);
 	else
 		exec_cmd(lst, env);
+	return (true);
+}
+
+bool	exec(char **cmd_line, char ***env, t_history *history)
+{
+	t_token	*lst;
+
+	lst = NULL;
+	lst = build_lst((char **)cmd_line);
+	if (!lst)
+		return (false);
+	what_to_exec(lst, env, history);
 	free_token_list(lst);
 	return (true);
 }

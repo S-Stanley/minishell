@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/28 22:27:49 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 23:37:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # include <signal.h>
 # include <errno.h>
 
-static int						g_exit_status = 0;
+static int				g_exit_status = 0;
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
