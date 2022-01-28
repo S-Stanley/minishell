@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 20:17:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 22:19:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,26 @@ void	read_lst(t_token *lst)
 	}
 }
 
+bool	create_all_files(char **line)
+{
+	unsigned int	i;
+	unsigned int	x;
+
+	i = 0;
+	x = 0;
+	while (line[i])
+	{
+		if (ft_strcmp(line[i], "|") == 0)
+			break ;
+		if (ft_strcmp(line[i], ">") == 0 && line[i + 1])
+		{
+			printf("file will be %s\n", line[i + 1]);
+		}
+		i++;
+	}
+	return (true);
+}
+
 t_token	*build_lst(char **line)
 {
 	unsigned int	i;
@@ -64,12 +84,13 @@ t_token	*build_lst(char **line)
 	i = 0;
 	while (line[i])
 	{
+		//create_all_files(&line[i]);
 		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]));
 		if (!lst)
 			return (NULL);
-		while (line[i] && !string_is_separator(line[i], "< << > >> |"))
+		while (line[i] && ft_strcmp(line[i], "|") != 0)
 			i++;
-		while (line[i] && string_is_separator(line[i], "< << > >> |"))
+		if (ft_strcmp(line[i], "|") == 0)
 			i++;
 	}
 	return (lst);
@@ -81,8 +102,10 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 
 	lst = NULL;
 	lst = build_lst((char **)cmd_line);
+
 	if (!lst)
 		return (false);
+	
 	read_lst(lst);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
