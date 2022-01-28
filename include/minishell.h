@@ -109,6 +109,8 @@ char		**copy_n_extract(char **extended, int newtab_size, char **env);
 int			get_operator(char *s);
 /* checks for arrow and pipe misuse */
 int			check_input(char *command_line);
+/*removes quotes and special chars */
+void        unquote(char **splitted);
 
 char		*get_bash_var(char *var_to_find, char **env);
 void		exec_cmd(t_token *lst, char ***env);

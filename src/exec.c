@@ -86,6 +86,8 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	lst = build_lst((char **)cmd_line);
 	if (!lst)
 		return (false);
+	if (lst)
+		unquote(lst->cmd);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);

@@ -47,7 +47,10 @@ int	main(int ac, char **av, char **env)
 		if (!command_line)
 			break ;
 		add_history(command_line);
-		output = ft_extract_operators(ft_extend_vars(ft_split_input(command_line), environnement), environnement);
+		output = ft_extract_operators( ft_extend_vars(
+						ft_split_input(command_line)
+						, environnement)
+						, environnement);
 		// check errors in prompt
 		if (!check_input(command_line))
 		{
