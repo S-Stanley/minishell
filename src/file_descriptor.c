@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 23:04:19 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 20:20:24 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 23:31:34 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,26 @@ char	*read_from_stdin(char *next_cmd_line)
 	return (get_fd("/tmp/.listen-stdin"));
 }
 
+bool	string_is_separator(char *str, char *separators)
+{
+	char			**sep;
+	unsigned int	x;
+
+	sep = ft_split(separators, ' ');
+	x = 0;
+	while (sep[x])
+	{
+		if (ft_strcmp(str, sep[x]) == 0)
+		{
+			free_that_matrice(sep);
+			return (true);
+		}
+		x++;
+	}
+	free_that_matrice(sep);
+	return (false);
+}
+
 char	**get_redirection(char **str)
 {
 	unsigned int	i;
@@ -55,7 +75,7 @@ char	**get_redirection(char **str)
 	files = malloc(sizeof(char *) * 3);
 	files[0] = NULL;
 	files[1] = NULL;
-	while (str[i] && ft_strcmp(str[i], "|") != 0)
+	while (str[i])
 	{
 		if (ft_strcmp(str[i], "<") == 0)
 			files[0] = get_fd(str[i + 1]);
@@ -65,6 +85,8 @@ char	**get_redirection(char **str)
 			files[1] = get_fd(str[i + 1]);
 		if (ft_strcmp(str[i], ">>") == 0)
 			files[1] = get_fd(str[i + 1]);
+		if (ft_strcmp(str[i], "|") == 0)
+			break ;
 		i++;
 	}
 	files[2] = 0;

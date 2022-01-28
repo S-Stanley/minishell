@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 19:55:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 23:31:26 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,35 @@ void	read_lst(t_token *lst)
 	}
 }
 
+bool	create_all_files(char **line)
+{
+	unsigned int	i;
+	unsigned int	x;
+	int				fd;
+
+	i = 0;
+	x = 0;
+	while (line[i])
+	{
+		if (ft_strcmp(line[i], "|") == 0)
+			break ;
+		if ((ft_strcmp(line[i], ">") == 0 || ft_strcmp(line[i], ">>") == 0)
+			&& line[i + 1])
+		{
+			fd = open(line[i + 1], O_RDWR | O_CREAT, 0777);
+			printf("creating %s %d\n", line[i + 1], fd);
+			if (fd == -1)
+			{
+				printf("%s\n", strerror(errno));
+				return (false);
+			}
+			close(fd);
+		}
+		i++;
+	}
+	return (true);
+}
+
 t_token	*build_lst(char **line)
 {
 	unsigned int	i;
@@ -64,15 +93,13 @@ t_token	*build_lst(char **line)
 	i = 0;
 	while (line[i])
 	{
+		create_all_files(&line[i]);
 		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]));
 		if (!lst)
-		{
-			// printf("error %s\n");
 			return (NULL);
-		}
-		while (line[i] && ft_strcmp((char *)line[i], "|") != 0)
+		while (line[i] && ft_strcmp(line[i], "|") != 0)
 			i++;
-		while (ft_strcmp((char *)line[i], "|") == 0)
+		while (ft_strcmp(line[i], "|") == 0)
 			i++;
 	}
 	return (lst);
@@ -84,6 +111,7 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 
 	lst = NULL;
 	lst = build_lst((char **)cmd_line);
+	read_lst(lst);
 	if (!lst)
 		return (false);
 	if (lst)
@@ -91,7 +119,7 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
-			exec_cmd(lst, env);
+		exec_cmd(lst, env);
 	}
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/26 20:01:43 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/28 22:27:49 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <errno.h>
 
 static int						g_exit_status = 0;
 
@@ -148,5 +149,6 @@ t_pid		*add_pid(t_pid *pid, pid_t new_pid);
 void		wait_all_pid(t_pid *pid);
 void		free_pid(t_pid *pid);
 void		set_status(int status);
+bool		string_is_separator(char *str, char *separators);
 
 #endif
