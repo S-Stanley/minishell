@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/29 17:00:18 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 18:23:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void	exit_handler(int nb)
 	// rl_redisplay();
 	printf("\n");
 	get_prompt();
+}
+
+t_history	*update_history(char *command_line, t_history *history)
+{
+	add_history(command_line);
+	history = add_cmd_line(history, command_line);
+	return (history);
 }
 
 int	main(int ac, char **av, char **env)
@@ -45,10 +52,9 @@ int	main(int ac, char **av, char **env)
 			break ;
 		get_prompt();
 		command_line = readline("");
-		history = add_cmd_line(history, command_line);
 		if (!command_line)
 			break ;
-		add_history(command_line);
+		history = update_history(ft_strdup(command_line), history);
 		output = ft_extract_operators(ft_extend_vars(
 					ft_split_input(command_line), environnement),
 				environnement);
@@ -61,8 +67,10 @@ int	main(int ac, char **av, char **env)
 		else
 		{
 			exec(output, &environnement, history);
+			// free(output);
 			free_that_matrice(output);
 		}
+		free(command_line);
 	}
 	// rl_clear_history();
 	free_that_matrice(environnement);

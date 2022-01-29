@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:38 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 22:16:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 17:58:40 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	find_index(const char *str, char c)
 	return (-1);
 }
 
-char	*get_full_path(char *cmd)
+char	*get_full_path(char *cmd, char **env)
 {
 	char	**path;
 	char	*path_env;
@@ -63,13 +63,14 @@ char	*get_full_path(char *cmd)
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 	}
-	path_env = getenv("PATH");
+	path_env = get_bash_var("PATH", env);
 	if (!path_env)
 		return (NULL);
 	path = ft_split(path_env, ':');
 	if (!path)
 		return (NULL);
 	res = find_cmd_in_path(path, cmd);
+	free(path_env);
 	if (res)
 	{
 		free_that_matrice(path);

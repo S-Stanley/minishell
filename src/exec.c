@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/29 17:39:07 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 18:16:58 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ bool	create_all_files(char **line)
 	return (true);
 }
 
-t_token	*build_lst(char **line)
+t_token	*build_lst(char **line, char **env)
 {
 	unsigned int	i;
 	t_token			*lst;
@@ -93,7 +93,7 @@ t_token	*build_lst(char **line)
 	while (line[i])
 	{
 		create_all_files(&line[i]);
-		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]));
+		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]), env);
 		if (!lst)
 			return (NULL);
 		while (line[i] && ft_strcmp(line[i], "|") != 0)
@@ -148,7 +148,7 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	t_token	*lst;
 
 	lst = NULL;
-	lst = build_lst((char **)cmd_line);
+	lst = build_lst((char **)cmd_line, *env);
 	if (!lst)
 		return (false);
 	lst = unquote_lst(lst);

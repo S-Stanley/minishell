@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/29 16:37:19 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 17:53:11 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char		*get_bash_var(char *var_to_find, char **env);
 void		exec_cmd(t_token *lst, char ***env);
 t_token		*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
 void		free_token_list(t_token *lst);
-char		*get_full_path(char *cmd);
+char		*get_full_path(char *cmd, char **env);
 void		print_error(int code, char *value);
 int			ft_len_matrice(char **matrice);
 char		*get_cmd_arr(char **cmd, int x, char *output);
@@ -129,8 +129,8 @@ int			find_index_matrice(char **matrice, char **to_find);
 int			count_len_matrice(char **matrice);
 char		**get_redirection(char **str);
 char		*read_from_stdin(char *next_cmd_line);
-t_token		*build_lst(char **line);
-t_token		*add_lst(t_token *lst, char **cmd, char **redirections);
+t_token		*build_lst(char **line, char **env);
+t_token		*add_lst(t_token *lst, char **cmd, char **redirections, char **env);
 bool		builtin_cd(char *path, char **env);
 int			find_index(const char *str, char c);
 void		get_prompt(void);
