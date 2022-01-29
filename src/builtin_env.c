@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 00:09:36 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 18:46:29 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,12 @@ char	**remove_item_env(char **cmd, char **env)
 	int		i;
 	char	**to_return;
 	int		x;
+	char	*find;
 
 	if (!cmd || !env)
+		return (env);
+	find = get_bash_var(cmd[1], env);
+	if (ft_strcmp(find, "") == 0)
 		return (env);
 	to_return = malloc(sizeof(char *)
 			* (count_len_matrice(env) - count_len_matrice(&cmd[1]) + 1));
@@ -168,6 +172,7 @@ char	**remove_item_env(char **cmd, char **env)
 		}
 		i++;
 	}
+	printf("x -> %d\n", x);
 	to_return[x] = 0;
 	free_that_matrice(env);
 	return (to_return);
