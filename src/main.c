@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/29 16:32:03 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 17:00:18 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ void	exit_handler(int nb)
 	if (nb == 3)
 		return ;
 	// rl_replace_line("", 0);
-	rl_redisplay();
+	// rl_redisplay();
+	printf("\n");
+	get_prompt();
 }
 
 int	main(int ac, char **av, char **env)
 {
 	char		**output;
 	char		*command_line;
-	char		*prompt;
 	char		**environnement;
 	t_history	*history;
 
@@ -42,10 +43,9 @@ int	main(int ac, char **av, char **env)
 	{
 		if (!isatty(STDIN_FILENO))
 			break ;
-		prompt = get_prompt();
-		command_line = readline(prompt);
+		get_prompt();
+		command_line = readline("");
 		history = add_cmd_line(history, command_line);
-		free(prompt);
 		if (!command_line)
 			break ;
 		add_history(command_line);

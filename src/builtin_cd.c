@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 00:47:48 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 15:32:25 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 16:38:17 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,19 @@ bool	builtin_cd(char *path, char **env)
 	return (false);
 }
 
-char	*get_prompt(void)
+void	get_prompt(void)
 {
 	char	*prompt;
 	char	*cwd;
 
 	cwd = malloc(sizeof(char) * 100);
 	if (!cwd)
-		return (ft_strdup(""));
+		return ;
 	cwd = getcwd(cwd, 100);
 	prompt = ft_strjoin(cwd, "> ");
 	free(cwd);
-	return (prompt);
+	if (!prompt)
+		return ;
+	write(1, prompt, ft_strlen(prompt));
+	free(prompt);
 }
