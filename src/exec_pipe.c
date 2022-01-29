@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/29 17:40:46 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 18:49:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,11 @@ bool	child_process(t_token *lst, int *fd, char ***env)
 	else
 	{
 		if (access(lst->exec_name, X_OK) != 0)
-		{
 			perror(lst->exec_name);
-		}
 		else
 			execve(lst->exec_name, lst->cmd, *env);
-		// free_that_matrice(lst->cmd);
-		// free(lst->exec_name);
+		free_that_matrice(lst->cmd);
+		free(lst->exec_name);
 		exit(127);
 	}
 	return (false);
