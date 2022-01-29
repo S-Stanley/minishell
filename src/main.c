@@ -6,11 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/26 20:53:54 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 16:32:03 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int				g_exit_status;
 
 void	exit_handler(int nb)
 {
@@ -47,10 +49,9 @@ int	main(int ac, char **av, char **env)
 		if (!command_line)
 			break ;
 		add_history(command_line);
-		output = ft_extract_operators( ft_extend_vars(
-						ft_split_input(command_line)
-						, environnement)
-						, environnement);
+		output = ft_extract_operators(ft_extend_vars(
+					ft_split_input(command_line), environnement),
+				environnement);
 		// check errors in prompt
 		if (!check_input(command_line))
 		{

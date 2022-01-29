@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 23:50:49 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 16:34:48 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ void	set_status(int status)
 		g_exit_status = 2;
 	if (status == 256)
 		g_exit_status = 1;
+	if (status == 127)
+		g_exit_status = 127;
+	if (status == 32512)
+		g_exit_status = 127;
 }
 
 void	exec_buildint(t_token *lst, char ***env)
@@ -62,7 +66,6 @@ bool	child_process(t_token *lst, int *fd, char ***env)
 		if (access(lst->exec_name, X_OK) != 0)
 		{
 			perror(lst->exec_name);
-			g_exit_status = 127;
 			exit(127);
 		}
 		else
