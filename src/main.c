@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/29 18:23:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 19:05:19 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	main(int ac, char **av, char **env)
 		command_line = readline("");
 		if (!command_line)
 			break ;
-		history = update_history(ft_strdup(command_line), history);
 		output = ft_extract_operators(ft_extend_vars(
 					ft_split_input(command_line), environnement),
 				environnement);
@@ -66,9 +65,11 @@ int	main(int ac, char **av, char **env)
 		}
 		else
 		{
+			history = update_history(ft_strdup(command_line), history);
 			exec(output, &environnement, history);
-			// free(output);
 			free_that_matrice(output);
+			if (ft_strcmp(command_line, "") == 0)
+				printf("\n");
 		}
 		free(command_line);
 	}
