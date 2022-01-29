@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 11:30:36 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/26 20:33:34 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 18:53:55 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,24 @@ bool	builtin_echo(char **cmd)
 	unsigned int	x;
 
 	i = 1;
-	if (!cmd || count_len_matrice(cmd) == 1)
+	if (!cmd)
 		return (true);
-	while (cmd[i][0] == '-' && cmd[i][1] == 'n')
+	if (count_len_matrice(cmd) > 1)
 	{
-		x = 0;
-		while (cmd[i][x] == 'n')
-			x++;
-		i++;
-	}
-	while (cmd[i])
-	{
-		printf("%s", cmd[i]);
-		if (cmd[i + 1])
-			printf(" ");
-		i++;
+		while (cmd[i][0] == '-' && cmd[i][1] == 'n')
+		{
+			x = 0;
+			while (cmd[i][x] == 'n')
+				x++;
+			i++;
+		}
+		while (cmd[i])
+		{
+			printf("%s", cmd[i]);
+			if (cmd[i + 1])
+				printf(" ");
+			i++;
+		}
 	}
 	if (should_print_nl(cmd))
 		printf("\n");
