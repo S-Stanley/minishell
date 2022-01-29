@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/29 16:30:00 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/29 17:39:07 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ bool	create_all_files(char **line)
 			&& line[i + 1])
 		{
 			fd = open(line[i + 1], O_RDWR | O_CREAT, 0777);
-			printf("creating %s %d\n", line[i + 1], fd);
 			if (fd == -1)
 			{
 				printf("%s\n", strerror(errno));
