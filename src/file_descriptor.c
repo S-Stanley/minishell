@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 23:04:19 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/28 23:31:34 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:00:50 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,16 @@ char	**get_redirection(char **str)
 	files[1] = NULL;
 	while (str[i])
 	{
+		if (string_is_separator(str[i], "< <<"))
+		{
+			if (files[0])
+				free(files[0]);
+		}
+		if (string_is_separator(str[i], "> >>"))
+		{
+			if (files[1])
+				free(files[1]);
+		}
 		if (ft_strcmp(str[i], "<") == 0)
 			files[0] = get_fd(str[i + 1]);
 		if (ft_strcmp(str[i], "<<") == 0)
