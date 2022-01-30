@@ -12,36 +12,7 @@
 
 #include "../include/minishell.h"
 
-static char *get_var_name(char *str)
-{
-	char	*v_name;
-	int		v_len;
-
-	v_len = 1;
-	if (ft_isdigit(str[v_len]) || str[v_len] == '$' || str[v_len] == '?')
-	{
-		v_name = ft_strdup("$$");
-		if (ft_isdigit(str[v_len]))
-			v_name[1] = str[v_len];
-		if (str[v_len] == '?')
-			v_name[1] = '?';
-		return (v_name);
-	}
-	while (ft_isalnum(str[v_len]) || str[v_len] == '_')
-		v_len++;
-	v_name = malloc(sizeof(char) * (v_len + 1));
-	v_name[0] = '$';
-	v_len = 1;
-	while (ft_isalnum(str[v_len]) || str[v_len] == '_')
-	{
-		v_name[v_len] = str[v_len];
-		v_len++;
-	}
-	v_name[v_len] = '\0';
-	return (v_name);
-}
-
-static char	*before_and_val(char **s, char **env, int dollar_sign)
+static char	*before_and_val(char **s, char **env, int dollar_sign, 	int old_len)
 {
 	char	*new_str;
 	char	*v_value;
@@ -50,15 +21,16 @@ static char	*before_and_val(char **s, char **env, int dollar_sign)
 
 	v_name = get_var_name(*s + dollar_sign);
 	v_value = get_bash_var(v_name, env);
-	new_len = dollar_sign + ft_strlen(v_value);
+	new_len = dollar_sign - old_len + ft_strlen(v_value);
 	new_str = malloc(sizeof(char) * (new_len + 1));
 	new_len = 0;
-	while (new_len < dollar_sign)
+	while ((*s)[old_len] && !((*s)[old_len] == '$' && to_expand(*s, old_len)))
 	{
-		new_str[new_len] = (*s)[new_len];
+		new_str[new_len] = (*s)[old_len];
 		new_len++;
+		old_len++;
 	}
-	*s += new_len + ft_strlen(v_name);
+	(*s)[dollar_sign] = -1;
 	free(v_name);
 	dollar_sign = 0;
 	while (v_value[dollar_sign])
@@ -85,27 +57,29 @@ static void		add_append(char *tmp_str, char **new_str)
 
 static char		*process_line(char *s, char **env)
 {
-	char	*tmp_str;
-	char	*new_str;
-	int		i;
+	char		*tmp_str;
+	char		*new_str;
+	int			i;
+	static int	prv;
 
 	new_str = NULL;
-	while (1)
+	i = 0;
+	while (s[i])
 	{
-		i = 0;
-		while (s[i] && s[i] != '$')
+		while (s[i] && !(s[i] == '$' && to_expand(s, i)))
 			i++;
-		if (s[i] == '$')
+		if (s[i] == '$' && to_expand(s, i))
 		{
-			tmp_str = before_and_val(&s, env, i);
+			tmp_str = before_and_val(&s, env, i, prv);
+			prv = get_varname_len(s + i) + i;
 			add_append(tmp_str, &new_str);
 		}
 		else if (!s[i])
 		{
-			tmp_str = ft_strjoin(new_str, s);
+			tmp_str = ft_strjoin(new_str, s + prv);
 			free(new_str);
 			new_str = tmp_str;
-			break;
+			prv = 0;
 		}
 	}
 	return (new_str);
@@ -126,9 +100,10 @@ char		**ft_extend_vars(char **splitted, char **env)
 			free(splitted[i]);
 			splitted[i] = get_bash_var("$HOME", env);
 		}
-		while (splitted[i][j] && splitted[i][0] != '\'' && splitted[i][j] != '$')
+		while (splitted[i][j] && !(splitted[i][j] == '$'
+				&& to_expand(splitted[i], j)))
 			j++;
-		if (splitted[i][0] != '\'' && splitted[i][j] == '$')
+		if (splitted[i][j] == '$' && to_expand(splitted[i], j))
 		{
 			new_line = process_line(splitted[i], env);
 			free(splitted[i]);
