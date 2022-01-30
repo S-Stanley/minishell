@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/29 18:49:33 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 00:25:15 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	set_status(int status)
 		g_exit_status = 127;
 	if (status == 32512)
 		g_exit_status = 127;
+	if (status == 0)
+		g_exit_status = 0;
 }
 
 void	exec_buildint(t_token *lst, char ***env)
