@@ -108,10 +108,16 @@ char		**ft_extract_operators(char **extended, char **env);
 char		**copy_n_extract(char **extended, int newtab_size, char **env);
 /* extract_operators defining function */
 int			get_operator(char *s);
+/*expand variables extending function*/
+int			to_expand(char *line, int index);
+char		*get_var_name(char *str);
+int			get_varname_len(char *str);
+
 /* checks for arrow and pipe misuse */
 int			check_input(char *command_line);
 /*removes quotes and special chars */
 char		**unquote(char **splitted);
+
 
 char		*get_bash_var(char *var_to_find, char **env);
 void		exec_cmd(t_token *lst, char ***env);
