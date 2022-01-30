@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/30 18:48:01 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 00:23:01 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_handler(int nb)
 	if (nb == 3)
 		return ;
 	g_exit_status = 130;
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_redisplay();
 	printf("\n");
 	printf("minishell> ");
@@ -72,8 +72,10 @@ int	main(int ac, char **av, char **env)
 		}
 		free(command_line);
 		command_line = NULL;
+		unlink("/tmp/.listen-stdin");
 	}
 	// rl_clear_history();
+	unlink("/tmp/.listen-stdin");
 	free_that_matrice(environnement);
 	free_history(history);
 	return (0);

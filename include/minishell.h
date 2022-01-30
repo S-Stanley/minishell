@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/30 16:05:51 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/30 23:56:54 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <errno.h>
+# include <string.h>
 
 extern int				g_exit_status;
 
@@ -117,7 +118,6 @@ int			get_varname_len(char *str);
 int			check_input(char *command_line);
 /*removes quotes and special chars */
 char		**unquote(char **splitted);
-
 
 char		*get_bash_var(char *var_to_find, char **env);
 void		exec_cmd(t_token *lst, char ***env);
