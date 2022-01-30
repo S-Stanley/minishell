@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/29 18:16:58 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/30 15:55:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,9 @@ void	read_lst(t_token *lst)
 bool	create_all_files(char **line)
 {
 	unsigned int	i;
-	unsigned int	x;
 	int				fd;
 
 	i = 0;
-	x = 0;
 	while (line[i])
 	{
 		if (ft_strcmp(line[i], "|") == 0)
