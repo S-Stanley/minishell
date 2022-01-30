@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/30 18:51:04 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:28:03 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,22 @@ t_token	*create_lst(char **cmd, char **redirections, char **env)
 	return (new);
 }
 
+t_token	*error_arg_for_token(char **matrice, t_token *lst)
+{
+	if (matrice)
+		free_that_matrice(matrice);
+	return (lst);
+}
+
 t_token	*add_lst(t_token *lst, char **cmd, char **redirections, char **env)
 {
 	t_token	*new;
 	t_token	*tmp;
 
-	if (!cmd || !redirections)
-		return (lst);
+	if (!cmd)
+		return (error_arg_for_token(redirections, lst));
+	if (!redirections)
+		return (error_arg_for_token(cmd, lst));
 	new = create_lst(cmd, redirections, env);
 	if (!new)
 	{

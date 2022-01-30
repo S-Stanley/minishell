@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/30 19:02:26 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:23:53 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ char	**full_cmd(char **str)
 	to_split = get_splitter();
 	to_return = ft_matrice_split(str, to_split);
 	free(to_split);
+	if (to_return[0] == 0 || to_return[0][0] == 0)
+	{
+		free_that_matrice(to_return);
+		return (NULL);
+	}
 	return (to_return);
 }
 
@@ -104,6 +109,8 @@ t_token	*build_lst(char **line, char **env)
 
 bool	what_to_exec(t_token *lst, char ***env, t_history *history)
 {
+	if (count_len_matrice(lst->cmd) == 0)
+		return (true);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
