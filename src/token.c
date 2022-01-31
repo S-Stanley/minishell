@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 21:20:46 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/01 00:26:20 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_token_list(t_token *lst)
 			free(lst->infile);
 		if (lst->outfile)
 			free(lst->outfile);
+		if (lst->append)
+			free(lst->append);
 		free(lst->cmd);
 		free(lst);
 		lst = tmp;
@@ -61,6 +63,7 @@ t_token	*create_lst(char **cmd, char **redirections, char **env)
 		return (NULL);
 	new->infile = redirections[0];
 	new->outfile = redirections[1];
+	new->append = redirections[2];
 	new->is_builtin = is_builtin(cmd[0]);
 	new->cmd = cmd;
 	new->exec_name = get_full_path(cmd[0], env);

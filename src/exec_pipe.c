@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:24:37 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/01 00:31:08 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@ void	run_executable(t_token *lst, char ***env)
 	free_that_matrice(lst->cmd);
 	free(lst->exec_name);
 	exit(127);
+}
+
+int	get_outfile(t_token *lst)
+{
+	int	outfile;
+
+	if (lst->append)
+		outfile = open(lst->outfile,
+				O_RDWR | O_CREAT | O_APPEND, 0777);
+	else
+		outfile = open(lst->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	return (outfile);
 }
 
 bool	child_process(t_token *lst, int *fd, char ***env)
@@ -38,7 +50,7 @@ bool	child_process(t_token *lst, int *fd, char ***env)
 		dup2(fd[1], STDOUT_FILENO);
 	if (lst->outfile)
 	{
-		outfile = open(lst->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		outfile = get_outfile(lst);
 		dup2(outfile, STDOUT_FILENO);
 	}
 	if (lst->is_builtin)

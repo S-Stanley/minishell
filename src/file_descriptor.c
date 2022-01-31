@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 23:04:19 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/30 19:06:19 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/01 00:27:06 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,42 @@ void	should_you_free_fd(char **files, char **str)
 	}
 }
 
+char	**get_files(char **files, int i, char **str)
+{
+	if (ft_strcmp(str[i], "<") == 0)
+		files[0] = get_fd(str[i + 1]);
+	if (ft_strcmp(str[i], "<<") == 0)
+		files[0] = read_from_stdin(str[i + 1]);
+	if (ft_strcmp(str[i], ">") == 0)
+		files[1] = get_fd(str[i + 1]);
+	if (ft_strcmp(str[i], ">>") == 0)
+	{
+		files[1] = get_fd(str[i + 1]);
+		files[2] = ft_strdup("append");
+	}
+	return (files);
+}
+
 char	**get_redirection(char **str)
 {
 	unsigned int	i;
 	char			**files;
 
 	i = 0;
-	files = malloc(sizeof(char *) * 3);
+	files = malloc(sizeof(char *) * 4);
+	if (!files)
+		return (NULL);
 	files[0] = NULL;
 	files[1] = NULL;
+	files[2] = NULL;
 	while (str[i])
 	{
 		should_you_free_fd(files, &str[i]);
-		if (ft_strcmp(str[i], "<") == 0)
-			files[0] = get_fd(str[i + 1]);
-		if (ft_strcmp(str[i], "<<") == 0)
-			files[0] = read_from_stdin(str[i + 1]);
-		if (ft_strcmp(str[i], ">") == 0)
-			files[1] = get_fd(str[i + 1]);
-		if (ft_strcmp(str[i], ">>") == 0)
-			files[1] = get_fd(str[i + 1]);
+		files = get_files(files, i, str);
 		if (ft_strcmp(str[i], "|") == 0)
 			break ;
 		i++;
 	}
-	files[2] = 0;
+	files[3] = 0;
 	return (files);
 }
