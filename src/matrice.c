@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:33:19 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 21:03:30 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**get_value_to_return(char **matrice, char **splitter, int i, int x)
 
 	y = 0;
 	to_return = malloc(sizeof(char **)
-			* (find_index_matrice(matrice, splitter) + 2));
+			* (find_index_matrice(matrice, splitter) + 10));
 	while (matrice[i])
 	{
 		x = 0;
