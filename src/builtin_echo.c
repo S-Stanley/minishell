@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 11:30:36 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/29 18:53:55 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:15:48 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ bool	should_print_nl(char **cmd)
 	return (false);
 }
 
+bool	print_nl(char **cmd)
+{
+	if (should_print_nl(cmd))
+		printf("\n");
+	return (true);
+}
+
 bool	builtin_echo(char **cmd)
 {
 	unsigned int	i;
@@ -64,7 +71,5 @@ bool	builtin_echo(char **cmd)
 			i++;
 		}
 	}
-	if (should_print_nl(cmd))
-		printf("\n");
-	return (true);
+	return (print_nl(cmd));
 }

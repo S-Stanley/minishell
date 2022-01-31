@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:11:38 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 00:52:53 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:13:40 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,20 @@ char	*get_full_path(char *cmd, char **env)
 	}
 	free_that_matrice(path);
 	return (NULL);
+}
+
+char	**full_cmd(char **str)
+{
+	char	**to_return;
+	char	**to_split;
+
+	to_split = get_splitter();
+	to_return = ft_matrice_split(str, to_split);
+	free(to_split);
+	if (to_return[0] == 0 || to_return[0][0] == 0)
+	{
+		free_that_matrice(to_return);
+		return (NULL);
+	}
+	return (to_return);
 }
