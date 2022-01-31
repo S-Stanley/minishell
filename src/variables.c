@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 19:44:48 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 19:48:23 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,25 @@
 	4. If it's find it, return it, else if just return an empty string
 */
 // TODO if given "$$" should return PID and if "$?" - last return value
+
+char	*env_var_found(char **env_var, char *var_name)
+{
+	char			*to_return;
+
+	if (count_len_matrice(env_var) == 1)
+		to_return = NULL;
+	else
+		to_return = ft_strdup(env_var[1]);
+	free_that_matrice(env_var);
+	free(var_name);
+	return (to_return);
+}
+
 char	*get_bash_var(char *var_to_find, char **env)
 {
 	unsigned int	i;
 	char			*var_name;
 	char			**env_var;
-	char			*to_return;
 
 	if (!env || !var_to_find || var_to_find[1] == '$')
 		return (ft_strdup(""));
@@ -40,15 +53,7 @@ char	*get_bash_var(char *var_to_find, char **env)
 	{
 		env_var = ft_split(env[i], '=');
 		if (ft_strcmp(env_var[0], var_name) == 0)
-		{
-			if (count_len_matrice(env_var) == 1)
-				to_return = NULL;
-			else
-				to_return = ft_strdup(env_var[1]);
-			free_that_matrice(env_var);
-			free(var_name);
-			return (to_return);
-		}
+			return (env_var_found(env_var, var_name));
 		free_that_matrice(env_var);
 		i++;
 	}
