@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/01 00:26:37 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/01 00:32:59 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,7 @@ bool		check_var_exist(char **cmd, char **env);
 char		**get_env(char **env);
 bool		is_env_var_exist(char **env, char *to_add);
 void		read_lst(t_token *lst);
+char		*get_fd(char *filename);
+int			get_outfile(t_token *lst);
 
 #endif

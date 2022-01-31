@@ -6,18 +6,11 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 23:04:19 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/01 00:27:06 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/01 00:32:37 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	*get_fd(char *filename)
-{
-	if (!filename)
-		return (ft_strdup(""));
-	return (ft_strdup(filename));
-}
 
 char	*read_from_stdin(char *next_cmd_line)
 {
