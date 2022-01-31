@@ -6,39 +6,19 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 01:30:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:24:37 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	set_status(int status)
+void	run_executable(t_token *lst, char ***env)
 {
-	if (status == 512)
-		g_exit_status = 2;
-	if (status == 256)
-		g_exit_status = 1;
-	if (status == 127)
-		g_exit_status = 127;
-	if (status == 32512)
-		g_exit_status = 127;
-	if (status == 0)
-		g_exit_status = 0;
-}
-
-void	exec_buildint(t_token *lst, char ***env)
-{
-	if (ft_strcmp(lst->cmd[0], "pwd") == 0)
-		builtin_pwd();
-	if (ft_strcmp(lst->cmd[0], "env") == 0)
-		read_env(*env);
-	if (ft_strcmp(lst->cmd[0], "export") == 0 && !lst->cmd[1])
-		read_export(*env);
-	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
-		*env = update_env(lst->cmd, *env);
-	if (ft_strcmp(lst->cmd[0], "echo") == 0)
-		builtin_echo(lst->cmd);
-	exit(0);
+	if (access(lst->exec_name, X_OK) == 0)
+		execve(lst->exec_name, lst->cmd, *env);
+	free_that_matrice(lst->cmd);
+	free(lst->exec_name);
+	exit(127);
 }
 
 bool	child_process(t_token *lst, int *fd, char ***env)
@@ -64,13 +44,7 @@ bool	child_process(t_token *lst, int *fd, char ***env)
 	if (lst->is_builtin)
 		exec_buildint(lst, env);
 	else
-	{
-		if (access(lst->exec_name, X_OK) == 0)
-			execve(lst->exec_name, lst->cmd, *env);
-		free_that_matrice(lst->cmd);
-		free(lst->exec_name);
-		exit(127);
-	}
+		run_executable(lst, env);
 	return (false);
 }
 
@@ -80,6 +54,13 @@ bool	parent_process(int *fd, t_token *lst)
 	if (lst->next)
 		dup2(fd[0], STDIN_FILENO);
 	return (true);
+}
+
+void	finish_exec(t_pid *pid)
+{
+	dup2(STDOUT_FILENO, STDIN_FILENO);
+	wait_all_pid(pid);
+	free_pid(pid);
 }
 
 void	exec_cmd(t_token *lst, char ***env)
@@ -107,7 +88,5 @@ void	exec_cmd(t_token *lst, char ***env)
 		close(fd[1]);
 		lst = lst->next;
 	}
-	dup2(STDOUT_FILENO, STDIN_FILENO);
-	wait_all_pid(pid);
-	free_pid(pid);
+	finish_exec(pid);
 }

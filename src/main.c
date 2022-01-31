@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/31 00:23:01 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:24:13 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,28 @@ t_history	*update_history(char *command_line, t_history *history)
 	return (history);
 }
 
-int	main(int ac, char **av, char **env)
+void	parse_errors(char **output)
+{
+	free_that_matrice(output);
+	printf("wrong input\n");
+}
+
+void	run_minishell(char **environnement, t_history *history)
 {
 	char		**output;
 	char		*command_line;
-	char		**environnement;
-	t_history	*history;
 
-	(void)av;
-	if (ac != 1)
-		return (0);
-	history = NULL;
-	g_exit_status = 0;
-	environnement = get_env(env);
 	command_line = NULL;
-	signal(SIGINT, exit_handler);
-	signal(SIGQUIT, exit_handler);
 	while (1)
 	{
-		if (!isatty(STDIN_FILENO))
-			break ;
 		command_line = readline("minishell> ");
 		if (!command_line)
 			break ;
 		output = ft_extract_operators(ft_extend_vars(
 					ft_split_input(command_line), environnement),
 				environnement);
-		// check errors in prompt
 		if (!check_input(command_line))
-		{
-			free_that_matrice(output);
-			printf("wrong input\n");
-		}
+			parse_errors(output);
 		else
 		{
 			history = update_history(ft_strdup(command_line), history);
@@ -74,7 +64,24 @@ int	main(int ac, char **av, char **env)
 		command_line = NULL;
 		unlink("/tmp/.listen-stdin");
 	}
-	// rl_clear_history();
+}
+
+int	main(int ac, char **av, char **env)
+{
+	char		**environnement;
+	t_history	*history;
+
+	(void)av;
+	if (ac != 1)
+		return (0);
+	history = NULL;
+	g_exit_status = 0;
+	environnement = get_env(env);
+	signal(SIGINT, exit_handler);
+	signal(SIGQUIT, exit_handler);
+	if (!isatty(STDIN_FILENO))
+		return (0);
+	run_minishell(environnement, history);
 	unlink("/tmp/.listen-stdin");
 	free_that_matrice(environnement);
 	free_history(history);

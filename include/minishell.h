@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/30 23:56:54 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:26:03 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,8 @@ void		wait_all_pid(t_pid *pid);
 void		free_pid(t_pid *pid);
 void		set_status(int status);
 bool		string_is_separator(char *str, char *separators);
+char		**get_splitter(void);
+bool		create_all_files(char **line);
+char		**full_cmd(char **str);
 
 #endif

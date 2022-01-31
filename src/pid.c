@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:56:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 19:07:58 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:18:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,18 @@ void	free_pid(t_pid *pid)
 		free(pid);
 		pid = tmp;
 	}
+}
+
+void	set_status(int status)
+{
+	if (status == 512)
+		g_exit_status = 2;
+	if (status == 256)
+		g_exit_status = 1;
+	if (status == 127)
+		g_exit_status = 127;
+	if (status == 32512)
+		g_exit_status = 127;
+	if (status == 0)
+		g_exit_status = 0;
 }
