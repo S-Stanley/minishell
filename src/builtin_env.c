@@ -6,36 +6,17 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:35:21 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 20:17:07 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-bool	is_env_var_exist(char **env, char *to_add)
+char	**return_env_and_free(char **env,
+	char **env_var_split, char **to_add_split)
 {
-	unsigned int	i;
-	char			**to_add_split;
-	char			**env_var_split;
-
-	i = 0;
-	to_add_split = ft_split(to_add, '=');
-	if (!to_add_split)
-		return (false);
-	while (env[i])
-	{
-		env_var_split = ft_split(env[i], '=');
-		if (ft_strcmp(env_var_split[0], to_add_split[0]) == 0)
-		{
-			free_that_matrice(env_var_split);
-			free_that_matrice(to_add_split);
-			return (true);
-		}
-		free_that_matrice(env_var_split);
-		i++;
-	}
-	free_that_matrice(to_add_split);
-	return (false);
+	clean_two_matrice(env_var_split, to_add_split);
+	return (env);
 }
 
 char	**update_env_var(char **env, char *to_add)
@@ -54,7 +35,7 @@ char	**update_env_var(char **env, char *to_add)
 		if (ft_strcmp(env_var_split[0], to_add_split[0]) == 0)
 		{
 			if (!to_add_split[1])
-				return (env);
+				return (return_env_and_free(env, env_var_split, to_add_split));
 			free(env[i]);
 			env[i] = ft_strdup(to_add);
 			clean_two_matrice(env_var_split, to_add_split);

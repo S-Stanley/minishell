@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:34:00 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 19:43:08 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 20:09:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,30 @@ bool	check_var_exist(char **cmd, char **env)
 	}
 	free(find);
 	return (true);
+}
+
+bool	is_env_var_exist(char **env, char *to_add)
+{
+	unsigned int	i;
+	char			**to_add_split;
+	char			**env_var_split;
+
+	i = 0;
+	to_add_split = ft_split(to_add, '=');
+	if (!to_add_split)
+		return (false);
+	while (env[i])
+	{
+		env_var_split = ft_split(env[i], '=');
+		if (ft_strcmp(env_var_split[0], to_add_split[0]) == 0)
+		{
+			free_that_matrice(env_var_split);
+			free_that_matrice(to_add_split);
+			return (true);
+		}
+		free_that_matrice(env_var_split);
+		i++;
+	}
+	free_that_matrice(to_add_split);
+	return (false);
 }
