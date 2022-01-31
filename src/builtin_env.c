@@ -6,31 +6,11 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/29 18:51:17 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:35:21 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	**get_env(char **env)
-{
-	char	**to_return;
-	int		i;
-
-	if (!env)
-		return (NULL);
-	to_return = malloc(sizeof(char *) * (count_len_matrice(env) + 1));
-	if (!to_return)
-		return (NULL);
-	i = 0;
-	while (env[i])
-	{
-		to_return[i] = ft_strdup(env[i]);
-		i++;
-	}
-	to_return[i] = 0;
-	return (to_return);
-}
 
 bool	is_env_var_exist(char **env, char *to_add)
 {
@@ -77,8 +57,7 @@ char	**update_env_var(char **env, char *to_add)
 				return (env);
 			free(env[i]);
 			env[i] = ft_strdup(to_add);
-			free_that_matrice(env_var_split);
-			free_that_matrice(to_add_split);
+			clean_two_matrice(env_var_split, to_add_split);
 			return (env);
 		}
 		free_that_matrice(env_var_split);
@@ -123,44 +102,14 @@ char	**update_env(char **cmd, char **env)
 	return (env);
 }
 
-bool	find_string_in_matrice(char *to_find, char **matrice)
-{
-	unsigned int	i;
-	char			**var;
-
-	i = 0;
-	if (!to_find || !matrice)
-		return (false);
-	while (matrice[i])
-	{
-		var = ft_split(to_find, '=');
-		if (ft_strcmp(var[0], matrice[i]) == 0)
-		{
-			free_that_matrice(var);
-			return (true);
-		}
-		free_that_matrice(var);
-		i++;
-	}
-	return (false);
-}
-
 char	**remove_item_env(char **cmd, char **env)
 {
 	int		i;
 	char	**to_return;
 	int		x;
-	char	*find;
 
-	if (!cmd || !env)
+	if (!check_var_exist(cmd, env))
 		return (env);
-	find = get_bash_var(cmd[1], env);
-	if (ft_strcmp(find, "") == 0)
-	{
-		free(find);
-		return (env);
-	}
-	free(find);
 	to_return = malloc(sizeof(char *)
 			* (count_len_matrice(env) - count_len_matrice(&cmd[1]) + 1));
 	if (!to_return)
@@ -179,41 +128,4 @@ char	**remove_item_env(char **cmd, char **env)
 	to_return[x] = 0;
 	free_that_matrice(env);
 	return (to_return);
-}
-
-void	read_export(char **env)
-{
-	int		i;
-	char	**var;
-
-	if (!env)
-		return ;
-	i = 0;
-	while (env[i])
-	{
-		var = ft_split(env[i], '=');
-		if (var[1])
-			printf("declare -x %s=\"%s\"\n", var[0], var[1]);
-		else
-		{
-			printf("declare -x %s\n", var[0]);
-		}
-		free_that_matrice(var);
-		i++;
-	}
-}
-
-void	read_env(char **env)
-{
-	unsigned int	i;
-
-	if (!env)
-		return ;
-	i = 0;
-	while (env[i])
-	{
-		if (find_index(env[i], '=') >= 0)
-			printf("%s\n", env[i]);
-		i++;
-	}
 }

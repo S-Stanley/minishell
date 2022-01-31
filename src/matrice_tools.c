@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:09:45 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:10:05 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:32:43 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,26 @@ int	count_len_matrice(char **matrice)
 	while (matrice[i])
 		i++;
 	return (i);
+}
+
+bool	find_string_in_matrice(char *to_find, char **matrice)
+{
+	unsigned int	i;
+	char			**var;
+
+	i = 0;
+	if (!to_find || !matrice)
+		return (false);
+	while (matrice[i])
+	{
+		var = ft_split(to_find, '=');
+		if (ft_strcmp(var[0], matrice[i]) == 0)
+		{
+			free_that_matrice(var);
+			return (true);
+		}
+		free_that_matrice(var);
+		i++;
+	}
+	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:10:00 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:33:19 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,10 @@ char	**ft_matrice_split(char **matrice, char **splitter)
 	i = get_value_i(matrice, splitter);
 	to_return = get_value_to_return(matrice, splitter, i, x);
 	return (to_return);
+}
+
+void	clean_two_matrice(char **m1, char **m2)
+{
+	free_that_matrice(m1);
+	free_that_matrice(m2);
 }

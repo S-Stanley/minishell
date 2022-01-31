@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:26:03 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:35:57 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,9 @@ bool		string_is_separator(char *str, char *separators);
 char		**get_splitter(void);
 bool		create_all_files(char **line);
 char		**full_cmd(char **str);
+bool		find_string_in_matrice(char *to_find, char **matrice);
+void		clean_two_matrice(char **m1, char **m2);
+bool		check_var_exist(char **cmd, char **env);
+char		**get_env(char **env);
 
 #endif
