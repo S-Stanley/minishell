@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:24:13 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/01/31 02:37:33 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_handler(int nb)
 	if (nb == 3)
 		return ;
 	g_exit_status = 130;
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 	printf("\n");
 	printf("minishell> ");
