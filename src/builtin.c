@@ -24,5 +24,7 @@ void	exec_buildint(t_token *lst, char ***env)
 		*env = update_env(lst->cmd, *env);
 	if (ft_strcmp(lst->cmd[0], "echo") == 0)
 		builtin_echo(lst->cmd);
+	free_that_matrice(lst->cmd);
+	free(lst->exec_name);
 	exit(0);
 }
