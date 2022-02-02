@@ -21,7 +21,7 @@ void	free_token_list(t_token *lst)
 	while (lst)
 	{
 		tmp = lst->next;
-		if (!lst->is_builtin)
+//		if (!lst->is_builtin) LEAK
 			free(lst->exec_name);
 		if (lst->infile)
 			free(lst->infile);
