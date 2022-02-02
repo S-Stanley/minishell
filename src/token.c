@@ -29,6 +29,11 @@ void	free_token_list(t_token *lst)
 			free(lst->outfile);
 		if (lst->append)
 			free(lst->append);
+		if (lst->orig_splitted)
+        {
+		    free(lst->orig_splitted);
+            lst->orig_splitted = NULL;
+        }
 		free(lst->cmd);
 		free(lst);
 		lst = tmp;

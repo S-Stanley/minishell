@@ -77,6 +77,7 @@ struct s_prompt
 
 struct s_token
 {
+    char    **orig_splitted;
 	char	**cmd;
 	char	*exec_name;
 	bool	is_builtin;
