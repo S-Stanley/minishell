@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:14:20 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:14:41 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/02 23:15:31 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ t_token	*build_lst(char **line, char **env)
 		lst = add_lst(lst, full_cmd(&line[i]), get_redirection(&line[i]), env);
 		if (!lst)
 			return (NULL);
-		lst->orig_splitted = NULL;
 		while (line[i] && ft_strcmp(line[i], "|") != 0)
 			i++;
 		while (ft_strcmp(line[i], "|") == 0)
 			i++;
 	}
-    lst->orig_splitted = line;
 	return (lst);
 }
