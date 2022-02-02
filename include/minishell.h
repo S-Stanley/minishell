@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/01 00:36:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/02 23:15:25 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ struct s_prompt
 
 struct s_token
 {
-    char    **orig_splitted;
 	char	**cmd;
 	char	*exec_name;
 	bool	is_builtin;
