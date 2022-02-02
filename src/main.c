@@ -19,7 +19,7 @@ void	exit_handler(int nb)
 	if (nb == 3)
 		return ;
 	g_exit_status = 130;
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 	printf("\n");
 	printf("minishell> ");
