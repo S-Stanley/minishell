@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 04:11:46 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 03:14:45 by roman            ###   ########.fr       */
+/*   Updated: 2022/02/03 20:04:12 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	check_input(char *command_line)
 		while (command_line[i] && command_line[i] != '>'
 			&& command_line[i] != '<' && command_line[i] != '|'
 			&& command_line[i] != '\'' && command_line[i] != '\"')
-				i++;
+			i++;
 		if (!check_signs(command_line, &i, i))
 			return (0);
 	}
