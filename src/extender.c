@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   extender.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 19:22:26 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 23:16:02 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 02:31:30 by roman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*before_and_val(char **s, char **env, int dollar_sign, 	int old_len)
+static char	*before_and_val(char **s, char **env, int dollar_sign, int old_len)
 {
 	char	*new_str;
 	char	*v_value;
@@ -40,7 +40,7 @@ static char	*before_and_val(char **s, char **env, int dollar_sign, 	int old_len)
 	return (new_str);
 }
 
-static void		add_append(char *tmp_str, char **new_str)
+static void	add_append(char *tmp_str, char **new_str)
 {
 	char	*old_str;
 
@@ -55,7 +55,14 @@ static void		add_append(char *tmp_str, char **new_str)
 	free(tmp_str);
 }
 
-static char		*process_line(char *s, char **env)
+static void	handle_endline(char **tmp_str, char **new_str, char *s)
+{
+	*tmp_str = ft_strjoin(*new_str, s);
+	free(*new_str);
+	*new_str = *tmp_str;
+}
+
+static char	*process_line(char *s, char **env)
 {
 	char		*tmp_str;
 	char		*new_str;
@@ -76,16 +83,14 @@ static char		*process_line(char *s, char **env)
 		}
 		else if (!s[i])
 		{
-			tmp_str = ft_strjoin(new_str, s + prv);
-			free(new_str);
-			new_str = tmp_str;
+			handle_endline(&tmp_str, &new_str, s + prv);
 			prv = 0;
 		}
 	}
 	return (new_str);
 }
 
-char		**ft_extend_vars(char **splitted, char **env)
+char	**ft_extend_vars(char **splitted, char **env)
 {
 	char	*new_line;
 	int		i;

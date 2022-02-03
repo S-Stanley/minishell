@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   extender_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 16:33:03 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/29 16:33:05 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/03 02:15:45 by roman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int to_expand(char *line, int index)
+static void	skip_to_char(int *i, char *line, int index, char c)
+{
+	(*i)++;
+	while (line[*i] && line[*i] != c && *i < index)
+		(*i)++;
+}
+
+int	to_expand(char *line, int index)
 {
 	int	i;
 
@@ -21,17 +28,13 @@ int to_expand(char *line, int index)
 	{
 		if (line[i] == '\"')
 		{
-			i++;
-			while (line[i] && line[i] != '\"' && i < index)
-				i++;
+			skip_to_char(&i, line, index, '\"');
 			if (i >= index)
 				return (1);
 		}
 		else if (line[i] == '\'')
 		{
-			i++;
-			while (line[i] && line[i] != '\'' && i < index)
-				i++;
+			skip_to_char(&i, line, index, '\'');
 			if (i >= index)
 				return (0);
 		}
@@ -42,10 +45,10 @@ int to_expand(char *line, int index)
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-char *get_var_name(char *str)
+char	*get_var_name(char *str)
 {
 	char	*v_name;
 	int		v_len;

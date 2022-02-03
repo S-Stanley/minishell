@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   extractor.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:49:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/22 16:09:53 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 03:13:59 by roman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		get_operator(char *s)
+int	get_operator(char *s)
 {
 	if (*s == '|')
 		return (1);
@@ -74,7 +74,7 @@ static void	count_sublines(char *line, int *ops_per_line, int *chars_per_line)
 		else
 		{
 			while (line[j] && !get_operator(line + j)
-					&& !(line[j] == '\'' || line[j] == '\"'))
+				&& !(line[j] == '\'' || line[j] == '\"'))
 				j++;
 			if (!line[j] || get_operator(line + j))
 				(*chars_per_line)++;
@@ -102,7 +102,7 @@ static int	count_new_tab_size(char **extended)
 	return (res);
 }
 
-char		**ft_extract_operators(char **extended, char **env)
+char	**ft_extract_operators(char **extended, char **env)
 {
 	int		new_len;
 	int		old_len;

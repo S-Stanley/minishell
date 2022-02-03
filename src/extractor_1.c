@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extractor_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 19:33:12 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/21 19:33:17 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/03 03:13:29 by roman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	count_quoted(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (line[i] == '\'')
@@ -34,7 +34,7 @@ static int	count_quoted(char *line)
 
 static int	get_linelen(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (get_operator(line))
@@ -45,8 +45,8 @@ static int	get_linelen(char *line)
 		{
 			if (line[i] == '\'' || line[i] == '\"')
 				i += count_quoted(line + i) + 1;
-			while (line[i] && !get_operator(line + i) 
-					&& !(line[i] == '\'' || line[i] == '\"'))
+			while (line[i] && !get_operator(line + i)
+				&& !(line[i] == '\'' || line[i] == '\"'))
 				i++;
 			if (get_operator(line + i))
 				return (i);

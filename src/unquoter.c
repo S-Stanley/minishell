@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquoter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:17:24 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/28 23:56:24 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 02:17:54 by roman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	copy_inside_quotes(int *i, int *j, char *str, char *new)
 {
-	char q;
+	char	q;
 
 	q = str[*i];
 	(*i)++;
@@ -30,8 +30,8 @@ static void	copy_inside_quotes(int *i, int *j, char *str, char *new)
 static char	*q_remove(char *str, int len)
 {
 	int		i;
-	int 	j;
-	char 	*new;
+	int		j;
+	char	*new;
 
 	i = 0;
 	j = 0;
@@ -51,15 +51,15 @@ static char	*q_remove(char *str, int len)
 	return (new);
 }
 
-static int		get_unquoted_len(char *str)
+static int	get_unquoted_len(char *str)
 {
 	int		i;
 	int		newlen;
-	char 	q;
+	char	q;
 
 	i = 0;
 	newlen = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 		{
@@ -70,7 +70,8 @@ static int		get_unquoted_len(char *str)
 				newlen++;
 				i++;
 			}
-		} else
+		}
+		else
 			newlen++;
 		i++;
 	}
@@ -92,7 +93,6 @@ char	**unquote(char **splitted)
 		if ((size_t)newlen != ft_strlen(splitted[i]))
 		{
 			unquoted = q_remove(splitted[i], newlen);
-//			free(splitted[i]); TODO Looks like it causes double free
 			splitted[i] = unquoted;
 		}
 		i++;
