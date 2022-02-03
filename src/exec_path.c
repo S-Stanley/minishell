@@ -19,6 +19,8 @@ char	*find_cmd_in_path(char **path, char *cmd)
 	char	*path_with_slash;
 
 	i = 0;
+	if (is_builtin(cmd))
+		return (cmd);
 	while (path[i])
 	{
 		path_with_slash = ft_strjoin(path[i], "/");
@@ -29,8 +31,6 @@ char	*find_cmd_in_path(char **path, char *cmd)
 		free(full_path);
 		i++;
 	}
-	if (is_builtin(cmd))
-		return (cmd);
 	print_error(0, cmd);
 	if (!cmd)
 		return (NULL);

@@ -6,13 +6,20 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:18:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:19:03 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:55:14 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exec_buildint(t_token *lst, char ***env)
+void	close_fds(void)
+{
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(2);
+}
+
+void	exec_buildint(t_token *lst, char ***env, char **cmd)
 {
 	if (ft_strcmp(lst->cmd[0], "pwd") == 0)
 		builtin_pwd();
@@ -24,5 +31,10 @@ void	exec_buildint(t_token *lst, char ***env)
 		*env = update_env(lst->cmd, *env);
 	if (ft_strcmp(lst->cmd[0], "echo") == 0)
 		builtin_echo(lst->cmd);
+	free(lst->exec_name);
+	free_token_list(lst);
+	free_that_matrice(*env);
+	free(cmd);
+	close_fds();
 	exit(0);
 }

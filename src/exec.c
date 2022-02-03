@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 20:51:57 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:57:07 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,31 @@ bool	create_all_files(char **line)
 	return (true);
 }
 
-bool	what_to_exec(t_token *lst, char ***env, t_history *history)
+bool	what_to_exec(t_token *lst, char ***env, t_history *history, char **cmd)
 {
 	if (count_len_matrice(lst->cmd) == 0)
 		return (true);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
-		exec_cmd(lst, env);
+		exec_cmd(lst, env, cmd);
 	}
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
 		*env = remove_item_env(lst->cmd, *env);
 		if (lst->next)
-			exec_cmd(lst->next, env);
+			exec_cmd(lst->next, env, cmd);
 	}
 	else if (ft_strcmp(lst->cmd[0], "cd") == 0)
 	{
 		builtin_cd(lst->cmd[1], *env);
 		if (lst->next)
-			exec_cmd(lst->next, env);
+			exec_cmd(lst->next, env, cmd);
 	}
 	else if (ft_strcmp(lst->cmd[0], "exit") == 0)
-		builtin_exit(lst, env, history);
+		builtin_exit(lst, env, history, cmd);
 	else
-		exec_cmd(lst, env);
+		exec_cmd(lst, env, cmd);
 	return (true);
 }
 
@@ -102,7 +102,7 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	if (!lst)
 		return (false);
 	lst = unquote_lst(lst);
-	what_to_exec(lst, env, history);
+	what_to_exec(lst, env, history, cmd_line);
 	free_token_list(lst);
 	return (true);
 }

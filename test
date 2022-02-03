@@ -1,0 +1,8 @@
+include
+leak1
+libft
+Makefile
+minishell
+src
+test
+tmp

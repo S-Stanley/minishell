@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:51:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/23 17:48:33 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:55:17 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ bool	check_if_alphanum(t_token *lst, char ***env, t_history *history)
 	return (true);
 }
 
-bool	builtin_exit(t_token *lst, char ***env, t_history *history)
+bool	builtin_exit(t_token *lst, char ***env, t_history *history, char **cmd)
 {
 	int	exit_code;
 
+	rl_clear_history();
+	free(cmd);
+	free(lst->exec_name);
 	if (count_len_matrice(lst->cmd) == 1)
 		exit_and_free(0, lst, env, history);
 	if (!check_if_alphanum(lst, env, history))

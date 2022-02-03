@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/01 00:36:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:54:19 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ struct s_prompt
 
 struct s_token
 {
-    char    **orig_splitted;
 	char	**cmd;
 	char	*exec_name;
 	bool	is_builtin;
@@ -122,7 +121,7 @@ int			check_input(char *command_line);
 char		**unquote(char **splitted);
 
 char		*get_bash_var(char *var_to_find, char **env);
-void		exec_cmd(t_token *lst, char ***env);
+void		exec_cmd(t_token *lst, char ***env, char **cmd);
 t_token		*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
 void		free_token_list(t_token *lst);
 char		*get_full_path(char *cmd, char **env);
@@ -143,13 +142,14 @@ bool		builtin_cd(char *path, char **env);
 int			find_index(const char *str, char c);
 void		get_prompt(void);
 void		builtin_pwd(void);
-void		exec_buildint(t_token *lst, char ***env);
+void		exec_buildint(t_token *lst, char ***env, char **cmd);
 char		**get_env(char **env);
 char		**update_env(char **cmd, char **env);
 char		**remove_item_env(char **cmd, char **env);
 void		read_export(char **env);
 void		read_env(char **env);
-bool		builtin_exit(t_token *lst, char ***env, t_history *history);
+bool		builtin_exit(t_token *lst, char ***env,
+				t_history *history, char **cmd);
 bool		builtin_echo(char **cmd);
 t_history	*add_cmd_line(t_history *cmd, char *to_add);
 void		free_history(t_history *history);
@@ -170,5 +170,7 @@ void		read_lst(t_token *lst);
 char		*get_fd(char *filename);
 int			get_outfile(t_token *lst);
 void		exit_handler(int nb);
+void		close_fds(void);
+void		free_token_light(t_token *lst);
 
 #endif
