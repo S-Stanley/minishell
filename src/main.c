@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 20:22:54 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:56:15 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ int	main(int ac, char **av, char **env)
 	free_that_matrice(environnement);
 	free_history(history);
 	rl_clear_history();
+	close_fds();
 	return (0);
 }

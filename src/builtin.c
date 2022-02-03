@@ -6,11 +6,18 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:18:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/03 20:27:15 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:55:14 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	close_fds(void)
+{
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(2);
+}
 
 void	exec_buildint(t_token *lst, char ***env, char **cmd)
 {
@@ -28,5 +35,6 @@ void	exec_buildint(t_token *lst, char ***env, char **cmd)
 	free_token_list(lst);
 	free_that_matrice(*env);
 	free(cmd);
+	close_fds();
 	exit(0);
 }
