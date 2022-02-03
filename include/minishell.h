@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/02 23:15:25 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:27:53 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int			check_input(char *command_line);
 char		**unquote(char **splitted);
 
 char		*get_bash_var(char *var_to_find, char **env);
-void		exec_cmd(t_token *lst, char ***env);
+void		exec_cmd(t_token *lst, char ***env, char **cmd);
 t_token		*add_token(t_token *lst, int in_fd, int out_fd, char **cmd);
 void		free_token_list(t_token *lst);
 char		*get_full_path(char *cmd, char **env);
@@ -142,7 +142,7 @@ bool		builtin_cd(char *path, char **env);
 int			find_index(const char *str, char c);
 void		get_prompt(void);
 void		builtin_pwd(void);
-void		exec_buildint(t_token *lst, char ***env);
+void		exec_buildint(t_token *lst, char ***env, char **cmd);
 char		**get_env(char **env);
 char		**update_env(char **cmd, char **env);
 char		**remove_item_env(char **cmd, char **env);

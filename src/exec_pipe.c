@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/01 00:36:25 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:26:52 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	run_executable(t_token *lst, char ***env)
 	exit(127);
 }
 
-bool	child_process(t_token *lst, int *fd, char ***env)
+bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
 {
 	int		infile;
 	int		outfile;
@@ -44,7 +44,7 @@ bool	child_process(t_token *lst, int *fd, char ***env)
 		dup2(outfile, STDOUT_FILENO);
 	}
 	if (lst->is_builtin)
-		exec_buildint(lst, env);
+		exec_buildint(lst, env, cmd);
 	else
 		run_executable(lst, env);
 	return (false);
@@ -65,7 +65,7 @@ void	finish_exec(t_pid *pid)
 	free_pid(pid);
 }
 
-void	exec_cmd(t_token *lst, char ***env)
+void	exec_cmd(t_token *lst, char ***env, char **cmd)
 {
 	int		fd[2];
 	t_pid	*pid;
@@ -77,10 +77,7 @@ void	exec_cmd(t_token *lst, char ***env)
 		pipe(fd);
 		new_pid = fork();
 		if (new_pid == 0)
-		{
-			// pid = add_pid(pid, new_pid);
-			child_process(lst, fd, env);
-		}
+			child_process(lst, fd, env, cmd);
 		else
 		{
 			parent_process(fd, lst);
