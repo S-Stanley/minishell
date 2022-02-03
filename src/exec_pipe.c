@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/03 21:21:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 23:31:06 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,19 @@ void	run_executable(t_token *lst, char ***env, char **cmd)
 	exit(127);
 }
 
+void	init_signal(void)
+{
+	struct sigaction	sa_signal;
+
+	sa_signal.sa_sigaction = exit_handler;
+	sigaction(SIGINT, &sa_signal, NULL);
+	sigaction(SIGQUIT, &sa_signal, NULL);
+}
+
 bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
 {
 	int		infile;
 
-	signal(SIGINT, exit_handler);
-	signal(SIGQUIT, exit_handler);
 	close(fd[0]);
 	if (lst->infile)
 	{

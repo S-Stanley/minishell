@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 21:52:21 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 23:30:21 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 int				g_exit_status;
 
-void	exit_handler(int nb)
+void	exit_handler(int signum, siginfo_t *info, void *context)
 {
-	if (nb == 3)
+	(void)context;
+	if (signum == 3)
 		return ;
 	g_exit_status = 130;
 	rl_replace_line("", 0);
 	rl_redisplay();
 	printf("\n");
-	printf("minishell> ");
+	printf("signal pid -> %d\n", info->si_pid);
+	if (info->si_pid == 0)
+		printf("minishell2> ");
+		// kill(info->si_pid, SIGKILL);
+	// else
+		// kill(info->si_pid, SIGKILL);
 }
 
 t_history	*update_history(char *command_line, t_history *history)
@@ -45,7 +51,8 @@ void	run_minishell(char **environnement, t_history *history)
 	command_line = NULL;
 	while (1)
 	{
-		command_line = readline("minishell> ");
+		command_line = readline("minishell1> ");
+		init_signal();
 		if (!command_line)
 			break ;
 		output = ft_extract_operators(ft_extend_vars(
@@ -76,8 +83,6 @@ int	main(int ac, char **av, char **env)
 	history = NULL;
 	g_exit_status = 0;
 	environnement = get_env(env);
-	signal(SIGINT, exit_handler);
-	signal(SIGQUIT, exit_handler);
 	if (!isatty(STDIN_FILENO))
 		return (0);
 	run_minishell(environnement, history);
