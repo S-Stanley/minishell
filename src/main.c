@@ -28,7 +28,7 @@ void	exit_handler(int nb)
 t_history	*update_history(char *command_line, t_history *history)
 {
 	add_history(command_line);
-	history = add_cmd_line(history, command_line);
+	// history = add_cmd_line(history, command_line);
 	return (history);
 }
 
@@ -56,7 +56,7 @@ void	run_minishell(char **environnement, t_history *history)
 			parse_errors(output);
 		else
 		{
-			history = update_history(ft_strdup(command_line), history);
+			history = update_history(command_line, history);
 			exec(output, &environnement, history);
 			free_that_matrice(output);
 		}
@@ -85,5 +85,6 @@ int	main(int ac, char **av, char **env)
 	unlink("/tmp/.listen-stdin");
 	free_that_matrice(environnement);
 	free_history(history);
+	rl_clear_history();
 	return (0);
 }
