@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:28:04 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/18 01:15:13 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 03:15:24 by roman            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	check_handle_quotes(char **s)
 		while (*(*s) && *(*s) != '\'')
 			(*s)++;
 		if (!*(*s))
-			return (1); // particular quote is not closed
+			return (1);
 	}
 	else if (*(*s) == '\"')
 	{
@@ -29,9 +29,9 @@ static int	check_handle_quotes(char **s)
 		while (*(*s) && *(*s) != '\"')
 			(*s)++;
 		if (!*(*s))
-			return (1); // particular quote is not closed
+			return (1);
 	}
-	return (0); // We've hound the closing quote
+	return (0);
 }
 
 static int	wcount(char *s)

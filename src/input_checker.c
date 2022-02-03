@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 04:11:46 by rokupin           #+#    #+#             */
-/*   Updated: 2022/01/24 04:11:47 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:04:12 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_arrow(char *command_line, int *i, char arrow)
 	if (command_line[*i] == arrow)
 		(*i)++;
 	while (command_line[*i] && command_line[*i] != '>'
-			&& command_line[*i] != '<' && command_line[*i] != '|')
+		&& command_line[*i] != '<' && command_line[*i] != '|')
 	{
 		if (command_line[*i] > ' ' && command_line[*i] <= '~')
 			return (1);
@@ -31,7 +31,7 @@ static int	check_pipe(char *command_line, int *i)
 {
 	(*i)++;
 	while (command_line[*i] && command_line[*i] != '>'
-			&& command_line[*i] != '<' && command_line[*i] != '|')
+		&& command_line[*i] != '<' && command_line[*i] != '|')
 	{
 		if (command_line[*i] > ' ' && command_line[*i] <= '~')
 			return (1);
@@ -67,21 +67,20 @@ static int	check_signs(char *command_line, int *i, int j)
 	return (1);
 }
 
-int			check_input(char *command_line)
+int	check_input(char *command_line)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (command_line[0] == '|' 
-			|| command_line[ft_strlen(command_line)] == '|')
+	if (command_line[0] == '|'
+		|| command_line[ft_strlen(command_line)] == '|')
 		return (0);
-
 	while (command_line[i])
 	{
 		while (command_line[i] && command_line[i] != '>'
 			&& command_line[i] != '<' && command_line[i] != '|'
 			&& command_line[i] != '\'' && command_line[i] != '\"')
-				i++;
+			i++;
 		if (!check_signs(command_line, &i, i))
 			return (0);
 	}
