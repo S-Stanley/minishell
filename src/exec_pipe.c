@@ -78,7 +78,7 @@ void	exec_cmd(t_token *lst, char ***env)
 		new_pid = fork();
 		if (new_pid == 0)
 		{
-			pid = add_pid(pid, new_pid);
+			// pid = add_pid(pid, new_pid);
 			child_process(lst, fd, env);
 		}
 		else
