@@ -6,18 +6,19 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/03 20:56:05 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:15:12 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	run_executable(t_token *lst, char ***env)
+void	run_executable(t_token *lst, char ***env, char **cmd)
 {
 	if (access(lst->exec_name, X_OK) == 0)
 		execve(lst->exec_name, lst->cmd, *env);
-	free_that_matrice(lst->cmd);
-	free(lst->exec_name);
+	free_token_light(lst);
+	free_that_matrice(*env);
+	free(cmd);
 	exit(127);
 }
 
@@ -43,7 +44,7 @@ bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
 	if (lst->is_builtin)
 		exec_buildint(lst, env, cmd);
 	else
-		run_executable(lst, env);
+		run_executable(lst, env, cmd);
 	return (false);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:14:20 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/02 23:15:31 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:15:25 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,27 @@ t_token	*build_lst(char **line, char **env)
 			i++;
 	}
 	return (lst);
+}
+
+void	free_token_light(t_token *lst)
+{
+	t_token	*tmp;	
+
+	if (!lst)
+		return ;
+	while (lst)
+	{
+		tmp = lst->next;
+		if (!lst->is_builtin)
+			free(lst->exec_name);
+		if (lst->infile)
+			free(lst->infile);
+		if (lst->outfile)
+			free(lst->outfile);
+		if (lst->append)
+			free(lst->append);
+		free_that_matrice(lst->cmd);
+		free(lst);
+		lst = tmp;
+	}
 }

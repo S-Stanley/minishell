@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 20:55:29 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:15:34 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,5 +170,6 @@ char		*get_fd(char *filename);
 int			get_outfile(t_token *lst);
 void		exit_handler(int nb);
 void		close_fds(void);
+void		free_token_light(t_token *lst);
 
 #endif
