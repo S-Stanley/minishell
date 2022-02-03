@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/03 20:26:52 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:41:00 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	run_executable(t_token *lst, char ***env)
 bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
 {
 	int		infile;
-	int		outfile;
 
 	signal(SIGINT, exit_handler);
 	signal(SIGQUIT, exit_handler);
@@ -39,10 +38,8 @@ bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
 	if (lst->next)
 		dup2(fd[1], STDOUT_FILENO);
 	if (lst->outfile)
-	{
-		outfile = get_outfile(lst);
-		dup2(outfile, STDOUT_FILENO);
-	}
+		get_outfile(lst);
+	close(fd[1]);
 	if (lst->is_builtin)
 		exec_buildint(lst, env, cmd);
 	else
@@ -55,6 +52,7 @@ bool	parent_process(int *fd, t_token *lst)
 	close(fd[1]);
 	if (lst->next)
 		dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 	return (true);
 }
 

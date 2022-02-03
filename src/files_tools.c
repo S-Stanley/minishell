@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 00:32:02 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/01 00:33:23 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 20:40:38 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	get_outfile(t_token *lst)
 				O_RDWR | O_CREAT | O_APPEND, 0777);
 	else
 		outfile = open(lst->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	dup2(outfile, STDOUT_FILENO);
 	return (outfile);
 }
 
