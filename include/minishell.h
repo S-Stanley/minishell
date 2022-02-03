@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 21:15:34 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 21:54:19 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,8 @@ char		**update_env(char **cmd, char **env);
 char		**remove_item_env(char **cmd, char **env);
 void		read_export(char **env);
 void		read_env(char **env);
-bool		builtin_exit(t_token *lst, char ***env, t_history *history);
+bool		builtin_exit(t_token *lst, char ***env,
+				t_history *history, char **cmd);
 bool		builtin_echo(char **cmd);
 t_history	*add_cmd_line(t_history *cmd, char *to_add);
 void		free_history(t_history *history);
