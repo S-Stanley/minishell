@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 21:54:19 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/03 23:12:08 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,9 @@ bool		is_env_var_exist(char **env, char *to_add);
 void		read_lst(t_token *lst);
 char		*get_fd(char *filename);
 int			get_outfile(t_token *lst);
-void		exit_handler(int nb);
+void		exit_handler(int signum, siginfo_t *info, void *context);
 void		close_fds(void);
 void		free_token_light(t_token *lst);
+void		init_signal(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/03 21:21:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/04 01:39:10 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
 {
 	int		infile;
 
-	signal(SIGINT, exit_handler);
-	signal(SIGQUIT, exit_handler);
 	close(fd[0]);
 	if (lst->infile)
 	{

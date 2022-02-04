@@ -6,30 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 21:52:21 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/04 01:40:44 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int				g_exit_status;
-
-void	exit_handler(int nb)
-{
-	if (nb == 3)
-		return ;
-	g_exit_status = 130;
-	rl_replace_line("", 0);
-	rl_redisplay();
-	printf("\n");
-	printf("minishell> ");
-}
-
-t_history	*update_history(char *command_line, t_history *history)
-{
-	add_history(command_line);
-	return (history);
-}
 
 void	parse_errors(char **output)
 {
@@ -46,6 +29,7 @@ void	run_minishell(char **environnement, t_history *history)
 	while (1)
 	{
 		command_line = readline("minishell> ");
+		init_signal();
 		if (!command_line)
 			break ;
 		output = ft_extract_operators(ft_extend_vars(
@@ -55,7 +39,6 @@ void	run_minishell(char **environnement, t_history *history)
 			parse_errors(output);
 		else
 		{
-			history = update_history(command_line, history);
 			exec(output, &environnement, history);
 			free_that_matrice(output);
 		}
@@ -76,8 +59,7 @@ int	main(int ac, char **av, char **env)
 	history = NULL;
 	g_exit_status = 0;
 	environnement = get_env(env);
-	signal(SIGINT, exit_handler);
-	signal(SIGQUIT, exit_handler);
+	init_signal();
 	if (!isatty(STDIN_FILENO))
 		return (0);
 	run_minishell(environnement, history);
