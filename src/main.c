@@ -21,14 +21,14 @@ void	exit_handler(int signum, siginfo_t *info, void *context)
 		return ;
 	g_exit_status = 130;
 	rl_replace_line("", 0);
-	rl_redisplay();
+	rl_on_new_line();
+	if (info->si_pid != 0)
+		rl_redisplay();
 	printf("\n");
-	printf("signal pid -> %d\n", info->si_pid);
-	if (info->si_pid == 0)
+	if (info->si_pid != 0)
 		printf("minishell2> ");
-		// kill(info->si_pid, SIGKILL);
-	// else
-		// kill(info->si_pid, SIGKILL);
+	(void)info;
+	init_signal();
 }
 
 t_history	*update_history(char *command_line, t_history *history)
@@ -81,6 +81,7 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (0);
 	history = NULL;
+	init_signal();
 	g_exit_status = 0;
 	environnement = get_env(env);
 	if (!isatty(STDIN_FILENO))
