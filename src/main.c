@@ -28,7 +28,7 @@ void	run_minishell(char **environnement, t_history *history)
 	command_line = NULL;
 	while (1)
 	{
-		command_line = readline("minishell1> ");
+		command_line = readline("minishell> ");
 		init_signal();
 		if (!command_line)
 			break ;
@@ -39,7 +39,6 @@ void	run_minishell(char **environnement, t_history *history)
 			parse_errors(output);
 		else
 		{
-			history = update_history(command_line, history);
 			exec(output, &environnement, history);
 			free_that_matrice(output);
 		}
@@ -60,6 +59,7 @@ int	main(int ac, char **av, char **env)
 	history = NULL;
 	g_exit_status = 0;
 	environnement = get_env(env);
+	init_signal();
 	if (!isatty(STDIN_FILENO))
 		return (0);
 	run_minishell(environnement, history);

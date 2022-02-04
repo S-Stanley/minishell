@@ -27,8 +27,13 @@ void	exit_handler(int signum, siginfo_t *info, void *context)
 	if (signum == 3)
 		return ;
 	g_exit_status = 130;
-	rl_redisplay();
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	if (info->si_pid != 0)
+		rl_redisplay();
 	printf("\n");
-	if (info->si_pid == 0)
-		printf("minishell2> ");
+	if (info->si_pid != 0)
+		printf("minishell> ");
+	(void)info;
+	init_signal();
 }
