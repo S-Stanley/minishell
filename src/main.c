@@ -6,36 +6,13 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 23:30:21 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/04 01:40:44 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int				g_exit_status;
-
-void	exit_handler(int signum, siginfo_t *info, void *context)
-{
-	(void)context;
-	if (signum == 3)
-		return ;
-	g_exit_status = 130;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	if (info->si_pid != 0)
-		rl_redisplay();
-	printf("\n");
-	if (info->si_pid != 0)
-		printf("minishell2> ");
-	(void)info;
-	init_signal();
-}
-
-t_history	*update_history(char *command_line, t_history *history)
-{
-	add_history(command_line);
-	return (history);
-}
 
 void	parse_errors(char **output)
 {
@@ -81,7 +58,6 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (0);
 	history = NULL;
-	init_signal();
 	g_exit_status = 0;
 	environnement = get_env(env);
 	if (!isatty(STDIN_FILENO))
