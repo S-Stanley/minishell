@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 19:48:23 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/05 16:39:57 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 	3. Go thought the env, split by = and check if the name is exact
 	4. If it's find it, return it, else if just return an empty string
 */
-// TODO if given "$$" should return PID and if "$?" - last return value
 
 char	*env_var_found(char **env_var, char *var_name)
 {

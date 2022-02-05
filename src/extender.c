@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extender.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 19:22:26 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 02:31:30 by roman            ###   ########.fr       */
+/*   Updated: 2022/02/05 17:29:06 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	*process_line(char *s, char **env)
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] && !(s[i] == '$' && to_expand(s, i)))
+		while (s[i] && !(s[i] == '$' && s[i + 1] != '$' && to_expand(s, i)))
 			i++;
 		if (s[i] == '$' && to_expand(s, i))
 		{
@@ -90,31 +90,31 @@ static char	*process_line(char *s, char **env)
 	return (new_str);
 }
 
-char	**ft_extend_vars(char **splitted, char **env)
+char	**ft_extend_vars(char **spl, char **env)
 {
 	char	*new_line;
 	int		i;
 	int		j;
 
 	i = 0;
-	while (splitted[i])
+	while (spl[i])
 	{
 		j = 0;
-		if (ft_strcmp(splitted[i], "~") == 0)
+		if (ft_strcmp(spl[i], "~") == 0)
 		{
-			free(splitted[i]);
-			splitted[i] = get_bash_var("$HOME", env);
+			free(spl[i]);
+			spl[i] = get_bash_var("$HOME", env);
 		}
-		while (splitted[i][j] && !(splitted[i][j] == '$'
-				&& to_expand(splitted[i], j)))
+		while (spl[i][j] && !(spl[i][j] == '$'
+			&& spl[i][j + 1] != '$' && to_expand(spl[i], j)))
 			j++;
-		if (splitted[i][j] == '$' && to_expand(splitted[i], j))
+		if (spl[i][j] == '$' && spl[i][j + 1] != '$' && to_expand(spl[i], j))
 		{
-			new_line = process_line(splitted[i], env);
-			free(splitted[i]);
-			splitted[i] = new_line;
+			new_line = process_line(spl[i], env);
+			free(spl[i]);
+			spl[i] = new_line;
 		}
 		i++;
 	}
-	return (splitted);
+	return (spl);
 }

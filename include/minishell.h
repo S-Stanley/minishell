@@ -103,7 +103,7 @@ typedef struct s_history {
 	or NULL, if quote expression is wrong */
 char		**ft_split_input(char *str);
 /* takes splitted (not NULL) input and replaces variable names by it's values */
-char		**ft_extend_vars(char **splitted, char **env);
+char		**ft_extend_vars(char **spl, char **env);
 /* takes replaced list of strings and separates characters < > >> << | */
 char		**ft_extract_operators(char **extended, char **env);
 /* extract_operators extending function */
