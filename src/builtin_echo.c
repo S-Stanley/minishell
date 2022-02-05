@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 11:30:36 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:15:48 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/05 22:08:24 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	builtin_echo(char **cmd)
 		}
 		while (cmd[i])
 		{
-			printf("%s", cmd[i]);
+			write(1, cmd[i], ft_strlen(cmd[i]));
 			if (cmd[i + 1])
 				printf(" ");
 			i++;
