@@ -42,6 +42,7 @@ void	run_minishell(char **environnement, t_history *history)
 			exec(output, &environnement, history);
 			free_that_matrice(output);
 		}
+		add_history(command_line);
 		free(command_line);
 		command_line = NULL;
 		unlink("/tmp/.listen-stdin");
