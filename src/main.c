@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/04 01:40:44 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/05 11:28:45 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	run_minishell(char **environnement, t_history *history)
 	command_line = NULL;
 	while (1)
 	{
-		command_line = readline("minishell> ");
 		init_signal();
+		command_line = readline("minishell> ");
 		if (!command_line)
 			break ;
 		output = ft_extract_operators(ft_extend_vars(
@@ -42,6 +42,7 @@ void	run_minishell(char **environnement, t_history *history)
 			exec(output, &environnement, history);
 			free_that_matrice(output);
 		}
+		add_history(command_line);
 		free(command_line);
 		command_line = NULL;
 		unlink("/tmp/.listen-stdin");

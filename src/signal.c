@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 01:39:16 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/04 01:45:22 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/05 11:25:08 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ void	exit_handler(int signum, siginfo_t *info, void *context)
 	g_exit_status = 130;
 	rl_replace_line("", 0);
 	rl_on_new_line();
-	if (info->si_pid != 0)
+	write(1, "\n", 1);
+	if (info->si_pid == 0)
+		return ;
+	else
 		rl_redisplay();
-	printf("\n");
-	if (info->si_pid != 0)
-		printf("minishell> ");
-	(void)info;
 	init_signal();
 }
