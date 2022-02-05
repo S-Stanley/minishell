@@ -38,7 +38,7 @@ $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJS)
 	$(CC) $(OBJS) $(FLAGS) -lreadline $(LIB) $(INCL) -o $(NAME)
 
 $(ASAN): $(LIBFT) $(OBJ_DIR) $(OBJS)
-	$(CC) $(OBJS) $(AFLAG) $(FLAGS) $(LIB) $(INCL) -o $(NAME)
+	$(CC) $(OBJS) $(AFLAG) $(FLAGS) -lreadline $(LIB) $(INCL) -o $(NAME)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
