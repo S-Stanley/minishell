@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:56:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 02:18:22 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/05 22:26:04 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,10 @@ void	wait_all_pid(t_pid *pid)
 		return ;
 	while (pid)
 	{
-		waitpid(pid->pid, &pid->status, 2);
 		if (waitpid(pid->pid, &pid->status, 2) != -1)
 		{
 			if (pid && pid->status)
-			{
-				printf("%d\n", pid->status);
 				set_status(pid->status);
-			}
 		}
 		pid = pid->next;
 	}
