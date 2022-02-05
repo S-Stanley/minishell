@@ -2,7 +2,7 @@ NAME = minishell
 ASAN = asan
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 AFLAG = -fsanitize=address
 LIB = -lft -L$(LFT_DIR)
 INCL = -I$(HEAD_DIR) -I$(LFT_DIR)
