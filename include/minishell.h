@@ -169,7 +169,7 @@ bool		is_env_var_exist(char **env, char *to_add);
 void		read_lst(t_token *lst);
 char		*get_fd(char *filename);
 int			get_outfile(t_token *lst);
-void		exit_handler(int signum, siginfo_t *info, void *context);
+void		exit_handler(int signum);
 void		close_fds(void);
 void		free_token_light(t_token *lst);
 void		init_signal(void);

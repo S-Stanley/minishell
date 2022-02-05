@@ -14,26 +14,19 @@
 
 void	init_signal(void)
 {
-	struct sigaction	sa_signal;
-
-	sa_signal.sa_sigaction = exit_handler;
-	sigaction(SIGINT, &sa_signal, NULL);
-	sigaction(SIGQUIT, &sa_signal, NULL);
+	signal(SIGINT, exit_handler);
+	signal(SIGQUIT, exit_handler);
 }
 
-void	exit_handler(int signum, siginfo_t *info, void *context)
+
+void	exit_handler(int signum)
 {
-	(void)context;
 	if (signum == 3)
 		return ;
 	g_exit_status = 130;
 	rl_replace_line("", 0);
 	rl_on_new_line();
-	if (info->si_pid != 0)
-		rl_redisplay();
 	printf("\n");
-	if (info->si_pid != 0)
-		printf("minishell> ");
-	(void)info;
-	init_signal();
+	rl_redisplay();
+	// printf("minishell> ");
 }
