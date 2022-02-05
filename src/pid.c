@@ -41,10 +41,19 @@ t_pid	*add_pid(t_pid *pid, pid_t new_pid)
 
 void	wait_all_pid(t_pid *pid)
 {
+	if (!pid)
+		return ;
 	while (pid)
 	{
 		waitpid(pid->pid, &pid->status, 2);
-		set_status(pid->status);
+		if (waitpid(pid->pid, &pid->status, 2) != -1)
+		{
+			if (pid && pid->status)
+			{
+				printf("%d\n", pid->status);
+				set_status(pid->status);
+			}
+		}
 		pid = pid->next;
 	}
 }
