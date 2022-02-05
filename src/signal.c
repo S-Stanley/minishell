@@ -18,15 +18,15 @@ void	init_signal(void)
 	signal(SIGQUIT, exit_handler);
 }
 
-
 void	exit_handler(int signum)
 {
-	if (signum == 3)
+	if (signum == SIGQUIT)
 		return ;
-	g_exit_status = 130;
+	wait(&g_exit_status);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	printf("\n");
-	rl_redisplay();
-	// printf("minishell> ");
+	if (g_exit_status != SIGINT)
+		rl_redisplay();
+	g_exit_status = 130;
 }
