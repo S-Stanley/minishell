@@ -65,12 +65,12 @@ void	set_status(int status)
 {
 	if (status == 512)
 		g_exit_status = 2;
-	if (status == 256)
+	else if (status == 256)
 		g_exit_status = 1;
-	if (status == 127)
+	else if (status == 127)
 		g_exit_status = 127;
-	if (status == 32512)
+	else if (status == 32512)
 		g_exit_status = 127;
-	if (status == 0)
+	else if (status == 0)
 		g_exit_status = 0;
 }
