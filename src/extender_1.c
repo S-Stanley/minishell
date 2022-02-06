@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extender_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 16:33:03 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 02:15:45 by roman            ###   ########.fr       */
+/*   Updated: 2022/02/05 22:30:22 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,24 +87,25 @@ int	get_varname_len(char *str)
 	free(varname);
 	return (len);
 }
-/*
-echo "$USER"123'$USER'
-echo "$USER"123"$HOME"
-echo $USER'$USER'"$USER"
-echo "$USER"
-echo $USER
-echo ""$USER""
-echo "'"$USER"'"
-echo "'$USER'"
-echo '"$USER"'
-echo '"$USER"$USER'
-echo "'"$USER"$USER"
-echo '"'$USER'"'
-echo '''$USER'''
-echo '"'"'$USER'"'"'
-echo '"''$USER''"'
-echo '"''$USER''"$USER'
-echo '"''$USER''$USER'
-echo '"''$USER'"'"$USER'
-echo '"''$USER'"'"$USER"'"
-*/
+
+void	handle_tilda(char **spl, int i, char **env)
+{
+	char	*tmp_val;
+	char	*tmp_env;
+	char	*ptr;
+
+	ptr = spl[i];
+	if (ft_strcmp(ptr, "~") == 0)
+	{
+		free(spl[i]);
+		spl[i] = get_bash_var("$HOME", env);
+	}
+	else if (ptr[0] == '~' && ptr[1] == '/')
+	{
+		tmp_env = get_bash_var("$HOME", env);
+		tmp_val = ft_strjoin(tmp_env, ptr + 1);
+		free(spl[i]);
+		free(tmp_env);
+		spl[i] = tmp_val;
+	}
+}

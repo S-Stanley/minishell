@@ -1,9 +1,7 @@
 NAME = minishell
-ASAN = asan
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -g
-AFLAG = -fsanitize=address
+FLAGS = -Wall -Wextra -Werror 
 LIB = -lft -L$(LFT_DIR)
 INCL = -I$(HEAD_DIR) -I$(LFT_DIR)
 
@@ -36,9 +34,6 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OBJS)
 	$(CC) $(OBJS) $(FLAGS) -lreadline $(LIB) $(INCL) -o $(NAME)
-
-$(ASAN): $(LIBFT) $(OBJ_DIR) $(OBJS)
-	$(CC) $(OBJS) $(AFLAG) $(FLAGS) -lreadline $(LIB) $(INCL) -o $(NAME)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

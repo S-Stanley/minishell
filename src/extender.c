@@ -6,7 +6,7 @@
 /*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 19:22:26 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/05 17:29:06 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/05 22:30:26 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,7 @@ char	**ft_extend_vars(char **spl, char **env)
 	while (spl[i])
 	{
 		j = 0;
-		if (ft_strcmp(spl[i], "~") == 0)
-		{
-			free(spl[i]);
-			spl[i] = get_bash_var("$HOME", env);
-		}
+		handle_tilda(spl, i, env);
 		while (spl[i][j] && !(spl[i][j] == '$'
 			&& spl[i][j + 1] != '$' && to_expand(spl[i], j)))
 			j++;
