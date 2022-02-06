@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:10 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 21:11:36 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/06 16:24:26 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ char	*get_shell(void)
 	else
 		shell = ft_strdup("");
 	return (shell);
+}
+
+void	cd_error(int code, char *value, char *shell)
+{
+	if (code == 3)
+	{
+		g_exit_status = 1;
+		printf("%s: %s: Permission denied\n", shell, value);
+	}
 }
 
 void	print_error(int code, char *value)
@@ -48,5 +57,6 @@ void	print_error(int code, char *value)
 		g_exit_status = 1;
 		printf("%s: %s: numeric argument required\n", shell, value);
 	}
+	cd_error(code, value, shell);
 	free(shell);
 }

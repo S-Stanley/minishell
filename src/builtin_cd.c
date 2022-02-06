@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 00:47:48 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/30 16:05:48 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/06 16:21:52 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ bool	builtin_cd(char *path, char **env)
 			free(full_path);
 		return (true);
 	}
+	print_error(3, ft_strjoin("cd: ", path));
 	return (false);
 }
 
