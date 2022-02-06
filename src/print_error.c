@@ -35,7 +35,6 @@ static void		p_err(char *value, char	*shell, char *message)
 	write(STDERR_FILENO, value, ft_strlen(value));
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, message, ft_strlen(message));
-	write(STDERR_FILENO, ": ", 2);
 }
 
 void	print_error(int code, char *value)
