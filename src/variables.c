@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 16:02:03 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/06 16:09:45 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_value_var(char *var)
 		return (ft_strtrim(var, "$"));
 	if (ft_strlen(var) == 2)
 		return (ft_strdup(&var[1]));
-	return (ft_strdup(""));
+	return (ft_strdup(var));
 }
 
 char	*get_bash_var(char *var_to_find, char **env)
