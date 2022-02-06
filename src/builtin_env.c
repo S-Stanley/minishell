@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 18:37:29 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 20:17:07 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/06 17:22:02 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	**add_env_var(char **env, char *to_add)
 	}
 	to_return[i] = ft_strdup(to_add);
 	to_return[++i] = 0;
+	free(env);
 	return (to_return);
 }
 

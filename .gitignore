@@ -9,3 +9,4 @@ minishell
 *.json
 .DS_Store
 test/
+sup
