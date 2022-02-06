@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 18:36:23 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/06 18:57:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,21 @@ bool	create_all_files(char **line)
 	return (true);
 }
 
+char	**export_something(char ***env, char **cmd, t_token *lst)
+{
+	*env = update_env(lst->cmd, *env);
+	if (lst->next)
+		exec_cmd(lst->next, env, cmd);
+	return (*env);
+}
+
 bool	what_to_exec(t_token *lst, char ***env, t_history *history, char **cmd)
 {
 	g_exit_status = 0;
 	if (count_len_matrice(lst->cmd) == 0)
 		return (true);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
-	{
-		*env = update_env(lst->cmd, *env);
-		if (lst->next)
-			exec_cmd(lst->next, env, cmd);
-	}
+		*env = export_something(env, cmd, lst);
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
 		*env = remove_item_env(lst->cmd, *env);
