@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 18:57:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/06 18:58:26 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,6 @@ bool	create_all_files(char **line)
 		i++;
 	}
 	return (true);
-}
-
-char	**export_something(char ***env, char **cmd, t_token *lst)
-{
-	*env = update_env(lst->cmd, *env);
-	if (lst->next)
-		exec_cmd(lst->next, env, cmd);
-	return (*env);
 }
 
 bool	what_to_exec(t_token *lst, char ***env, t_history *history, char **cmd)

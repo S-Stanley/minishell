@@ -22,7 +22,7 @@ SRC = main.c splitter.c extender.c token.c variables.c \
 	builtin_pwd.c builtin_env.c builtin_exit.c builtin_echo.c \
 	history.c pid.c input_checker.c unquoter.c extender_1.c \
 	matrice_tools.c token_tools.c builtin.c readenv.c files_tools.c \
-	signal.c
+	signal.c export.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
