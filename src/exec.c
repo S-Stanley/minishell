@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 17:25:38 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/06 18:36:23 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ bool	what_to_exec(t_token *lst, char ***env, t_history *history, char **cmd)
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
 	{
 		*env = update_env(lst->cmd, *env);
-		exec_cmd(lst, env, cmd);
+		if (lst->next)
+			exec_cmd(lst->next, env, cmd);
 	}
 	else if (ft_strcmp(lst->cmd[0], "unset") == 0)
 	{
