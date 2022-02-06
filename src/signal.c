@@ -21,7 +21,7 @@ void	init_signal(void)
 void	exit_handler(int signum)
 {
 	if (signum == SIGQUIT)
-		return ;
+		return;
 	wait(&g_exit_status);
 	rl_replace_line("", 0);
 	rl_on_new_line();
