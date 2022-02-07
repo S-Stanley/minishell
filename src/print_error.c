@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:10 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/07 03:54:09 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/07 20:02:04 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ char	*get_shell(void)
 	else
 		shell = ft_strdup("");
 	return (shell);
+}
+
+void	cd_error(char *value, char *shell)
+{
+	printf("%s: %s: %s\n", shell, value, strerror(errno));
+	g_exit_status = 1;
 }
 
 static void	p_err(char *value, char	*shell, char *message)
@@ -57,5 +63,7 @@ void	print_error(int code, char *value)
 		g_exit_status = 1;
 		p_err(value, shell, "numeric argument required\n");
 	}
+	if (code == 3)
+		cd_error(value, shell);
 	free(shell);
 }

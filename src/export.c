@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files_tools.c                                      :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 00:32:02 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 16:55:03 by sserbin          ###   ########.fr       */
+/*   Created: 2022/02/06 18:59:13 by sserbin           #+#    #+#             */
+/*   Updated: 2022/02/06 18:59:28 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	get_outfile(t_token *lst)
+char	**export_something(char ***env, char **cmd, t_token *lst)
 {
-	int	outfile;
-
-	if (lst->append)
-		outfile = open(lst->outfile,
-				O_RDWR | O_CREAT | O_APPEND, 0777);
-	else
-		outfile = open(lst->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	dup2(outfile, STDOUT_FILENO);
-	return (outfile);
-}
-
-char	*get_fd(char *filename)
-{
-	if (!filename)
-		return (ft_strdup(""));
-	return (ft_strdup(filename));
+	*env = update_env(lst->cmd, *env);
+	if (lst->next)
+		exec_cmd(lst->next, env, cmd);
+	return (*env);
 }
