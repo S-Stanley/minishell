@@ -116,7 +116,7 @@ char		*get_var_name(char *str);
 int			get_varname_len(char *str);
 
 /* checks for arrow and pipe misuse */
-int			check_input(char *command_line);
+int			check_input(char *input);
 /*removes quotes and special chars */
 char		**unquote(char **splitted);
 

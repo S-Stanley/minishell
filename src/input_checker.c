@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 04:11:46 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 20:04:12 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/07 18:46:05 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,30 @@ static int	check_signs(char *command_line, int *i, int j)
 	return (1);
 }
 
-int	check_input(char *command_line)
+int	check_input(char *input)
 {
-	int	i;
+	int		i;
+	int		unq_len;
+	char	*unq_inp;
 
 	i = 0;
-	if (command_line[0] == '|'
-		|| command_line[ft_strlen(command_line)] == '|')
-		return (0);
-	while (command_line[i])
+	unq_len = get_unquoted_len(input);
+	if ((size_t)unq_len != ft_strlen(input))
 	{
-		while (command_line[i] && command_line[i] != '>'
-			&& command_line[i] != '<' && command_line[i] != '|'
-			&& command_line[i] != '\'' && command_line[i] != '\"')
+		unq_inp = q_remove(input, unq_len);
+		if (unq_inp[0] == '|' || unq_inp[ft_strlen(unq_inp)] == '|')
+		{
+			free(unq_inp);
+			return (0);
+		}
+	}
+	while (input[i])
+	{
+		while (input[i] && input[i] != '>'
+			&& input[i] != '<' && input[i] != '|'
+			&& input[i] != '\'' && input[i] != '\"')
 			i++;
-		if (!check_signs(command_line, &i, i))
+		if (!check_signs(input, &i, i))
 			return (0);
 	}
 	return (1);
