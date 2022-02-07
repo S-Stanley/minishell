@@ -116,7 +116,7 @@ char		*get_var_name(char *str);
 int			get_varname_len(char *str);
 
 /* checks for arrow and pipe misuse */
-int			check_input(char *command_line);
+int			check_input(char *input);
 /*removes quotes and special chars */
 char		**unquote(char **splitted);
 
@@ -174,5 +174,7 @@ void		close_fds(void);
 void		free_token_light(t_token *lst);
 void		init_signal(void);
 void		handle_tilda(char **spl, int i, char **env);
+char		*q_remove(char *str, int len);
+int			get_unquoted_len(char *str);
 
 #endif

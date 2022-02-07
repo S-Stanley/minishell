@@ -27,7 +27,7 @@ static void	copy_inside_quotes(int *i, int *j, char *str, char *new)
 	(*i)++;
 }
 
-static char	*q_remove(char *str, int len)
+char	*q_remove(char *str, int len)
 {
 	int		i;
 	int		j;
@@ -51,7 +51,7 @@ static char	*q_remove(char *str, int len)
 	return (new);
 }
 
-static int	get_unquoted_len(char *str)
+int	get_unquoted_len(char *str)
 {
 	int		i;
 	int		newlen;
@@ -86,7 +86,7 @@ char	**unquote(char **splitted)
 
 	if (!splitted || !(*splitted))
 		return (NULL);
-	i = 1;
+	i = 0;
 	while (splitted[i])
 	{
 		newlen = get_unquoted_len(splitted[i]);
