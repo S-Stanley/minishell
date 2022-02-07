@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unquoter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roman <roman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:17:24 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/03 02:17:54 by roman            ###   ########.fr       */
+/*   Updated: 2022/02/07 20:44:18 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,14 @@ char	**unquote(char **splitted)
 	i = 0;
 	while (splitted[i])
 	{
-		newlen = get_unquoted_len(splitted[i]);
-		if ((size_t)newlen != ft_strlen(splitted[i]))
+		if (i >= 1 && ft_strcmp("|", splitted[i]) == 0)
 		{
-			unquoted = q_remove(splitted[i], newlen);
-			splitted[i] = unquoted;
+			newlen = get_unquoted_len(splitted[i]);
+			if ((size_t)newlen != ft_strlen(splitted[i]))
+			{
+				unquoted = q_remove(splitted[i], newlen);
+				splitted[i] = unquoted;
+			}
 		}
 		i++;
 	}
