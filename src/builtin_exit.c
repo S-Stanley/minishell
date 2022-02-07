@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:51:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/07 19:06:22 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/07 20:04:44 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ void	exit_and_free(int exit_code, t_token *lst,
 	exit(exit_code);
 }
 
+int	get_value_i_exit(t_token *lst)
+{
+	int	i;
+
+	i = 0;
+	if (lst->cmd[1][i] == '-')
+		i++;
+	return (i);
+}
+
 bool	check_if_alphanum(t_token *lst, char ***env, t_history *history)
 {
 	int		i;
@@ -34,7 +44,7 @@ bool	check_if_alphanum(t_token *lst, char ***env, t_history *history)
 		print_error(1, lst->exec_name);
 		return (false);
 	}
-	i = 0;
+	i = get_value_i_exit(lst);
 	while (lst->cmd[1][i])
 	{
 		if (lst->cmd[1][i] < '0' || lst->cmd[1][i] > '9')
@@ -63,8 +73,12 @@ bool	builtin_exit(t_token *lst, char ***env, t_history *history, char **cmd)
 	if (!check_if_alphanum(lst, env, history))
 		return (false);
 	exit_code = ft_atoi(lst->cmd[1]);
-	if (exit_code > 255 || exit_code < 0)
-		exit_and_free(2, lst, env, history);
+	if (exit_code > 255)
+		exit_and_free(exit_code - 256, lst, env, history);
+	if (exit_code > (255 * 2))
+		exit_and_free(exit_code % 256, lst, env, history);
+	if (exit_code < 0)
+		exit_and_free(256 + exit_code, lst, env, history);
 	exit_and_free(exit_code, lst, env, history);
 	return (true);
 }

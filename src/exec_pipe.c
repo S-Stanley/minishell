@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/07 19:05:34 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/07 20:05:11 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
 	if (lst->next)
 		dup2(fd[1], STDOUT_FILENO);
 	if (lst->outfile)
-		get_outfile(lst);
+		if (get_outfile(lst) == -1)
+			exit(1);
 	close(fd[1]);
 	if (lst->is_builtin)
 		exec_buildint(lst, env, cmd);

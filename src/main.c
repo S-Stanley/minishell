@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/05 17:27:10 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/06 17:18:13 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int				g_exit_status;
 void	parse_errors(char **output)
 {
 	free_that_matrice(output);
-	printf("wrong input\n");
+	write(STDERR_FILENO, "minishell: wrong input!\n", 24);
+	g_exit_status = 2;
 }
 
 void	run_minishell(char **environnement, t_history *history)

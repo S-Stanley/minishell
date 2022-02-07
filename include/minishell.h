@@ -6,7 +6,7 @@
 /*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/05 22:31:14 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/06 18:59:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ char		*get_var_name(char *str);
 int			get_varname_len(char *str);
 
 /* checks for arrow and pipe misuse */
-int			check_input(char *command_line);
+int			check_input(char *input);
 /*removes quotes and special chars */
 char		**unquote(char **splitted);
 
@@ -173,6 +173,9 @@ void		exit_handler(int signum);
 void		close_fds(void);
 void		free_token_light(t_token *lst);
 void		init_signal(void);
+char		**export_something(char ***env, char **cmd, t_token *lst);
 void		handle_tilda(char **spl, int i, char **env);
+char		*q_remove(char *str, int len);
+int			get_unquoted_len(char *str);
 
 #endif
