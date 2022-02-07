@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:10 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 21:11:36 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/07 03:54:09 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_shell(void)
 	return (shell);
 }
 
-static void		p_err(char *value, char	*shell, char *message)
+static void	p_err(char *value, char	*shell, char *message)
 {
 	if (shell && ft_strcmp(shell, "") != 0)
 	{
