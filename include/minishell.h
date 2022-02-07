@@ -174,5 +174,7 @@ void		close_fds(void);
 void		free_token_light(t_token *lst);
 void		init_signal(void);
 void		handle_tilda(char **spl, int i, char **env);
+char		*q_remove(char *str, int len);
+int			get_unquoted_len(char *str);
 
 #endif

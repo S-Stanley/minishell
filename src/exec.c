@@ -80,28 +80,15 @@ bool	what_to_exec(t_token *lst, char ***env, t_history *history, char **cmd)
 	return (true);
 }
 
-t_token	*unquote_lst(t_token *lst)
-{
-	t_token	*tmp;
-
-	tmp = lst;
-	while (lst)
-	{
-		lst->cmd = unquote(lst->cmd);
-		lst = lst->next;
-	}
-	return (tmp);
-}
-
 bool	exec(char **cmd_line, char ***env, t_history *history)
 {
 	t_token	*lst;
 
 	lst = NULL;
+	cmd_line = unquote(cmd_line);
 	lst = build_lst((char **)cmd_line, *env);
 	if (!lst)
 		return (false);
-	lst = unquote_lst(lst);
 	what_to_exec(lst, env, history, cmd_line);
 	free_token_list(lst);
 	return (true);
