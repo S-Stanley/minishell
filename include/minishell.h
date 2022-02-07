@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
 /*   Updated: 2022/02/06 18:59:39 by sserbin          ###   ########.fr       */
@@ -174,5 +174,6 @@ void		close_fds(void);
 void		free_token_light(t_token *lst);
 void		init_signal(void);
 char		**export_something(char ***env, char **cmd, t_token *lst);
+void		handle_tilda(char **spl, int i, char **env);
 
 #endif
