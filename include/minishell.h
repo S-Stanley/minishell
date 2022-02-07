@@ -177,5 +177,6 @@ char		**export_something(char ***env, char **cmd, t_token *lst);
 void		handle_tilda(char **spl, int i, char **env);
 char		*q_remove(char *str, int len);
 int			get_unquoted_len(char *str);
+char		*get_unq_copy(char *str);
 
 #endif
