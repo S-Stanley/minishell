@@ -63,7 +63,7 @@ char	**get_value_to_return(char **matrice, char **splitter, int i, int x)
 			}
 			x++;
 		}
-		to_return[y] = matrice[i];
+		to_return[y] = get_unq_copy(matrice[i]);
 		i++;
 		y++;
 	}
@@ -88,3 +88,4 @@ void	clean_two_matrice(char **m1, char **m2)
 	free_that_matrice(m1);
 	free_that_matrice(m2);
 }
+//"echo" "ff" > "z"
