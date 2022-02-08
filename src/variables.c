@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 18:27:12 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 16:09:45 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 22:15:42 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_value_var(char *var)
 		return (ft_strdup(""));
 	if (ft_strlen(var) > 3)
 		return (ft_strtrim(var, "$"));
-	if (ft_strlen(var) == 2)
+	if (ft_strlen(var) == 2 && var[0] == '$')
 		return (ft_strdup(&var[1]));
 	return (ft_strdup(var));
 }
