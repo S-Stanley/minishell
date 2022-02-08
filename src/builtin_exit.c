@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:51:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 20:09:07 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 22:28:18 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exit_and_free(int exit_code, t_token *lst,
 	char ***env, t_history *history)
 {
 	free_that_matrice(*env);
+	free(lst->cmd[1]);
 	free_token_list(lst);
 	free_history(history);
 	if (exit_code == 0)
