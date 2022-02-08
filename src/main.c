@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/08 21:32:11 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 22:17:46 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	run_minishell(char **env, t_history *history)
 	while (1)
 	{
 		comm = readline("minishell> ");
-		if (ft_strlen(comm) == 0)
-			continue ;
 		init_signal();
 		if (!comm)
 			break ;
+		if (ft_strlen(comm) == 0)
+			continue ;
 		output = ft_extr_ops(ft_extend_vars(ft_split_input(comm), env), env);
 		if (!check_input(comm))
 			parse_errors(output);
