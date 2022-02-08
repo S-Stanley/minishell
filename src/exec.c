@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 20:06:09 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:11:11 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	t_token	*lst;
 
 	lst = NULL;
-	//cmd_line = unquote(cmd_line);
 	lst = build_lst((char **)cmd_line, *env);
 	if (!lst)
 		return (false);
