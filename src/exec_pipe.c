@@ -18,7 +18,7 @@ void	run_executable(t_token *lst, char ***env, char **cmd)
 		execve(lst->exec_name, lst->cmd, *env);
 	free_token_light(lst);
 	free_that_matrice(*env);
-	free(cmd);
+	free_that_matrice(cmd);
 	exit(127);
 }
 

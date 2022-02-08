@@ -88,4 +88,3 @@ void	clean_two_matrice(char **m1, char **m2)
 	free_that_matrice(m1);
 	free_that_matrice(m2);
 }
-//"echo" "ff" > "z"
