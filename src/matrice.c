@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 01:09:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 21:03:30 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 19:49:34 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**get_value_to_return(char **matrice, char **splitter, int i, int x)
 			}
 			x++;
 		}
-		to_return[y] = matrice[i];
+		to_return[y] = get_unq_copy(matrice[i]);
 		i++;
 		y++;
 	}

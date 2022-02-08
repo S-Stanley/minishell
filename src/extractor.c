@@ -102,7 +102,7 @@ static int	count_new_tab_size(char **extended)
 	return (res);
 }
 
-char	**ft_extract_operators(char **extended, char **env)
+char	**ft_extr_ops(char **extended, char **env)
 {
 	int		new_len;
 	int		old_len;

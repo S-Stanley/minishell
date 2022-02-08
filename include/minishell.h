@@ -105,7 +105,7 @@ char		**ft_split_input(char *str);
 /* takes splitted (not NULL) input and replaces variable names by it's values */
 char		**ft_extend_vars(char **spl, char **env);
 /* takes replaced list of strings and separates characters < > >> << | */
-char		**ft_extract_operators(char **extended, char **env);
+char		**ft_extr_ops(char **extended, char **env);
 /* extract_operators extending function */
 char		**copy_n_extract(char **extended, int newtab_size, char **env);
 /* extract_operators defining function */
@@ -177,5 +177,6 @@ char		**export_something(char ***env, char **cmd, t_token *lst);
 void		handle_tilda(char **spl, int i, char **env);
 char		*q_remove(char *str, int len);
 int			get_unquoted_len(char *str);
+char		*get_unq_copy(char *str);
 
 #endif
