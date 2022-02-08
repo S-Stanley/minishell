@@ -78,6 +78,19 @@ int	get_unquoted_len(char *str)
 	return (newlen);
 }
 
+char	*get_unq_copy(char *str)
+{
+	char	*unquoted;
+	int		unquoted_len;
+
+	unquoted_len = get_unquoted_len(str);
+	if ((size_t)unquoted_len != ft_strlen(str))
+		unquoted = q_remove(str, unquoted_len);
+	else
+		unquoted = ft_strdup(str);
+	return (unquoted);
+}
+
 char	**unquote(char **splitted)
 {
 	int		i;

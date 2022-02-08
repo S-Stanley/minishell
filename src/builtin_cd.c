@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 00:47:48 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 16:32:31 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/07 21:11:48 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ char	*get_forward_path(char *cwd, char *path)
 	return (full_path);
 }
 
+bool	err_cd(char *path)
+{
+	char	*err_msg;
+
+	err_msg = ft_strjoin("cd: ", path);
+	print_error(3, err_msg);
+	free(err_msg);
+	return (false);
+}
+
 bool	builtin_cd(char *path, char **env)
 {
 	char	*full_path;
@@ -76,23 +86,6 @@ bool	builtin_cd(char *path, char **env)
 			free(full_path);
 		return (true);
 	}
-	print_error(3, ft_strjoin("cd: ", path));
-	return (false);
-}
-
-void	get_prompt(void)
-{
-	char	*prompt;
-	char	*cwd;
-
-	cwd = malloc(sizeof(char) * 100);
-	if (!cwd)
-		return ;
-	cwd = getcwd(cwd, 100);
-	prompt = ft_strjoin(cwd, "> ");
-	free(cwd);
-	if (!prompt)
-		return ;
-	write(1, prompt, ft_strlen(prompt));
-	free(prompt);
+	free(full_path);
+	return (err_cd(path));
 }

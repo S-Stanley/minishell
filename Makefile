@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror -g
 LIB = -lft -L$(LFT_DIR)
 INCL = -I$(HEAD_DIR) -I$(LFT_DIR)
 
@@ -20,7 +20,7 @@ SRC = main.c splitter.c extender.c token.c variables.c \
 	builtin_pwd.c builtin_env.c builtin_exit.c builtin_echo.c \
 	history.c pid.c input_checker.c unquoter.c extender_1.c \
 	matrice_tools.c token_tools.c builtin.c readenv.c files_tools.c \
-	signal.c export.c
+	signal.c export.c prompt.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

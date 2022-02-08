@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_that_matrice.c                                :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/16 19:17:15 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 19:52:48 by sserbin          ###   ########.fr       */
+/*   Created: 2022/02/07 21:11:58 by sserbin           #+#    #+#             */
+/*   Updated: 2022/02/07 21:12:40 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "../include/minishell.h"
 
-void	free_that_matrice(char **matrice)
+void	get_prompt(void)
 {
-	unsigned int	i;
+	char	*prompt;
+	char	*cwd;
 
-	i = 0;
-	if (!matrice)
+	cwd = malloc(sizeof(char) * 100);
+	if (!cwd)
 		return ;
-	while (matrice[i])
-	{
-		free(matrice[i]);
-		i++;
-	}
-	free(matrice);
+	cwd = getcwd(cwd, 100);
+	prompt = ft_strjoin(cwd, "> ");
+	free(cwd);
+	if (!prompt)
+		return ;
+	write(1, prompt, ft_strlen(prompt));
+	free(prompt);
 }

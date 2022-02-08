@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/08 20:54:27 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:10:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,31 @@ void	parse_errors(char **output)
 	g_exit_status = 2;
 }
 
-void	run_minishell(char **environnement, t_history *history)
+void	run_minishell(char **env, t_history *history)
 {
 	char		**output;
-	char		*command_line;
+	char		*comm;
 
-	command_line = NULL;
+	comm = NULL;
 	while (1)
 	{
 		command_line = readline("minishell> ");
 		if (ft_strlen(command_line) == 0)
 			continue ;
 		init_signal();
-		if (!command_line)
+		if (!comm)
 			break ;
-		output = ft_extract_operators(ft_extend_vars(
-					ft_split_input(command_line), environnement),
-				environnement);
-		if (!check_input(command_line))
+		output = ft_extr_ops(ft_extend_vars(ft_split_input(comm), env), env);
+		if (!check_input(comm))
 			parse_errors(output);
-		else
+		else if (output && *output && *comm && ft_strcmp(comm, "\n"))
 		{
-			exec(output, &environnement, history);
+			exec(output, &env, history);
 			free_that_matrice(output);
 		}
-		add_history(command_line);
-		free(command_line);
-		command_line = NULL;
+		add_history(comm);
+		free(comm);
+		comm = NULL;
 		unlink("/tmp/.listen-stdin");
 	}
 }

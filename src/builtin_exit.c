@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:51:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/07 20:04:44 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 20:09:07 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ bool	builtin_exit(t_token *lst, char ***env, t_history *history, char **cmd)
 	int	exit_code;
 
 	rl_clear_history();
-	free(cmd);
+	free_that_matrice(cmd);
 	free(lst->exec_name);
 	if (count_len_matrice(lst->cmd) == 1)
 		exit_and_free(0, lst, env, history);

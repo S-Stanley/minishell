@@ -76,17 +76,25 @@ void	should_you_free_fd(char **files, char **str)
 
 char	**get_files(char **files, int i, char **str)
 {
-	if (ft_strcmp(str[i], "<") == 0)
-		files[0] = get_fd(str[i + 1]);
+	char	*filename;
+
 	if (ft_strcmp(str[i], "<<") == 0)
-		files[0] = read_from_stdin(str[i + 1]);
+	{
+		filename = read_from_stdin(str[i + 1]);
+		files[0] = get_unq_copy(filename);
+		free(filename);
+	}
+	filename = get_fd(str[i + 1]);
+	if (ft_strcmp(str[i], "<") == 0)
+		files[0] = get_unq_copy(filename);
 	if (ft_strcmp(str[i], ">") == 0)
-		files[1] = get_fd(str[i + 1]);
+		files[1] = get_unq_copy(filename);
 	if (ft_strcmp(str[i], ">>") == 0)
 	{
-		files[1] = get_fd(str[i + 1]);
+		files[1] = get_unq_copy(filename);
 		files[2] = ft_strdup("append");
 	}
+	free(filename);
 	return (files);
 }
 
