@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 11:30:36 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/07 19:42:28 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:56:07 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	start_to_write_at(unsigned int i, char **cmd)
 		x = -1;
 		if (cmd[i][x + 1] == '-')
 			x++;
+		else
+			return (i);
 		while (cmd[i][++x])
 			if (cmd[i][x] != 'n' && cmd[i][x] != ' ')
 				return (i);
