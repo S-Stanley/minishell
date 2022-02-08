@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/07 21:11:33 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:11:11 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,25 @@ bool	create_all_files(char **line)
 {
 	unsigned int	i;
 	int				fd;
+	char			*file_n;
 
 	i = 0;
 	while (line[i])
 	{
 		if (ft_strcmp(line[i], "|") == 0)
 			break ;
-		if ((ft_strcmp(line[i], ">") == 0 || ft_strcmp(line[i], ">>") == 0)
-			&& line[i + 1])
+		file_n = line[i + 1];
+		if ((!ft_strcmp(line[i], ">") || !ft_strcmp(line[i], ">>")) && file_n)
 		{
-			fd = open(line[i + 1], O_RDWR | O_CREAT, 0777);
+			file_n = get_unq_copy(line[i + 1]);
+			fd = open(file_n, O_RDWR | O_CREAT, 0777);
 			if (fd == -1)
 			{
 				printf("%s\n", strerror(errno));
 				return (false);
 			}
 			close(fd);
+			free(file_n);
 		}
 		i++;
 	}
@@ -83,11 +86,10 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 	t_token	*lst;
 
 	lst = NULL;
-	cmd_line = unquote(cmd_line);
 	lst = build_lst((char **)cmd_line, *env);
 	if (!lst)
 		return (false);
 	what_to_exec(lst, env, history, cmd_line);
-	free_token_list(lst);
+	free_token_light(lst);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:18:43 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/07 20:04:58 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 20:01:34 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,8 @@ void	exec_buildint(t_token *lst, char ***env, char **cmd)
 		*env = update_env(lst->cmd, *env);
 	if (ft_strcmp(lst->cmd[0], "echo") == 0)
 		builtin_echo(lst->cmd);
-	free_the_rest(&cmd[1]);
-	free(lst->exec_name);
-	free_token_list(lst);
+	free_token_light(lst);
 	free_that_matrice(*env);
-	free(cmd);
-	close_fds();
+	free_that_matrice(cmd);
 	exit(0);
 }

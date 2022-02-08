@@ -6,11 +6,26 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:04 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 18:48:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 19:47:02 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	free_that_matrice_light(char **matrice)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (!matrice)
+		return ;
+	while (matrice[i])
+	{
+		if (matrice[i])
+			free(matrice[i]);
+		i++;
+	}
+}
 
 void	free_token_list(t_token *lst)
 {

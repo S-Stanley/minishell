@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror -g
 LIB = -lft -L$(LFT_DIR)
 INCL = -I$(HEAD_DIR) -I$(LFT_DIR)
 

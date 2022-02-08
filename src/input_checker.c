@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 04:11:46 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/07 18:46:05 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/08 20:08:57 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	check_input(char *input)
 			free(unq_inp);
 			return (0);
 		}
+		free(unq_inp);
 	}
 	while (input[i])
 	{

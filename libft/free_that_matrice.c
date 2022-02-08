@@ -6,11 +6,12 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:17:15 by sserbin           #+#    #+#             */
-/*   Updated: 2022/01/31 21:13:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 19:52:48 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 void	free_that_matrice(char **matrice)
 {
@@ -21,8 +22,7 @@ void	free_that_matrice(char **matrice)
 		return ;
 	while (matrice[i])
 	{
-		if (matrice[i])
-			free(matrice[i]);
+		free(matrice[i]);
 		i++;
 	}
 	free(matrice);

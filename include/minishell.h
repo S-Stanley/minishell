@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/07 21:12:21 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:11:21 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char		**ft_split_input(char *str);
 /* takes splitted (not NULL) input and replaces variable names by it's values */
 char		**ft_extend_vars(char **spl, char **env);
 /* takes replaced list of strings and separates characters < > >> << | */
-char		**ft_extract_operators(char **extended, char **env);
+char		**ft_extr_ops(char **extended, char **env);
 /* extract_operators extending function */
 char		**copy_n_extract(char **extended, int newtab_size, char **env);
 /* extract_operators defining function */
@@ -178,5 +178,6 @@ void		handle_tilda(char **spl, int i, char **env);
 char		*q_remove(char *str, int len);
 int			get_unquoted_len(char *str);
 void		get_prompt(void);
+char		*get_unq_copy(char *str);
 
 #endif
