@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 00:49:29 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/08 21:11:21 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:36:35 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,5 +179,6 @@ char		*q_remove(char *str, int len);
 int			get_unquoted_len(char *str);
 void		get_prompt(void);
 char		*get_unq_copy(char *str);
+void		free_that_matrice_light(char **matrice);
 
 #endif

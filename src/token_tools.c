@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   token_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 02:14:20 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/06 18:50:05 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:39:57 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	free_that_matrice_light(char **matrice)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (!matrice)
+		return ;
+	while (matrice[i])
+	{
+		if (matrice[i])
+			free(matrice[i]);
+		i++;
+	}
+}
 
 void	read_lst(t_token *lst)
 {
