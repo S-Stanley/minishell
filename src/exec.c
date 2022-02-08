@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 21:11:11 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:30:56 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ bool	create_all_files(char **line)
 
 bool	what_to_exec(t_token *lst, char ***env, t_history *history, char **cmd)
 {
-	g_exit_status = 0;
 	if (count_len_matrice(lst->cmd) == 0)
 		return (true);
 	if (ft_strcmp(lst->cmd[0], "export") == 0 && lst->cmd[1])
@@ -85,11 +84,13 @@ bool	exec(char **cmd_line, char ***env, t_history *history)
 {
 	t_token	*lst;
 
+	g_exit_status = 0;
 	lst = NULL;
 	lst = build_lst((char **)cmd_line, *env);
 	if (!lst)
 		return (false);
-	what_to_exec(lst, env, history, cmd_line);
+	if (g_exit_status != 130)
+		what_to_exec(lst, env, history, cmd_line);
 	free_token_light(lst);
 	return (true);
 }
