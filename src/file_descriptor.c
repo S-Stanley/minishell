@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 23:04:19 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/01 00:32:37 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 20:34:24 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ char	*read_from_stdin(char *next_cmd_line)
 		if (ft_strcmp(buffer, to_stop) == 0)
 		{
 			free(to_stop);
-			write(fd_to_write, buffer, ft_strlen(buffer));
 			close(fd_to_write);
 			free(buffer);
 			break ;
 		}
+		write(fd_to_write, buffer, ft_strlen(buffer));
 		free(buffer);
 	}
 	return (get_fd("/tmp/.listen-stdin"));
