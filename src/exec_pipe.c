@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:15:56 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 20:34:05 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 22:43:04 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ void	run_executable(t_token *lst, char ***env, char **cmd)
 {
 	if (access(lst->exec_name, X_OK) == 0)
 		execve(lst->exec_name, lst->cmd, *env);
-	free_token_light(lst);
 	free_that_matrice(*env);
 	free_that_matrice(cmd);
-	exit(127);
 }
 
 bool	child_process(t_token *lst, int *fd, char ***env, char **cmd)
@@ -68,15 +66,19 @@ void	exec_cmd(t_token *lst, char ***env, char **cmd)
 	int		fd[2];
 	t_pid	*pid;
 	pid_t	new_pid;
+	t_token	*tmp;
 
 	pid = NULL;
+	tmp = lst;
 	while (lst)
 	{
 		pipe(fd);
 		new_pid = fork();
 		if (new_pid == 0)
+		{
 			child_process(lst, fd, env, cmd);
-		else
+			err_child(pid, tmp);
+		}
 		{
 			parent_process(fd, lst);
 			pid = add_pid(pid, new_pid);

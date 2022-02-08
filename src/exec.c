@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 01:24:51 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 21:30:56 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 22:43:21 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ char	**get_splitter(void)
 	splitter[4] = ">>";
 	splitter[5] = 0;
 	return (splitter);
+}
+
+void	err_child(t_pid *pid, t_token *tmp)
+{
+	free_pid(pid);
+	free_token_light(tmp);
+	exit(127);
 }
 
 bool	create_all_files(char **line)
