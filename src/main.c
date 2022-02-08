@@ -29,8 +29,8 @@ void	run_minishell(char **env, t_history *history)
 	comm = NULL;
 	while (1)
 	{
-		command_line = readline("minishell> ");
-		if (ft_strlen(command_line) == 0)
+		comm = readline("minishell> ");
+		if (ft_strlen(comm) == 0)
 			continue ;
 		init_signal();
 		if (!comm)
