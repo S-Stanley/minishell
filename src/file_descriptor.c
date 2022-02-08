@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 23:04:19 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 20:50:30 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/08 21:05:16 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*read_from_stdin(char *next_cmd_line)
 		buffer = malloc(sizeof(char) * 100);
 		reading = read(0, buffer, 99);
 		buffer[reading] = 0;
-		if (ft_strcmp(buffer, to_stop) == 0 || reading == 0)
+		if (ft_strcmp(buffer, to_stop) == 0 || reading == 0
+			|| g_exit_status == 130)
 		{
 			free(to_stop);
 			close(fd_to_write);
