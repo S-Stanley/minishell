@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 11:30:36 by sserbin           #+#    #+#             */
-/*   Updated: 2022/02/08 21:56:07 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/09 15:12:49 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	start_to_write_at(unsigned int i, char **cmd)
 	tmp = i;
 	if (cmd[i][x] != '-')
 		return (tmp);
-	while (cmd[i++])
+	while (cmd[i])
 	{
 		x = -1;
 		if (cmd[i][x + 1] == '-')
@@ -65,6 +65,7 @@ int	start_to_write_at(unsigned int i, char **cmd)
 		while (cmd[i][++x])
 			if (cmd[i][x] != 'n' && cmd[i][x] != ' ')
 				return (i);
+		i++;
 	}
 	return (i);
 }
