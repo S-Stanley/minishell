@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/09 17:13:01 by rokupin          ###   ########.fr       */
+/*   Updated: 2022/02/10 00:31:01 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,22 @@ static int	check_quote_expr(char *str)
 	return (1);
 }
 
-static void	handle(char **output, char *comm, char **env, t_history *history)
+static void	handle(char *comm, char ***env, t_history *history)
 {
+	char		**output;
+
+	output = NULL;
+	output = ft_extr_ops(ft_extend_vars(
+				ft_split_input(comm), *env), *env);
 	if (output && *output && *comm && ft_strcmp(comm, "\n"))
 	{
-		exec(output, &env, history);
+		exec(output, env, history);
 		free_that_matrice(output);
 	}
 }
 
 static void	run_minishell(char **env, t_history *history)
 {
-	char		**output;
 	char		*comm;
 
 	comm = NULL;
@@ -64,15 +68,14 @@ static void	run_minishell(char **env, t_history *history)
 		if (!comm)
 			break ;
 		if (ft_strlen(comm) == 0)
+		{
+			free(comm);
 			continue ;
+		}
 		if (!check_quote_expr(comm) || !check_input(comm))
 			parse_errors();
 		else
-		{
-			output = ft_extr_ops(ft_extend_vars(
-						ft_split_input(comm), env), env);
-			handle(output, comm, env, history);
-		}
+			handle(comm, &env, history);
 		add_history(comm);
 		free(comm);
 		comm = NULL;
