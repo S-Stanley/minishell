@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 01:25:37 by rokupin           #+#    #+#             */
-/*   Updated: 2022/02/08 22:17:46 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/02/09 17:13:01 by rokupin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,44 @@
 
 int				g_exit_status;
 
-void	parse_errors(char **output)
+static void	parse_errors(void)
 {
-	free_that_matrice(output);
 	write(STDERR_FILENO, "minishell: wrong input!\n", 24);
 	g_exit_status = 2;
 }
 
-void	run_minishell(char **env, t_history *history)
+static int	check_quote_expr(char *str)
+{
+	char	q;
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			q = str[i];
+			i++;
+			while (str[i] && str[i] != q)
+				i++;
+			if (!str[i])
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+static void	handle(char **output, char *comm, char **env, t_history *history)
+{
+	if (output && *output && *comm && ft_strcmp(comm, "\n"))
+	{
+		exec(output, &env, history);
+		free_that_matrice(output);
+	}
+}
+
+static void	run_minishell(char **env, t_history *history)
 {
 	char		**output;
 	char		*comm;
@@ -35,13 +65,13 @@ void	run_minishell(char **env, t_history *history)
 			break ;
 		if (ft_strlen(comm) == 0)
 			continue ;
-		output = ft_extr_ops(ft_extend_vars(ft_split_input(comm), env), env);
-		if (!check_input(comm))
-			parse_errors(output);
-		else if (output && *output && *comm && ft_strcmp(comm, "\n"))
+		if (!check_quote_expr(comm) || !check_input(comm))
+			parse_errors();
+		else
 		{
-			exec(output, &env, history);
-			free_that_matrice(output);
+			output = ft_extr_ops(ft_extend_vars(
+						ft_split_input(comm), env), env);
+			handle(output, comm, env, history);
 		}
 		add_history(comm);
 		free(comm);
